@@ -1,13 +1,16 @@
 {
     "name": "loudverse",
     "version": "1.0.0",
-    "private":"true",
+    "private": "true",
     "description": "Be seen. Be heard. Be experienced.",
     "main": "index.js",
     "scripts": {
+        "prettier": "yarn next:prettier && yarn hh:prettier",
+        "next:prettier": "yarn workspace next-app prettier",
         "next:dev": "yarn workspace next-app dev",
         "next:build": "yarn workspace next-app build",
         "next:start": "yarn workspace next-app start",
+        "hh:prettier": "yarn workspace hardhat prettier",
         "hh:test": "yarn workspace hardhat hardhat test"
     },
     "repository": {
@@ -20,6 +23,8 @@
     "bugs": {
         "url": "https://github.com/neodaoist/loudverse/issues"
     },
-    "workspaces": ["packages/*"],
+    "workspaces": [
+        "packages/*"
+    ],
     "homepage": "https://github.com/neodaoist/loudverse#readme"
 }
