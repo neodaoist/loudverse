@@ -1,4 +1,31 @@
 {
+    "name": "loudverse",
+    "version": "1.0.0",
+    "description": "Be seen. Be heard. Be experienced.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "next:dev": "yarn workspace @neodaoist/loudverse dev",
+        "next:build": "yarn workspace @neodaoist/loudverse build",
+        "next:start": "yarn workspace @neodaoist/loudverse start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/neodaoist/loudverse.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/neodaoist/loudverse/issues"
+    },
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ]
+    },
+    "homepage": "https://github.com/neodaoist/loudverse#readme"
+=======
   "name": "hardhat-project",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
