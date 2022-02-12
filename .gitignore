@@ -2,6 +2,7 @@
 
 next-app/.env 
 hardhat/.env 
+
 # Dependency directories
 node_modules/
 
