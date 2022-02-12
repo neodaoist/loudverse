@@ -1,0 +1,18 @@
+type Grant = {
+    contributions: number[]
+}
+
+const useQuadraticFundingFormula = (allGrants: Grant[]) => {
+    let allSums = 0
+
+    allGrants.forEach((grant)=> {
+        let thisGrantsSum = 0
+
+        grant.contributions.forEach((contribution) => {
+            //TODO
+            //get sum for this grant, add it to allsums.
+            //square it shake it bake it 
+            // too tired rn srry
+        })
+    })
+}

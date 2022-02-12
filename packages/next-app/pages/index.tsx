@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+// import PageWrapper from "../components/Layout/PageWrapper"
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   return (
+    // <PageWrapper>
+
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -60,6 +63,7 @@ const Home: NextPage = () => {
         </a>
       </footer>
     </div>
+    // </PageWrapper>
   );
 };
 
