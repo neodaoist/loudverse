@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import {GrantStorage} from "./GrantStorage.sol";
+import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 
-contract GrantLogic is GrantStorage {
+contract CallForFundsLogic is CallForFundsStorage {
     //vars
 
     //events
@@ -14,7 +14,7 @@ contract GrantLogic is GrantStorage {
     );
 
     //ClaimFunds
-    //DeleteGrant
+    //DeleteCallForFunds
     //ChangeMinimum
 
     // Plain ETH transfers.
