@@ -12,6 +12,7 @@
     "next:start": "yarn workspace next-app start",
     "hh:prettier": "yarn workspace hardhat prettier",
     "hh:test": "yarn workspace hardhat hardhat test",
+    "hh:deploy": "yarn workspace hardhat deploy",
     "graph:codegen": "yarn workspace subgraph codegen",
     "graph:build": "yarn workspace subgraph build",
     "graph:deploy-local": "yarn workspace subgraph deploy-local",

@@ -16,12 +16,16 @@ async function main() {
 
   console.log(`Deploying to ${networkName}`);
 
-  const GrantLogic = await ethers.getContractFactory("GrantLogic");
-  const logic = await GrantLogic.deploy();
+  const CallForFundsLogic = await ethers.getContractFactory(
+    "CallForFundsLogic"
+  );
+  const logic = await CallForFundsLogic.deploy();
   await logic.deployed();
 
-  const GrantFactory = await ethers.getContractFactory("GrantFactory");
-  const factory = await GrantFactory.deploy(logic.address);
+  const CallForFundsFactory = await ethers.getContractFactory(
+    "CallForFundsFactory"
+  );
+  const factory = await CallForFundsFactory.deploy(logic.address);
   await factory.deployed();
 
   const info = {
@@ -39,6 +43,30 @@ async function main() {
       JSON.stringify(info, null, 2)
     );
   }
+
+  //TODO
+  // automate first 5 grants being created
+  // const deployer = new ethers.Wallet(
+  //   process.env.PRIVATE_KEY,
+  //   "https://rpc-mumbai.maticvigil.com"
+  // );
+  // const factoryWithSigner = factory.connect(deployer);
+  // const grantProxy = factoryWithSigner.createCallForFunds();
+
+  // wait for polygonscan before verifying
+  await new Promise((resolve) => setTimeout(resolve, 60000));
+
+  await run("verify:verify", {
+    address: logic.address,
+    contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
+    contractArguments: [],
+  });
+
+  await run("verify:verify", {
+    address: factory.address,
+    contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
+    contractArguments: [logic.address],
+  });
 }
 
 main()
