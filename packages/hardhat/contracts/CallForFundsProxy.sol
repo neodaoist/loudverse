@@ -27,7 +27,6 @@ contract CallForFundsProxy is CallForFundsStorage {
         genre = _genre;
         deliverableFormat = _deliverableFormat;
         timeline = _timeline;
-        //todo fix
         fundingState = FundingState.OPEN;
     }
 
