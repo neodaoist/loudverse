@@ -32,4 +32,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Computing funding for contract ${{ github.event.inputs.name }} from pool ${{ github.event.inputs.matchpool_address"
+      run: echo "Computing funding for contract ${{ github.event.inputs.name }} from pool ${{ github.event.inputs.matchpool_address }}"
