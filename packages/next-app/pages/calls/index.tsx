@@ -1,8 +1,73 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import FundingCall from "../../components/Cards/FundingCall";
 import styles from "../../styles/Home.module.css"; // change
 
 const Calls: NextPage = () => {
+  // dummy data
+  const calls = [
+    {
+      logicAddress: "0x1",
+      minFundingAmount: "100 DAI",
+      creator: "person1",
+      title: "Solarpunk Strings",
+      description: "@wellwisher.eth is creating a musical solarpunk experience with a Western classical twist",
+      category: "music",
+      genre: "genre1",
+      deliverableFormat: "deliverableFormat1",
+      timeline: "timeline1",
+      fundingState: "open",
+    },
+    {
+      logicAddress: "0x2",
+      minFundingAmount: "200 DAI",
+      creator: "person2",
+      title: "title2",
+      description: "description2",
+      category: "category2",
+      genre: "genre2",
+      deliverableFormat: "deliverableFormat2",
+      timeline: "timeline2",
+      fundingState: "open",
+    },
+    {
+      logicAddress: "0x3",
+      minFundingAmount: "300 DAI",
+      creator: "person3",
+      title: "title3",
+      description: "description3",
+      category: "category3",
+      genre: "genre3",
+      deliverableFormat: "deliverableFormat3",
+      timeline: "timeline3",
+      fundingState: "open",
+    },
+    {
+      logicAddress: "0x4",
+      minFundingAmount: "400 DAI",
+      creator: "person4",
+      title: "title4",
+      description: "description4",
+      category: "category4",
+      genre: "genre4",
+      deliverableFormat: "deliverableFormat4",
+      timeline: "timeline4",
+      fundingState: "open",
+    },
+    {
+      logicAddress: "0x5",
+      minFundingAmount: "500 DAI",
+      creator: "person5",
+      title: "title5",
+      description: "description5",
+      category: "category5",
+      genre: "genre5",
+      deliverableFormat: "deliverableFormat5",
+      timeline: "timeline5",
+      fundingState: "open",
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,12 +76,15 @@ const Calls: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Calls!</a>
-        </h1>
+      <main>
+        <h1>Connect and bar up in this area</h1>
+        <h2>Open calls for funds</h2>
+        <div>
+          {calls.map(call => (
+            <FundingCall callForFunding={call}/>
+          ))}
+        </div>
       </main>
-
     </div>
   );
 };
