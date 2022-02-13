@@ -1,30 +1,51 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-const hre = require("hardhat");
+const { ethers, waffle } = require("hardhat");
+const fs = require("fs");
+
+const NETWORK_MAP = {
+  137: "matic",
+  80001: "mumbai",
+};
+
+const isLocal = false;
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
+  const chainId = (await waffle.provider.getNetwork()).chainId;
 
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  console.log({ chainId });
+  const networkName = NETWORK_MAP[chainId];
 
-  await greeter.deployed();
+  console.log(`Deploying to ${networkName}`);
 
-  console.log("Greeter deployed to:", greeter.address);
+  const GrantLogic = await ethers.getContractFactory("GrantLogic");
+  const logic = await GrantLogic.deploy();
+  await logic.deployed();
+
+  const GrantFactory = await ethers.getContractFactory("GrantFactory");
+  const factory = await GrantFactory.deploy(logic.address);
+  await factory.deployed();
+
+  const info = {
+    Contracts: {
+      logic: logic.address,
+      factory: factory.address,
+    },
+  };
+
+  console.log(info);
+
+  if (!isLocal) {
+    fs.writeFileSync(
+      `${__dirname.slice(0, -8)}/networks/${networkName}.json`,
+      JSON.stringify(info, null, 2)
+    );
+  }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  // eslint-disable-next-line no-process-exit
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
+  });
