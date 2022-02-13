@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import PageWrapper from "../components/Layout/PageWrapper";
 import styles from "../styles/Home.module.css";
 
@@ -18,9 +19,31 @@ const Home: NextPage = () => {
           <h1 className={styles.title}>
             Welcome to <a href="https://nextjs.org">LOUDVERSE!</a>
           </h1>
-
-          <p className={styles.description}>
-            Get started by editing <code className={styles.code}>pages/index.tsx</code>
+          <h2>Page examples</h2>
+          <p>
+            <Link href="/calls">
+              <a>calls</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/calls/create">
+              <a>create call</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/calls/42">
+              <a>call 42</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/users">
+              <a>users</a>
+            </Link>
+          </p>
+          <p>
+            <Link href="/users/1377">
+              <a>user 1377</a>
+            </Link>
           </p>
 
           <div className={styles.grid}>
