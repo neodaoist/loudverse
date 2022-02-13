@@ -3,18 +3,12 @@ pragma solidity ^0.8.2;
 
 import {GrantStorage} from "./GrantStorage.sol";
 
-interface IGrantStorage {
-    enum FundingState {
-        OPEN,
-        CLOSED,
-        MATCHED,
-        DELIVERED
-    }
+interface IGrantFactory {
+    function logicAddress() external returns (address);
 }
 
 contract GrantProxy is GrantStorage {
     constructor(
-        address _logicAddress,
         address _creator,
         string memory _title,
         string memory _description,
@@ -24,7 +18,7 @@ contract GrantProxy is GrantStorage {
         uint256 _minFundingAmount,
         string memory _deliverableFormat
     ) {
-        logicAddress = _logicAddress;
+        logicAddress = IGrantFactory(msg.sender).logicAddress();
         minFundingAmount = _minFundingAmount;
         creator = _creator;
         title = _title;
@@ -34,7 +28,7 @@ contract GrantProxy is GrantStorage {
         deliverableFormat = _deliverableFormat;
         timeline = _timeline;
         //todo fix
-        // fundingState = IGrantStorage(FundingState);
+        fundingState = FundingState.OPEN;
     }
 
     fallback() external payable {
@@ -55,8 +49,4 @@ contract GrantProxy is GrantStorage {
             }
         }
     }
-
-    // function logic() public view returns (address) {
-    //     return logicAddress;
-    // }
 }

@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-enum FundingState {
-    OPEN,
-    CLOSED,
-    MATCHED,
-    DELIVERED
-}
-
 contract GrantStorage {
+    enum FundingState {
+        OPEN,
+        CLOSED,
+        MATCHED,
+        DELIVERED
+    }
+
     address public logicAddress;
 
     address public creator;
