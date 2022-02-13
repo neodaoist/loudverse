@@ -10,7 +10,7 @@ const Calls: NextPage = () => {
       logicAddress: "0x1",
       minFundingAmount: "100 DAI",
       creator: "person1",
-      title: "Solarpunk Strinks",
+      title: "Solarpunk Strings",
       description: "@wellwisher.eth is creating a musical solarpunk experience with a Western classical twist",
       category: "music",
       genre: "genre1",
