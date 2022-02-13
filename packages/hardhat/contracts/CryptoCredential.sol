@@ -1,51 +1,113 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import "./ERC1238/extensions/ERC1238URIStorage.sol";
 
-// plan to redo this as ERC1238 — https://github.com/violetprotocol/ERC1238-token
+// Resources:
+// https://github.com/ethereum/EIPs/issues/1238
+// https://github.com/violetprotocol/ERC1238-token
+// https://vitalik.ca/general/2022/01/26/soulbound.html
 
-//TODO
-// soulbound/nontransferrable
-// overwrite ERC1155's transfer func
+contract CryptoCredential is ERC1238, ERC1238URIStorage {
 
-contract CryptoCredential is ERC1155, Ownable, ERC1155Supply {
-    constructor() ERC1155("") {}
+    address public issuer;
 
-    function setURI(string memory newuri) public onlyOwner {
-        _setURI(newuri);
+    enum Skill {
+        Music,
+        Photography,
+        Painting,
+        DigitalArt,
+        Animation,
+        Film,
+        Sculpture,
+        Poetry,
+        Play,
+        Dance
+    }
+
+    constructor(address issuer_, string memory baseURI_) ERC1238(baseURI_) {
+        issuer = issuer_;
+    }
+
+    modifier onlyIssuer() {
+        require(msg.sender == issuer, "Unauthorized: only contract issuer can issue new CryptoCredentials");
+        _;
+    }
+
+    // This is the method I was thinking that we can use to issue new credentials, which builds the data and mints the NTT
+    function issueCredential(
+        address creator,
+        string memory creationTitle,
+        Skill skill,
+        string memory totalFunding,
+        string memory totalFunders
+    ) external onlyIssuer {
+        // Setup data
+        // TODO
+
+        // Mint NTT
+        mint(
+            creator,
+            ???,
+            1,
+            ???,
+            ???
+        );
+    }
+
+    // The modifier above and all the below methods are from the ERC1238 "Badge" example
+    function setIssuer(address newIssuer) external onlyIssuer {
+        require(newIssuer != address(0), "Invalid address for new issuer");
+        issuer = newIssuer;
+    }
+
+    function setBaseURI(string memory newBaseURI) external onlyIssuer {
+        _setBaseURI(newBaseURI);
     }
 
     function mint(
-        address account,
+        address to,
         uint256 id,
         uint256 amount,
+        string memory uri,
         bytes memory data
-    ) public onlyOwner {
-        _mint(account, id, amount, data);
+    ) external onlyIssuer {
+        _mintWithURI(to, id, amount, uri, data);
     }
 
     function mintBatch(
         address to,
         uint256[] memory ids,
         uint256[] memory amounts,
+        string[] memory uris,
         bytes memory data
-    ) public onlyOwner {
-        _mintBatch(to, ids, amounts, data);
+    ) external onlyIssuer {
+        _mintBatchWithURI(to, ids, amounts, uris, data);
     }
 
-    // The following functions are overrides required by Solidity.
-
-    function _beforeTokenTransfer(
-        address operator,
+    function burn(
         address from,
-        address to,
+        uint256 id,
+        uint256 amount,
+        bool deleteURI
+    ) external onlyIssuer {
+        if (deleteURI) {
+            _burnAndDeleteURI(from, id, amount);
+        } else {
+            _burn(from, id, amount);
+        }
+    }
+
+    function burnBatch(
+        address from,
         uint256[] memory ids,
         uint256[] memory amounts,
-        bytes memory data
-    ) internal override(ERC1155, ERC1155Supply) {
-        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+        bool deleteURI
+    ) external onlyIssuer {
+        if (deleteURI) {
+            _burnBatchAndDeleteURIs(from, ids, amounts);
+        } else {
+            _burnBatch(from, ids, amounts);
+        }
     }
 }
