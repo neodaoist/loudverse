@@ -15,7 +15,7 @@
     "graph:codegen": "yarn workspace subgraph codegen",
     "graph:build": "yarn workspace subgraph build",
     "graph:deploy-local": "yarn workspace subgraph deploy-local",
-    "graph:deploy": "yarn workspace subgraph deploy"
+    "graph:deploy": "yarn workspace subgraph deploy-hosted"
   },
   "repository": {
     "type": "git",

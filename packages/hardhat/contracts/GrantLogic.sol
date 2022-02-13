@@ -13,7 +13,6 @@ contract GrantLogic is GrantStorage {
         uint256 indexed amount
     );
 
-    //StartStream
     //ClaimFunds
     //DeleteGrant
     //ChangeMinimum
@@ -23,5 +22,12 @@ contract GrantLogic is GrantStorage {
         emit ContributionReceivedETH(msg.sender, msg.value);
     }
 
-    // function ContributeERC20()
+    // function contributeERC20() onlyOpen // dai???
+
+    // function claimFunds()
+    // function StartSuperFluidStream() onlyCreator onlyMatched
+
+    // modifier onlyCreator() require msg.sender===creator
+    // modifier onlyOpen() require fundingState===FundingState.OPEN
+    // modifier onlyMatched() require fundingState===FundingState.MATCHED
 }
