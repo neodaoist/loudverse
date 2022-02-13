@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import {GrantStorage} from "./GrantStorage.sol";
+import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 
-interface IGrantFactory {
+interface ICallForFundsFactory {
     function logicAddress() external returns (address);
 }
 
-contract GrantProxy is GrantStorage {
+contract CallForFundsProxy is CallForFundsStorage {
     constructor(
         address _creator,
         string memory _title,
@@ -18,7 +18,7 @@ contract GrantProxy is GrantStorage {
         uint256 _minFundingAmount,
         string memory _deliverableFormat
     ) {
-        logicAddress = IGrantFactory(msg.sender).logicAddress();
+        logicAddress = ICallForFundsFactory(msg.sender).logicAddress();
         minFundingAmount = _minFundingAmount;
         creator = _creator;
         title = _title;

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import {GrantProxy} from "./GrantProxy.sol";
+import {CallForFundsProxy} from "./CallForFundsProxy.sol";
 
-contract GrantFactory {
+contract CallForFundsFactory {
     address public immutable logicAddress;
 
-    event GrantCreated(
-        address indexed grant,
+    event CallForFundsCreated(
+        address indexed CallForFunds,
         address indexed creator,
         string title,
         string description,
@@ -22,7 +22,7 @@ contract GrantFactory {
         logicAddress = _logicAddress;
     }
 
-    function createGrant(
+    function createCallForFunds(
         address _creator,
         string memory _title,
         string memory _description,
@@ -31,9 +31,11 @@ contract GrantFactory {
         uint8 _timeline,
         uint256 _minFundingAmount,
         string memory _deliverableFormat
-    ) external returns (address grantProxy) {
-        grantProxy = address(
-            new GrantProxy{salt: keccak256(abi.encode(_creator, _title))}(
+    ) external returns (address proxy) {
+        proxy = address(
+            new CallForFundsProxy{
+                salt: keccak256(abi.encode(_creator, _title))
+            }(
                 _creator,
                 _title,
                 _description,
@@ -45,8 +47,8 @@ contract GrantFactory {
             )
         );
 
-        emit GrantCreated(
-            grantProxy,
+        emit CallForFundsCreated(
+            proxy,
             _creator,
             _title,
             _description,
