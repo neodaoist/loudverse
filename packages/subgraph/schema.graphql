@@ -5,7 +5,14 @@ type Grant @entity {
   creator: User!
 
   title: String!
-  #...
+  description: String
+  category: String!
+  genre: String!
+  minFundingAmount: BigInt!
+  deliverableFormat: String!
+  timeline: Int!
+  fundingState: Int!
+
 }
 
 type User @entity {
