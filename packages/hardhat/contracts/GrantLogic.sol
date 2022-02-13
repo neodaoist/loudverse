@@ -8,7 +8,10 @@ contract GrantLogic is GrantStorage {
 
     //events
 
-    event ContributionReceived(address indexed donator, uint256 indexed amount);
+    event ContributionReceivedETH(
+        address indexed donator,
+        uint256 indexed amount
+    );
 
     //StartStream
     //ClaimFunds
@@ -17,6 +20,8 @@ contract GrantLogic is GrantStorage {
 
     // Plain ETH transfers.
     receive() external payable {
-        emit ContributionReceived(msg.sender, msg.value);
+        emit ContributionReceivedETH(msg.sender, msg.value);
     }
+
+    // function ContributeERC20()
 }

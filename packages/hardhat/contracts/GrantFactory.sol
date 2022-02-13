@@ -6,7 +6,17 @@ import {GrantProxy} from "./GrantProxy.sol";
 contract GrantFactory {
     address public immutable logicAddress;
 
-    event GrantCreated(address indexed grant, address indexed creator);
+    event GrantCreated(
+        address indexed grant,
+        address indexed creator,
+        string title,
+        string description,
+        string category,
+        string genre,
+        uint8 timeline,
+        uint256 minFundingAmount,
+        string deliverableFormat
+    );
 
     constructor(address _logicAddress) {
         logicAddress = _logicAddress;
@@ -35,6 +45,16 @@ contract GrantFactory {
             )
         );
 
-        emit GrantCreated(grantProxy, _creator);
+        emit GrantCreated(
+            grantProxy,
+            _creator,
+            _title,
+            _description,
+            _category,
+            _genre,
+            _timeline,
+            _minFundingAmount,
+            _deliverableFormat
+        );
     }
 }

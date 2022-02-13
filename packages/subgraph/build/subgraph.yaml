@@ -2,7 +2,7 @@ specVersion: 0.0.2
 description: Loudverse Subgraph
 repository: https://github.com/neodaoist/loudverse
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: GrantFactory
@@ -14,14 +14,15 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/grantFactoryMapping.ts
+      file: GrantFactory/GrantFactory.wasm
       entities:
         - GrantFactory
       abis:
         - name: GrantFactory
-          file: ./abis/GrantFactory.json
+          file: GrantFactory/abis/GrantFactory.json
       eventHandlers:
-        - event: GrantCreated(indexed address,indexed address,string,string,string,string,uint8,uint256,string)
+        - event: GrantCreated(indexed address,indexed
+            address,string,string,string,string,uint8,uint256,string)
           handler: handleNewGrant
 templates:
   - kind: ethereum/contract
@@ -33,14 +34,14 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/grantLogicMapping.ts
+      file: templates/GrantLogic/GrantLogic.wasm
       entities:
         - Grant
       abis:
         - name: GrantLogic
-          file: ./abis/GrantLogic.json
+          file: GrantLogic/abis/GrantLogic.json
         - name: GrantProxy
-          file: ./abis/GrantProxy.json
+          file: GrantLogic/abis/GrantProxy.json
       eventHandlers:
         - event: ContributionReceivedETH(indexed address,indexed uint256)
           handler: handleETHContribution
