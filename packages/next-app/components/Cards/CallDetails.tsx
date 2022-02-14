@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Tag, Text } from "degen";
+import { Box, Text } from "degen";
 
 const CallDetails = ({ callForFunding }: { callForFunding: CallForFundsGraphType }) => {
   return (
