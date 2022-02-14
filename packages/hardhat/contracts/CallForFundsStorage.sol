@@ -4,12 +4,17 @@ pragma solidity ^0.8.2;
 contract CallForFundsStorage {
     enum FundingState {
         OPEN,
-        CLOSED,
+        FAILED,
         MATCHED,
+        STREAMING,
         DELIVERED
     }
 
-    address public logicAddress;
+    // change later to multisig?
+    address public immutable loudverseAdmin =
+        0xA4E987fb3808d9FC206112967477793Ea8389450;
+
+    address internal logicAddress;
 
     address public creator;
     string public title;
@@ -22,8 +27,7 @@ contract CallForFundsStorage {
     uint8 public timelineInDays;
     uint256 public minFundingAmount;
 
-    FundingState public fundingState;
+    string public deliverableURI;
 
-    // @Funding Round
-    // @Calls for collaborators (optional)
+    FundingState public fundingState;
 }
