@@ -26,10 +26,8 @@ contract CallForFundsStorage {
     string public deliverableMedium;
     uint8 public timelineInDays;
     uint256 public minFundingAmount;
+
     string public deliverableURI;
 
     FundingState public fundingState;
-
-    // @Funding Round
-    // @Calls for collaborators (optional)
 }
