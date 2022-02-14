@@ -14,13 +14,16 @@ contract CallForFundsStorage {
     address public creator;
     string public title;
     string public description;
-    string public category; //(Music, Photography, Painting, Digital Art, Animation, Film, Sculpture, Poetry, Play, Dance)
+    string public image;
+    string public category;
     string public genre;
+    string public subgenre;
+    string public deliverableMedium;
+    uint8 public timelineInDays;
     uint256 public minFundingAmount;
-    string public deliverableFormat;
+
+    FundingState public fundingState;
+
     // @Funding Round
     // @Calls for collaborators (optional)
-    uint8 public timeline; // number of days?
-    FundingState public fundingState;
-    //details
 }

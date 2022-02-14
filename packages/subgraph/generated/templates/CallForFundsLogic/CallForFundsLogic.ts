@@ -32,9 +32,9 @@ export class ContributionReceivedETH__Params {
   }
 }
 
-export class GrantLogic extends ethereum.SmartContract {
-  static bind(address: Address): GrantLogic {
-    return new GrantLogic("GrantLogic", address);
+export class CallForFundsLogic extends ethereum.SmartContract {
+  static bind(address: Address): CallForFundsLogic {
+    return new CallForFundsLogic("CallForFundsLogic", address);
   }
 
   category(): string {
@@ -67,20 +67,20 @@ export class GrantLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  deliverableFormat(): string {
+  deliverableMedium(): string {
     let result = super.call(
-      "deliverableFormat",
-      "deliverableFormat():(string)",
+      "deliverableMedium",
+      "deliverableMedium():(string)",
       []
     );
 
     return result[0].toString();
   }
 
-  try_deliverableFormat(): ethereum.CallResult<string> {
+  try_deliverableMedium(): ethereum.CallResult<string> {
     let result = super.tryCall(
-      "deliverableFormat",
-      "deliverableFormat():(string)",
+      "deliverableMedium",
+      "deliverableMedium():(string)",
       []
     );
     if (result.reverted) {
@@ -135,6 +135,21 @@ export class GrantLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
+  image(): string {
+    let result = super.call("image", "image():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_image(): ethereum.CallResult<string> {
+    let result = super.tryCall("image", "image():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
   logicAddress(): Address {
     let result = super.call("logicAddress", "logicAddress():(address)", []);
 
@@ -173,14 +188,33 @@ export class GrantLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  timeline(): i32 {
-    let result = super.call("timeline", "timeline():(uint8)", []);
+  subgenre(): string {
+    let result = super.call("subgenre", "subgenre():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_subgenre(): ethereum.CallResult<string> {
+    let result = super.tryCall("subgenre", "subgenre():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  timelineInDays(): i32 {
+    let result = super.call("timelineInDays", "timelineInDays():(uint8)", []);
 
     return result[0].toI32();
   }
 
-  try_timeline(): ethereum.CallResult<i32> {
-    let result = super.tryCall("timeline", "timeline():(uint8)", []);
+  try_timelineInDays(): ethereum.CallResult<i32> {
+    let result = super.tryCall(
+      "timelineInDays",
+      "timelineInDays():(uint8)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }

@@ -11,11 +11,13 @@ contract CallForFundsFactory {
         address indexed creator,
         string title,
         string description,
+        string indexed image,
         string category,
         string genre,
-        uint8 timeline,
+        string subgenre,
+        uint8 timelineInDays,
         uint256 minFundingAmount,
-        string deliverableFormat
+        string deliverableMedium
     );
 
     constructor(address _logicAddress) {
@@ -23,40 +25,45 @@ contract CallForFundsFactory {
     }
 
     function createCallForFunds(
-        address _creator,
         string memory _title,
         string memory _description,
+        string memory _image,
         string memory _category,
         string memory _genre,
-        uint8 _timeline,
+        string memory _subgenre,
+        uint8 _timelineInDays,
         uint256 _minFundingAmount,
-        string memory _deliverableFormat
+        string memory _deliverableMedium
     ) external returns (address proxy) {
         proxy = address(
             new CallForFundsProxy{
-                salt: keccak256(abi.encode(_creator, _title))
+                salt: keccak256(abi.encode(msg.sender, _title))
             }(
-                _creator,
+                msg.sender,
                 _title,
                 _description,
+                _image,
                 _category,
                 _genre,
-                _timeline,
-                _minFundingAmount,
-                _deliverableFormat
+                _subgenre,
+                _deliverableMedium,
+                _timelineInDays,
+                _minFundingAmount
             )
         );
 
         emit CallForFundsCreated(
             proxy,
-            _creator,
+            msg.sender,
             _title,
             _description,
+            _image,
             _category,
             _genre,
-            _timeline,
+            _subgenre,
+            _timelineInDays,
             _minFundingAmount,
-            _deliverableFormat
+            _deliverableMedium
         );
     }
 }

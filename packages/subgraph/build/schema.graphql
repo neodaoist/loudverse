@@ -1,16 +1,22 @@
-type Grant @entity {
+type CallForFunding @entity {
   # address of the proxy
   id: ID!
-
   creator: User!
-
   title: String!
-  #...
+  description: String!
+  image: String!
+  category: String!
+  genre: String!
+  subgenre: String!
+  timelineInDays: Int
+  minFundingAmount: BigInt
+  deliverableMedium: String!
+  fundingState: Int
 }
 
 type User @entity {
   # address of the user
   id: ID!
 
-  grants: [Grant!]! @derivedFrom(field: "creator")
+  callsForFunds: [CallForFunding!]! @derivedFrom(field: "creator")
 }
