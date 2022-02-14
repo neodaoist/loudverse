@@ -3,7 +3,7 @@ import { Box, Text } from "degen";
 
 const UserStats = ({ stats }: { stats: UserStatsType }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4" height="80">
+    <Box backgroundColor="foregroundSecondary" padding="4">
       <Box marginBottom="4">
         <Text size="large">
           Raised {stats.raised} DAI for {stats.projects} projects
