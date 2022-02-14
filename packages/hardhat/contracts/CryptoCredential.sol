@@ -45,10 +45,14 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
         // Setup data
         // TODO
 
+        // Creator
+        // Title should be "Created '{creationTitle' with {totalFunding} ETH from {totalFunders} funders"
+        // Skill
+
         // Mint NTT
         mint(
             creator,
-            ???,
+            skill,
             1,
             ???,
             ???
