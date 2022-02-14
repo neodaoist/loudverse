@@ -16,7 +16,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "grant",
+        "name": "CallForFunds",
         "type": "address"
       },
       {
@@ -38,6 +38,12 @@
         "type": "string"
       },
       {
+        "indexed": true,
+        "internalType": "string",
+        "name": "image",
+        "type": "string"
+      },
+      {
         "indexed": false,
         "internalType": "string",
         "name": "category",
@@ -51,8 +57,14 @@
       },
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "subgenre",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint8",
-        "name": "timeline",
+        "name": "timelineInDays",
         "type": "uint8"
       },
       {
@@ -64,20 +76,15 @@
       {
         "indexed": false,
         "internalType": "string",
-        "name": "deliverableFormat",
+        "name": "deliverableMedium",
         "type": "string"
       }
     ],
-    "name": "GrantCreated",
+    "name": "CallForFundsCreated",
     "type": "event"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_creator",
-        "type": "address"
-      },
       {
         "internalType": "string",
         "name": "_title",
@@ -86,6 +93,11 @@
       {
         "internalType": "string",
         "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_image",
         "type": "string"
       },
       {
@@ -99,8 +111,13 @@
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "_subgenre",
+        "type": "string"
+      },
+      {
         "internalType": "uint8",
-        "name": "_timeline",
+        "name": "_timelineInDays",
         "type": "uint8"
       },
       {
@@ -110,15 +127,15 @@
       },
       {
         "internalType": "string",
-        "name": "_deliverableFormat",
+        "name": "_deliverableMedium",
         "type": "string"
       }
     ],
-    "name": "createGrant",
+    "name": "createCallForFunds",
     "outputs": [
       {
         "internalType": "address",
-        "name": "grantProxy",
+        "name": "proxy",
         "type": "address"
       }
     ],

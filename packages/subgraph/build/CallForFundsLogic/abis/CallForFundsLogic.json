@@ -46,7 +46,7 @@
   },
   {
     "inputs": [],
-    "name": "deliverableFormat",
+    "name": "deliverableMedium",
     "outputs": [
       {
         "internalType": "string",
@@ -75,7 +75,7 @@
     "name": "fundingState",
     "outputs": [
       {
-        "internalType": "enum GrantStorage.FundingState",
+        "internalType": "enum CallForFundsStorage.FundingState",
         "name": "",
         "type": "uint8"
       }
@@ -86,6 +86,19 @@
   {
     "inputs": [],
     "name": "genre",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "image",
     "outputs": [
       {
         "internalType": "string",
@@ -124,7 +137,20 @@
   },
   {
     "inputs": [],
-    "name": "timeline",
+    "name": "subgenre",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "timelineInDays",
     "outputs": [
       {
         "internalType": "uint8",

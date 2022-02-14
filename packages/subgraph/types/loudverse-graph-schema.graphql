@@ -1,0 +1,594 @@
+directive @entity on OBJECT
+
+directive @derivedFrom(field: String) on FIELD_DEFINITION
+
+directive @subgraphId(id: String) on OBJECT
+
+type _Block_ {
+  """The hash of the block"""
+  hash: Bytes
+
+  """The block number"""
+  number: Int!
+}
+
+"""The type for the top-level _meta field"""
+type _Meta_ {
+  """
+  Information about a specific subgraph block. The hash of the block
+  will be null if the _meta field has a block constraint that asks for
+  a block number. It will be filled if the _meta field has no block constraint
+  and therefore asks for the latest  block
+  
+  """
+  block: _Block_!
+
+  """The deployment ID"""
+  deployment: String!
+
+  """If `true`, the subgraph encountered indexing errors at some past block"""
+  hasIndexingErrors: Boolean!
+}
+
+enum _SubgraphErrorPolicy_ {
+  """Data will be returned even if the subgraph has indexing errors"""
+  allow
+
+  """
+  If the subgraph has indexing errors, data will be omitted. The default.
+  """
+  deny
+}
+
+scalar BigDecimal
+
+scalar BigInt
+
+input Block_height {
+  hash: Bytes
+  number: Int
+  number_gte: Int
+}
+
+scalar Bytes
+
+type CallForFunding {
+  id: ID!
+  creator: User!
+  title: String!
+  description: String!
+  image: String!
+  category: String!
+  genre: String!
+  subgenre: String!
+  timelineInDays: Int!
+  minFundingAmount: BigInt!
+  deliverableMedium: String!
+  fundingState: Int!
+  contributions(skip: Int = 0, first: Int = 100, orderBy: Contribution_orderBy, orderDirection: OrderDirection, where: Contribution_filter): [Contribution!]!
+  currentRoundFundsReceived: BigInt!
+  lifetimeFundsReceived: BigInt!
+}
+
+input CallForFunding_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  creator: String
+  creator_not: String
+  creator_gt: String
+  creator_lt: String
+  creator_gte: String
+  creator_lte: String
+  creator_in: [String!]
+  creator_not_in: [String!]
+  creator_contains: String
+  creator_not_contains: String
+  creator_starts_with: String
+  creator_not_starts_with: String
+  creator_ends_with: String
+  creator_not_ends_with: String
+  title: String
+  title_not: String
+  title_gt: String
+  title_lt: String
+  title_gte: String
+  title_lte: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_gt: String
+  description_lt: String
+  description_gte: String
+  description_lte: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  image: String
+  image_not: String
+  image_gt: String
+  image_lt: String
+  image_gte: String
+  image_lte: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  category: String
+  category_not: String
+  category_gt: String
+  category_lt: String
+  category_gte: String
+  category_lte: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  genre: String
+  genre_not: String
+  genre_gt: String
+  genre_lt: String
+  genre_gte: String
+  genre_lte: String
+  genre_in: [String!]
+  genre_not_in: [String!]
+  genre_contains: String
+  genre_not_contains: String
+  genre_starts_with: String
+  genre_not_starts_with: String
+  genre_ends_with: String
+  genre_not_ends_with: String
+  subgenre: String
+  subgenre_not: String
+  subgenre_gt: String
+  subgenre_lt: String
+  subgenre_gte: String
+  subgenre_lte: String
+  subgenre_in: [String!]
+  subgenre_not_in: [String!]
+  subgenre_contains: String
+  subgenre_not_contains: String
+  subgenre_starts_with: String
+  subgenre_not_starts_with: String
+  subgenre_ends_with: String
+  subgenre_not_ends_with: String
+  timelineInDays: Int
+  timelineInDays_not: Int
+  timelineInDays_gt: Int
+  timelineInDays_lt: Int
+  timelineInDays_gte: Int
+  timelineInDays_lte: Int
+  timelineInDays_in: [Int!]
+  timelineInDays_not_in: [Int!]
+  minFundingAmount: BigInt
+  minFundingAmount_not: BigInt
+  minFundingAmount_gt: BigInt
+  minFundingAmount_lt: BigInt
+  minFundingAmount_gte: BigInt
+  minFundingAmount_lte: BigInt
+  minFundingAmount_in: [BigInt!]
+  minFundingAmount_not_in: [BigInt!]
+  deliverableMedium: String
+  deliverableMedium_not: String
+  deliverableMedium_gt: String
+  deliverableMedium_lt: String
+  deliverableMedium_gte: String
+  deliverableMedium_lte: String
+  deliverableMedium_in: [String!]
+  deliverableMedium_not_in: [String!]
+  deliverableMedium_contains: String
+  deliverableMedium_not_contains: String
+  deliverableMedium_starts_with: String
+  deliverableMedium_not_starts_with: String
+  deliverableMedium_ends_with: String
+  deliverableMedium_not_ends_with: String
+  fundingState: Int
+  fundingState_not: Int
+  fundingState_gt: Int
+  fundingState_lt: Int
+  fundingState_gte: Int
+  fundingState_lte: Int
+  fundingState_in: [Int!]
+  fundingState_not_in: [Int!]
+  currentRoundFundsReceived: BigInt
+  currentRoundFundsReceived_not: BigInt
+  currentRoundFundsReceived_gt: BigInt
+  currentRoundFundsReceived_lt: BigInt
+  currentRoundFundsReceived_gte: BigInt
+  currentRoundFundsReceived_lte: BigInt
+  currentRoundFundsReceived_in: [BigInt!]
+  currentRoundFundsReceived_not_in: [BigInt!]
+  lifetimeFundsReceived: BigInt
+  lifetimeFundsReceived_not: BigInt
+  lifetimeFundsReceived_gt: BigInt
+  lifetimeFundsReceived_lt: BigInt
+  lifetimeFundsReceived_gte: BigInt
+  lifetimeFundsReceived_lte: BigInt
+  lifetimeFundsReceived_in: [BigInt!]
+  lifetimeFundsReceived_not_in: [BigInt!]
+}
+
+enum CallForFunding_orderBy {
+  id
+  creator
+  title
+  description
+  image
+  category
+  genre
+  subgenre
+  timelineInDays
+  minFundingAmount
+  deliverableMedium
+  fundingState
+  contributions
+  currentRoundFundsReceived
+  lifetimeFundsReceived
+}
+
+type Contribution {
+  id: ID!
+  callForFunds: CallForFunding!
+  user: User!
+  amount: BigInt!
+}
+
+input Contribution_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  callForFunds: String
+  callForFunds_not: String
+  callForFunds_gt: String
+  callForFunds_lt: String
+  callForFunds_gte: String
+  callForFunds_lte: String
+  callForFunds_in: [String!]
+  callForFunds_not_in: [String!]
+  callForFunds_contains: String
+  callForFunds_not_contains: String
+  callForFunds_starts_with: String
+  callForFunds_not_starts_with: String
+  callForFunds_ends_with: String
+  callForFunds_not_ends_with: String
+  user: String
+  user_not: String
+  user_gt: String
+  user_lt: String
+  user_gte: String
+  user_lte: String
+  user_in: [String!]
+  user_not_in: [String!]
+  user_contains: String
+  user_not_contains: String
+  user_starts_with: String
+  user_not_starts_with: String
+  user_ends_with: String
+  user_not_ends_with: String
+  amount: BigInt
+  amount_not: BigInt
+  amount_gt: BigInt
+  amount_lt: BigInt
+  amount_gte: BigInt
+  amount_lte: BigInt
+  amount_in: [BigInt!]
+  amount_not_in: [BigInt!]
+}
+
+enum Contribution_orderBy {
+  id
+  callForFunds
+  user
+  amount
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+type Query {
+  callForFunding(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CallForFunding
+  callForFundings(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CallForFunding_orderBy
+    orderDirection: OrderDirection
+    where: CallForFunding_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CallForFunding!]!
+  user(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): User
+  users(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: User_orderBy
+    orderDirection: OrderDirection
+    where: User_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [User!]!
+  contribution(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Contribution
+  contributions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Contribution_orderBy
+    orderDirection: OrderDirection
+    where: Contribution_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Contribution!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+type Subscription {
+  callForFunding(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): CallForFunding
+  callForFundings(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CallForFunding_orderBy
+    orderDirection: OrderDirection
+    where: CallForFunding_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [CallForFunding!]!
+  user(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): User
+  users(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: User_orderBy
+    orderDirection: OrderDirection
+    where: User_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [User!]!
+  contribution(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Contribution
+  contributions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Contribution_orderBy
+    orderDirection: OrderDirection
+    where: Contribution_filter
+
+    """
+    The block at which the query should be executed. Can either be a `{ hash:
+    Bytes }` value containing a block hash, a `{ number: Int }` containing the
+    block number, or a `{ number_gte: Int }` containing the minimum block
+    number. In the case of `number_gte`, the query will be executed on the
+    latest block only if the subgraph has progressed to or past the minimum
+    block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [Contribution!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+type User {
+  id: ID!
+  callsForFunds(skip: Int = 0, first: Int = 100, orderBy: CallForFunding_orderBy, orderDirection: OrderDirection, where: CallForFunding_filter): [CallForFunding!]!
+  contributions(skip: Int = 0, first: Int = 100, orderBy: Contribution_orderBy, orderDirection: OrderDirection, where: Contribution_filter): [Contribution!]!
+}
+
+input User_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+}
+
+enum User_orderBy {
+  id
+  callsForFunds
+  contributions
+}
+

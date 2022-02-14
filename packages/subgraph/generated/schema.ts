@@ -11,30 +11,41 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Grant extends Entity {
+export class CallForFunding extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("creator", Value.fromString(""));
     this.set("title", Value.fromString(""));
+    this.set("description", Value.fromString(""));
+    this.set("image", Value.fromString(""));
+    this.set("category", Value.fromString(""));
+    this.set("genre", Value.fromString(""));
+    this.set("subgenre", Value.fromString(""));
+    this.set("timelineInDays", Value.fromI32(0));
+    this.set("minFundingAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("deliverableMedium", Value.fromString(""));
+    this.set("fundingState", Value.fromI32(0));
+    this.set("currentRoundFundsReceived", Value.fromBigInt(BigInt.zero()));
+    this.set("lifetimeFundsReceived", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Grant entity without an ID");
+    assert(id != null, "Cannot save CallForFunding entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Grant entity with non-string ID. " +
+        "Cannot save CallForFunding entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Grant", id.toString(), this);
+      store.set("CallForFunding", id.toString(), this);
     }
   }
 
-  static load(id: string): Grant | null {
-    return changetype<Grant | null>(store.get("Grant", id));
+  static load(id: string): CallForFunding | null {
+    return changetype<CallForFunding | null>(store.get("CallForFunding", id));
   }
 
   get id(): string {
@@ -62,6 +73,114 @@ export class Grant extends Entity {
 
   set title(value: string) {
     this.set("title", Value.fromString(value));
+  }
+
+  get description(): string {
+    let value = this.get("description");
+    return value!.toString();
+  }
+
+  set description(value: string) {
+    this.set("description", Value.fromString(value));
+  }
+
+  get image(): string {
+    let value = this.get("image");
+    return value!.toString();
+  }
+
+  set image(value: string) {
+    this.set("image", Value.fromString(value));
+  }
+
+  get category(): string {
+    let value = this.get("category");
+    return value!.toString();
+  }
+
+  set category(value: string) {
+    this.set("category", Value.fromString(value));
+  }
+
+  get genre(): string {
+    let value = this.get("genre");
+    return value!.toString();
+  }
+
+  set genre(value: string) {
+    this.set("genre", Value.fromString(value));
+  }
+
+  get subgenre(): string {
+    let value = this.get("subgenre");
+    return value!.toString();
+  }
+
+  set subgenre(value: string) {
+    this.set("subgenre", Value.fromString(value));
+  }
+
+  get timelineInDays(): i32 {
+    let value = this.get("timelineInDays");
+    return value!.toI32();
+  }
+
+  set timelineInDays(value: i32) {
+    this.set("timelineInDays", Value.fromI32(value));
+  }
+
+  get minFundingAmount(): BigInt {
+    let value = this.get("minFundingAmount");
+    return value!.toBigInt();
+  }
+
+  set minFundingAmount(value: BigInt) {
+    this.set("minFundingAmount", Value.fromBigInt(value));
+  }
+
+  get deliverableMedium(): string {
+    let value = this.get("deliverableMedium");
+    return value!.toString();
+  }
+
+  set deliverableMedium(value: string) {
+    this.set("deliverableMedium", Value.fromString(value));
+  }
+
+  get fundingState(): i32 {
+    let value = this.get("fundingState");
+    return value!.toI32();
+  }
+
+  set fundingState(value: i32) {
+    this.set("fundingState", Value.fromI32(value));
+  }
+
+  get contributions(): Array<string> {
+    let value = this.get("contributions");
+    return value!.toStringArray();
+  }
+
+  set contributions(value: Array<string>) {
+    this.set("contributions", Value.fromStringArray(value));
+  }
+
+  get currentRoundFundsReceived(): BigInt {
+    let value = this.get("currentRoundFundsReceived");
+    return value!.toBigInt();
+  }
+
+  set currentRoundFundsReceived(value: BigInt) {
+    this.set("currentRoundFundsReceived", Value.fromBigInt(value));
+  }
+
+  get lifetimeFundsReceived(): BigInt {
+    let value = this.get("lifetimeFundsReceived");
+    return value!.toBigInt();
+  }
+
+  set lifetimeFundsReceived(value: BigInt) {
+    this.set("lifetimeFundsReceived", Value.fromBigInt(value));
   }
 }
 
@@ -97,12 +216,85 @@ export class User extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get grants(): Array<string> {
-    let value = this.get("grants");
+  get callsForFunds(): Array<string> {
+    let value = this.get("callsForFunds");
     return value!.toStringArray();
   }
 
-  set grants(value: Array<string>) {
-    this.set("grants", Value.fromStringArray(value));
+  set callsForFunds(value: Array<string>) {
+    this.set("callsForFunds", Value.fromStringArray(value));
+  }
+
+  get contributions(): Array<string> {
+    let value = this.get("contributions");
+    return value!.toStringArray();
+  }
+
+  set contributions(value: Array<string>) {
+    this.set("contributions", Value.fromStringArray(value));
+  }
+}
+
+export class Contribution extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("callForFunds", Value.fromString(""));
+    this.set("user", Value.fromString(""));
+    this.set("amount", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Contribution entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Contribution entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Contribution", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Contribution | null {
+    return changetype<Contribution | null>(store.get("Contribution", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get callForFunds(): string {
+    let value = this.get("callForFunds");
+    return value!.toString();
+  }
+
+  set callForFunds(value: string) {
+    this.set("callForFunds", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    return value!.toString();
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 }

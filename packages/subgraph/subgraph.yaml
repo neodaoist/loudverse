@@ -5,42 +5,43 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: GrantFactory
+    name: CallForFundsFactory
     network: mumbai
     source:
-      address: "0x4ED96cE6D4A6Df899f72674F0Ae8A22afC9F3212"
-      abi: GrantFactory
+      address: "0x33cF7a6e8848202Cd7C0C8fE31C19111E9115F8a"
+      abi: CallForFundsFactory
+      startBlock: 24900000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/grantFactoryMapping.ts
+      file: ./src/factoryMapping.ts
       entities:
-        - GrantFactory
+        - CallForFundsFactory
       abis:
-        - name: GrantFactory
-          file: ./abis/GrantFactory.json
+        - name: CallForFundsFactory
+          file: ./abis/CallForFundsFactory.json
       eventHandlers:
-        - event: GrantCreated(indexed address,indexed address,string,string,string,string,uint8,uint256,string)
-          handler: handleNewGrant
+        - event: CallForFundsCreated(indexed address,indexed address,string,string,indexed string,string,string,string,uint8,uint256,string)
+          handler: handleNewCallForFunds
 templates:
   - kind: ethereum/contract
-    name: GrantLogic
+    name: CallForFundsLogic
     network: mumbai
     source:
-      abi: GrantLogic
+      abi: CallForFundsLogic
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/grantLogicMapping.ts
+      file: ./src/logicMapping.ts
       entities:
-        - Grant
+        - CallForFunds
       abis:
-        - name: GrantLogic
-          file: ./abis/GrantLogic.json
-        - name: GrantProxy
-          file: ./abis/GrantProxy.json
+        - name: CallForFundsLogic
+          file: ./abis/CallForFundsLogic.json
+        - name: CallForFundsProxy
+          file: ./abis/CallForFundsProxy.json
       eventHandlers:
         - event: ContributionReceivedETH(indexed address,indexed uint256)
           handler: handleETHContribution
