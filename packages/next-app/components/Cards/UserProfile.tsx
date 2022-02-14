@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Tag, Text } from "degen";
+import { Box, Text } from "degen";
 
 const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
   return (
@@ -26,7 +26,7 @@ const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
         <Text variant="label">Biggest Inspo</Text>
         <Text variant="large">{userDetails.inspiration}</Text>
       </Box>
-      <Box marginBottom="8">
+      <Box>
         <Text variant="label">Favorite quote that describes me</Text>
         <Text variant="large">"{userDetails.quote}"</Text>
       </Box>
