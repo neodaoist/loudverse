@@ -16,7 +16,7 @@ export class Quadratic {
      */
     public getMatchForContract(contractId: bigint) : bigint {
         if( ! this.matchAmounts.has(contractId)) {
-            this.matchAmounts = this.computeMatchForContract(contractId);
+            this.matchAmounts.set(contractId,this.computeMatchForContract(contractId));
         }
         return this.matchAmounts.get(contractId);
     };
@@ -26,9 +26,8 @@ export class Quadratic {
      * @param contractId
      * @private
      */
-    private computeMatchForContract(contractId: bigint) {
-        const communityFunding = this.getCommunityFundForContract(contractId);
-        return undefined;
+    private computeMatchForContract(contractId: bigint) : bigint {
+        return Quadratic.computeMatch(this.getCommunityFundForContract(contractId));
     }
 
     /**
@@ -36,10 +35,10 @@ export class Quadratic {
      * @param contractId
      * @private
      */
-    private getCommunityFundForContract(contractId: bigint) : bigint {
+    private getCommunityFundForContract(contractId: bigint) : Array<bigint> {
         // FIXME: Call The Graph function here
         const fundingAmounts: Array<bigint> = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
-        return Quadratic.computeMatch(fundingAmounts);
+        return fundingAmounts;
     }
 
     /**
@@ -62,7 +61,7 @@ export class Quadratic {
     };
 
     private normalizeFunding() {
-
+        
     };
 
     private applyFunding() {
