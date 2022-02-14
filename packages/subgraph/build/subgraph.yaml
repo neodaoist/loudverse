@@ -5,43 +5,44 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: GrantFactory
+    name: CallForFundsFactory
     network: mumbai
     source:
-      address: "0x4ED96cE6D4A6Df899f72674F0Ae8A22afC9F3212"
-      abi: GrantFactory
+      address: "0x33cF7a6e8848202Cd7C0C8fE31C19111E9115F8a"
+      abi: CallForFundsFactory
+      startBlock: 24900000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: GrantFactory/GrantFactory.wasm
+      file: CallForFundsFactory/CallForFundsFactory.wasm
       entities:
-        - GrantFactory
+        - CallForFundsFactory
       abis:
-        - name: GrantFactory
-          file: GrantFactory/abis/GrantFactory.json
+        - name: CallForFundsFactory
+          file: CallForFundsFactory/abis/CallForFundsFactory.json
       eventHandlers:
-        - event: GrantCreated(indexed address,indexed
-            address,string,string,string,string,uint8,uint256,string)
-          handler: handleNewGrant
+        - event: CallForFundsCreated(indexed address,indexed address,string,string,indexed
+            string,string,string,string,uint8,uint256,string)
+          handler: handleNewCallForFunds
 templates:
   - kind: ethereum/contract
-    name: GrantLogic
+    name: CallForFundsLogic
     network: mumbai
     source:
-      abi: GrantLogic
+      abi: CallForFundsLogic
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: templates/GrantLogic/GrantLogic.wasm
+      file: templates/CallForFundsLogic/CallForFundsLogic.wasm
       entities:
-        - Grant
+        - CallForFunds
       abis:
-        - name: GrantLogic
-          file: GrantLogic/abis/GrantLogic.json
-        - name: GrantProxy
-          file: GrantLogic/abis/GrantProxy.json
+        - name: CallForFundsLogic
+          file: CallForFundsLogic/abis/CallForFundsLogic.json
+        - name: CallForFundsProxy
+          file: CallForFundsLogic/abis/CallForFundsProxy.json
       eventHandlers:
         - event: ContributionReceivedETH(indexed address,indexed uint256)
           handler: handleETHContribution
