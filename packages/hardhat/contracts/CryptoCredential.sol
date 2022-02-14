@@ -9,9 +9,6 @@ import "./ERC1238/extensions/ERC1238URIStorage.sol";
 // https://vitalik.ca/general/2022/01/26/soulbound.html
 
 contract CryptoCredential is ERC1238, ERC1238URIStorage {
-
-    address public issuer;
-
     enum Skill {
         Music,
         Photography,
@@ -25,38 +22,49 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
         Dance
     }
 
-    constructor(address issuer_, string memory baseURI_) ERC1238(baseURI_) {
+    address public issuer;
+
+    constructor(address issuer_) {
         issuer = issuer_;
     }
 
     modifier onlyIssuer() {
-        require(msg.sender == issuer, "Unauthorized: only contract issuer can issue new CryptoCredentials");
+        require(
+            msg.sender == issuer,
+            "Unauthorized: only contract issuer can issue new CryptoCredentials"
+        );
         _;
     }
 
     // This is the method I was thinking that we can use to issue new credentials, which builds the data and mints the NTT
     function issueCredential(
-        address creator,
+        address creator, //to
+        uint256 id,
+        uint256 amount, // can probably hardcode to 1?
         string memory creationTitle,
         Skill skill,
         string memory totalFunding,
         string memory totalFunders
-    ) external onlyIssuer {
-        // Setup data
-        // TODO
-
-        // Creator
-        // Title should be "Created '{creationTitle' with {totalFunding} ETH from {totalFunders} funders"
-        // Skill
-
-        // Mint NTT
-        mint(
-            creator,
-            skill,
-            1,
-            ???,
-            ???
+    ) internal {
+        // for now just JSON stringify
+        // eventually const tokenURI = "https://your-domain-name.com/credentials/tokens/1";
+        string memory fullURI = string(
+            abi.encodePacked(
+                "{ title: { 'Created ",
+                creationTitle,
+                " with ",
+                totalFunding,
+                " ETH from ",
+                totalFunders,
+                " funders.' } skill: { '",
+                skill,
+                "' } }"
+            )
         );
+
+        bytes memory bytes_; // null
+
+        _mintWithURI(creator, id, amount, fullURI, bytes_);
     }
 
     // The modifier above and all the below methods are from the ERC1238 "Badge" example

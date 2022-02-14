@@ -22,13 +22,6 @@ contract ERC1238 is IERC1238 {
     // e.g. https://token-cdn-domain/{id}.json
     string private baseURI;
 
-    /**
-     * @dev See {_setURI}.
-     */
-    constructor(string memory baseURI_) {
-        _setBaseURI(baseURI_);
-    }
-
     // TODO: Add support for ERC165
     // function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     //     return
@@ -56,8 +49,13 @@ contract ERC1238 is IERC1238 {
      *
      * - `account` cannot be the zero address.
      */
-    function balanceOf(address account, uint256 id) public view virtual override returns (uint256) {
-        require(account != address(0), "ERC1238: balance query for the zero address");
+    function balanceOf(address account, uint256 id)
+        public
+        view
+        virtual
+        override
+        returns (uint256)
+    {
         return _balances[id][account];
     }
 
@@ -75,7 +73,10 @@ contract ERC1238 is IERC1238 {
         override
         returns (uint256[] memory)
     {
-        require(accounts.length == ids.length, "ERC1238: accounts and ids length mismatch");
+        require(
+            accounts.length == ids.length,
+            "ERC1238: accounts and ids length mismatch"
+        );
 
         uint256[] memory batchBalances = new uint256[](accounts.length);
 
@@ -154,7 +155,10 @@ contract ERC1238 is IERC1238 {
         bytes memory data
     ) internal virtual {
         require(to != address(0), "ERC1238: mint to the zero address");
-        require(ids.length == amounts.length, "ERC1238: ids and amounts length mismatch");
+        require(
+            ids.length == amounts.length,
+            "ERC1238: ids and amounts length mismatch"
+        );
 
         address minter = msg.sender;
 
@@ -210,7 +214,10 @@ contract ERC1238 is IERC1238 {
         uint256[] memory amounts
     ) internal virtual {
         require(from != address(0), "ERC1238: burn from the zero address");
-        require(ids.length == amounts.length, "ERC1238: ids and amounts length mismatch");
+        require(
+            ids.length == amounts.length,
+            "ERC1238: ids and amounts length mismatch"
+        );
 
         address burner = msg.sender;
 
@@ -221,7 +228,10 @@ contract ERC1238 is IERC1238 {
             _beforeBurn(burner, from, id, amount);
 
             uint256 fromBalance = _balances[id][from];
-            require(fromBalance >= amount, "ERC1238: burn amount exceeds balance");
+            require(
+                fromBalance >= amount,
+                "ERC1238: burn amount exceeds balance"
+            );
             unchecked {
                 _balances[id][from] = fromBalance - amount;
             }
@@ -253,7 +263,9 @@ contract ERC1238 is IERC1238 {
         bytes memory data
     ) private {
         if (to.isContract()) {
-            try IERC1238Receiver(to).onERC1238Mint(minter, id, amount, data) returns (bytes4 response) {
+            try
+                IERC1238Receiver(to).onERC1238Mint(minter, id, amount, data)
+            returns (bytes4 response) {
                 if (response != IERC1238Receiver.onERC1238Mint.selector) {
                     revert("ERC1238: ERC1238Receiver rejected tokens");
                 }
@@ -273,7 +285,14 @@ contract ERC1238 is IERC1238 {
         bytes memory data
     ) internal {
         if (to.isContract()) {
-            try IERC1238Receiver(to).onERC1238BatchMint(minter, ids, amounts, data) returns (bytes4 response) {
+            try
+                IERC1238Receiver(to).onERC1238BatchMint(
+                    minter,
+                    ids,
+                    amounts,
+                    data
+                )
+            returns (bytes4 response) {
                 if (response != IERC1238Receiver.onERC1238BatchMint.selector) {
                     revert("ERC1238: ERC1238Receiver rejected tokens");
                 }
@@ -286,7 +305,11 @@ contract ERC1238 is IERC1238 {
     }
 
     // Could have that in a library instead of redeploying it every time?
-    function _asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
+    function _asSingletonArray(uint256 element)
+        private
+        pure
+        returns (uint256[] memory)
+    {
         uint256[] memory array = new uint256[](1);
         array[0] = element;
 
