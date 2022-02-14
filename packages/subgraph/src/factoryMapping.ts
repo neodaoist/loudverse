@@ -13,7 +13,7 @@ export function handleNewCallForFunds(event: CallForFundsCreated): void {
     newCallForFunds.creator = creator.id;
     newCallForFunds.title = event.params.title;
     newCallForFunds.description = event.params.description;
-    // newCallForFunds.image = event.params.image.toString();
+    newCallForFunds.image = event.params.image.toString();
     newCallForFunds.category = event.params.category;
     newCallForFunds.genre = event.params.genre;
     newCallForFunds.subgenre = event.params.subgenre;
