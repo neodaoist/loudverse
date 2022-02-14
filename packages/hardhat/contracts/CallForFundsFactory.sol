@@ -20,50 +20,50 @@ contract CallForFundsFactory {
         string deliverableMedium
     );
 
-    constructor(address _logicAddress) {
-        logicAddress = _logicAddress;
+    constructor(address logicAddress_) {
+        logicAddress = logicAddress_;
     }
 
     function createCallForFunds(
-        string memory _title,
-        string memory _description,
-        string memory _image,
-        string memory _category,
-        string memory _genre,
-        string memory _subgenre,
-        uint8 _timelineInDays,
-        uint256 _minFundingAmount,
-        string memory _deliverableMedium
+        string memory title_,
+        string memory description_,
+        string memory image_,
+        string memory category_,
+        string memory genre_,
+        string memory subgenre_,
+        uint8 timelineInDays_,
+        uint256 minFundingAmount_,
+        string memory deliverableMedium_
     ) external returns (address proxy) {
         proxy = address(
             new CallForFundsProxy{
-                salt: keccak256(abi.encode(msg.sender, _title))
+                salt: keccak256(abi.encode(msg.sender, title_))
             }(
                 msg.sender,
-                _title,
-                _description,
-                _image,
-                _category,
-                _genre,
-                _subgenre,
-                _deliverableMedium,
-                _timelineInDays,
-                _minFundingAmount
+                title_,
+                description_,
+                image_,
+                category_,
+                genre_,
+                subgenre_,
+                deliverableMedium_,
+                timelineInDays_,
+                minFundingAmount_
             )
         );
 
         emit CallForFundsCreated(
             proxy,
             msg.sender,
-            _title,
-            _description,
-            _image,
-            _category,
-            _genre,
-            _subgenre,
-            _timelineInDays,
-            _minFundingAmount,
-            _deliverableMedium
+            title_,
+            description_,
+            image_,
+            category_,
+            genre_,
+            subgenre_,
+            timelineInDays_,
+            minFundingAmount_,
+            deliverableMedium_
         );
     }
 }

@@ -9,29 +9,29 @@ interface ICallForFundsFactory {
 
 contract CallForFundsProxy is CallForFundsStorage {
     constructor(
-        address _creator,
-        string memory _title,
-        string memory _description,
-        string memory _image,
-        string memory _category,
-        string memory _genre,
-        string memory _subgenre,
-        string memory _deliverableMedium,
-        uint8 _timelineInDays,
-        uint256 _minFundingAmount
+        address creator_,
+        string memory title_,
+        string memory description_,
+        string memory image_,
+        string memory category_,
+        string memory genre_,
+        string memory subgenre_,
+        string memory deliverableMedium_,
+        uint8 timelineInDays_,
+        uint256 minFundingAmount_
     ) {
         logicAddress = ICallForFundsFactory(msg.sender).logicAddress();
 
-        creator = _creator;
-        title = _title;
-        description = _description;
-        image = _image;
-        category = _category;
-        genre = _genre;
-        subgenre = _subgenre;
-        deliverableMedium = _deliverableMedium;
-        timelineInDays = _timelineInDays;
-        minFundingAmount = _minFundingAmount;
+        creator = creator_;
+        title = title_;
+        description = description_;
+        image = image_;
+        category = category_;
+        genre = genre_;
+        subgenre = subgenre_;
+        deliverableMedium = deliverableMedium_;
+        timelineInDays = timelineInDays_;
+        minFundingAmount = minFundingAmount_;
 
         fundingState = FundingState.OPEN;
     }
