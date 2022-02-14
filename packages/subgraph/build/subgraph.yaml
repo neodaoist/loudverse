@@ -15,12 +15,12 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: CallForFundsFactory/CallForFundsFactory.wasm
+      file: CallForFundsFactory\CallForFundsFactory.wasm
       entities:
         - CallForFundsFactory
       abis:
         - name: CallForFundsFactory
-          file: CallForFundsFactory/abis/CallForFundsFactory.json
+          file: CallForFundsFactory\abis\CallForFundsFactory.json
       eventHandlers:
         - event: CallForFundsCreated(indexed address,indexed address,string,string,indexed
             string,string,string,string,uint8,uint256,string)
@@ -35,14 +35,14 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: templates/CallForFundsLogic/CallForFundsLogic.wasm
+      file: templates\CallForFundsLogic\CallForFundsLogic.wasm
       entities:
         - CallForFunds
       abis:
         - name: CallForFundsLogic
-          file: CallForFundsLogic/abis/CallForFundsLogic.json
+          file: CallForFundsLogic\abis\CallForFundsLogic.json
         - name: CallForFundsProxy
-          file: CallForFundsLogic/abis/CallForFundsProxy.json
+          file: CallForFundsLogic\abis\CallForFundsProxy.json
       eventHandlers:
         - event: ContributionReceivedETH(indexed address,indexed uint256)
           handler: handleETHContribution
