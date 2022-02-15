@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Text } from "degen";
+import { CallForFunding } from "../../graph/loudverse-graph-types";
 
-const CallDetails = ({ callForFunding }: { callForFunding: CallForFundsGraphType }) => {
+const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4">
+    <Box display="flex" flexDirection="column" width="1/2" backgroundColor="foregroundSecondary" padding="4">
       <Text size="extraLarge">{callForFunding.title}</Text>
       <Text>{callForFunding.description}</Text>
       <Box>[Image]</Box>
@@ -21,11 +22,11 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFundsGraphType
       </Box>
       <Box>
         <Text variant="label">Deliverable</Text>
-        <Text variant="large">{callForFunding.deliverableFormat}</Text>
+        <Text variant="large">{callForFunding.deliverableMedium}</Text>
       </Box>
       <Box>
         <Text variant="label">Timeline</Text>
-        <Text variant="large">{callForFunding.timeline}</Text>
+        <Text variant="large">{callForFunding.timelineInDays}</Text>
       </Box>
     </Box>
   );
