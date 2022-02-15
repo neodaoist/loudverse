@@ -24,20 +24,25 @@ const Home: NextPage = () => {
       <Box marginBottom="8">
         <Text size="extraLarge">
           <p>
-            <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding hard-to-quantify public goods like art,
-            music, and culture
+            <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding
+            <br />
+            hard-to-quantify public goods like art, music, and culture
           </p>
         </Text>
         <Text size="extraLarge">
           <p>
-            Key building blocks include streaming money, quadratic funding, and a new web3 primtive — the
-            <strong> crowd-commission</strong>
+            Key building blocks include streaming money, quadratic funding,
+            <br />
+            and a new web3 primtive — the <strong>crowd-commission</strong>
           </p>
         </Text>
         <Text size="extraLarge">
           <p>
-            Crowd-commissions blur lines between fan/creator, analog/digital, empowering artists to co-create and ship
-            <strong> creative work</strong> with the Ethereum blockchain in ways never before possible
+            Crowd-commissions blur lines between fan/creator, analog/digital,
+            <br />
+            empowering artists to co-create and ship <strong>creative work</strong> with the
+            <br />
+            Ethereum blockchain in ways never before possible
           </p>
         </Text>
       </Box>
