@@ -73,6 +73,7 @@ const Home: NextPage = () => {
           <Heading level="2">Credentialing</Heading>
         </Box>
       </Box>
+      <Box>[------------------ bar with CTA -------------------------------]</Box>
       {divider}
       {/* Mixed content rows */}
       <Box marginBottom="16">
