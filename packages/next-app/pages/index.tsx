@@ -31,8 +31,8 @@ const Home: NextPage = () => {
             </Link>
           </p>
           <p>
-            <Link href="/calls/42">
-              <a>call 42</a>
+            <Link href="/calls/2">
+              <a>call 2</a>
             </Link>
           </p>
           <p>
