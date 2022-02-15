@@ -1,13 +1,16 @@
 //import FundingCall from "../../components/Cards/FundingCall";
 
+import {getAllCallsForFunds} from "../graph/functions";
+import {CallForFunding} from "../graph/loudverse-graph-types";
+
+
 class Quadratic {
-    matchAmounts: Map<bigint, bigint>;  // contract address, amount
+    matchAmounts: Map<String, bigint>;  // contract address, amount
     poolAddress: bigint;
 
     constructor(fundingRound: bigint) {
-        this.matchAmounts = new Map<bigint, bigint>();
+        this.matchAmounts = new Map<String, bigint>();
         this.poolAddress = fundingRound;
-        console.log("IN the constructor.  Yay!");
     };
 
     /** Entry point for ending a funding round -- typically called from Github action
@@ -23,11 +26,11 @@ class Quadratic {
      * Returns the match amount, in wei, for one contract.  Computes the match as needed as a side-effect
      * @param contractId
      */
-    public getMatchForContract(contractId: bigint) : bigint {
-        if( ! this.matchAmounts.has(contractId)) {
-            this.matchAmounts.set(contractId,this.computeMatchForContract(contractId));
+    public getMatchForContract(contract: CallForFunding) : bigint {
+        if( ! this.matchAmounts.has(contract.id)) {
+            this.matchAmounts.set(contract.id,this.computeMatchForContract(contract));
         }
-        return this.matchAmounts.get(contractId);
+        return this.matchAmounts.get(contract.id);
     };
 
     /**
@@ -35,8 +38,8 @@ class Quadratic {
      * @param contractId
      * @private
      */
-    private computeMatchForContract(contractId: bigint) : bigint {
-        return Quadratic.computeMatch(this.getCommunityFundForContract(contractId));
+    private computeMatchForContract(contract: CallForFunding) : bigint {
+        return Quadratic.computeMatch(this.getCommunityFundForContract(contract));
     }
 
     /**
@@ -44,9 +47,13 @@ class Quadratic {
      * @param contractId
      * @private
      */
-    private getCommunityFundForContract(contractId: bigint) : Array<bigint> {
-        // FIXME: Call The Graph function here, hardcoded for now
-        const fundingAmounts: Array<bigint> = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
+    private getCommunityFundForContract(contract: CallForFunding) : Array<bigint> {
+
+        // TEST const fundingAmounts: Array<bigint> = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
+        const fundingAmounts = new Array<bigint>();
+        for(let contribution of contract.contributions) {
+            fundingAmounts.push(contribution.amount);
+        }
         return fundingAmounts;
     }
 
@@ -66,7 +73,13 @@ class Quadratic {
     }
 
     private computeMatchForRound() {
-
+        // Get contracts
+        const allCallsForRound = getAllCallsForFunds();
+        allCallsForRound.then(contracts => {
+            for (let contract of contracts) {
+                this.computeMatchForContract(contract);
+            }
+        })
     };
 
     private normalizeFunding(matchPoolAddress: bigint) {
