@@ -11,7 +11,7 @@ contract CallForFundsStorage {
     }
 
     // change later to multisig?
-    address public immutable loudverseAdmin =
+    address public constant loudverseAdmin =
         0xA4E987fb3808d9FC206112967477793Ea8389450;
 
     address internal logicAddress;
