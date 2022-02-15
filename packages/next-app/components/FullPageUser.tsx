@@ -41,7 +41,6 @@ const FullPageUser = () => {
 
   return (
     <Box>
-      <Box>First row (connect button, anything else)</Box>
       <Stack direction="horizontal">
         <UserProfile userDetails={user} />
         <Stack>

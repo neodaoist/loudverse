@@ -38,7 +38,6 @@ const FullPageCallDetails = () => {
 
   return (
     <Box>
-      <Box>First row (connect button, anything else)</Box>
       <Stack direction="horizontal">
         <CallDetails callForFunding={call} />
         <Stack>

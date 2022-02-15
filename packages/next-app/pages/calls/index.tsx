@@ -79,7 +79,6 @@ const Calls: NextPage = () => {
         </Head>
 
         <Box>
-          <h1>Connect and bar up in this area</h1>
           <Box marginBottom="8">
             <Text size="headingTwo">Open calls for funds</Text>
           </Box>
