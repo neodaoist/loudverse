@@ -5,7 +5,7 @@ const PageWrapper = ({ children }) => {
   return (
     <Box width="viewWidth" height="viewHeight" display="flex" flexDirection="column">
       <Navbar />
-      {children}
+      <Box marginX="16">{children}</Box>
     </Box>
   );
 };
