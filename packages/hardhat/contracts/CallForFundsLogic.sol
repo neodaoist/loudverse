@@ -4,30 +4,122 @@ pragma solidity ^0.8.2;
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 
 contract CallForFundsLogic is CallForFundsStorage {
-    //vars
-
-    //events
+    //======== EVENTS =========
+    event FundingStateChanged(
+        FundingState indexed newFundingState
+    );
 
     event ContributionReceivedETH(
         address indexed donator,
         uint256 indexed amount
     );
 
-    //ClaimFunds
-    //DeleteCallForFunds
-    //ChangeMinimum
+    event CallMatched(
+        uint256 indexed amountMatched
+        // , address indexed crowdNFTAddress
+    );
+
+    event StreamStarted(
+        // ???
+    );
+
+    event WorkDelivered(
+        string indexed deliverableURI
+        // , address indexed nftAddress 
+    );
+
+    event RefundCompleted(
+        address[] indexed addresses,
+        uint256[] indexed amounts
+    );
+
+    //======== MODIFIERS =========
+    modifier onlyCreator() {
+        require(msg.sender == creator);
+        _;
+    }
+
+    modifier onlyLoudverse() {
+        require(msg.sender == loudverseAdmin);
+        _;
+    }
+
+    modifier requireState(FundingState fundingState_) {
+        require(fundingState == fundingState_);
+        _;
+    }
+    
 
     // Plain ETH transfers.
     receive() external payable {
-        emit ContributionReceivedETH(msg.sender, msg.value);
+        // is this a safe req to make?
+        if (fundingState != FundingState.OPEN) {
+            emit ContributionReceivedETH(msg.sender, msg.value);
+        }
     }
 
-    // function contributeERC20() onlyOpen // dai???
+    //======== CREATOR METHODS =========
+    function startStream() external onlyCreator requireState(FundingState.MATCHED) {
+        //TODO #1
+        // Superfluid
+        setFundingState(FundingState.STREAMING);
+    }
 
-    // function claimFunds()
-    // function StartSuperFluidStream() onlyCreator onlyMatched
+    function deliver(string memory deliverableURI_)
+        external
+        onlyCreator
+        requireState(FundingState.STREAMING)
+    {
+        deliverableURI = deliverableURI_;
+        setFundingState(FundingState.DELIVERED);
+        emit WorkDelivered(deliverableURI);
 
-    // modifier onlyCreator() require msg.sender===creator
-    // modifier onlyOpen() require fundingState===FundingState.OPEN
-    // modifier onlyMatched() require fundingState===FundingState.MATCHED
+        //TODO #3 depending on time
+        // smart-art
+    }
+
+    //======== PLATFORM METHODS =========
+    function matchCallForFunds(uint256) external onlyLoudverse requireState(FundingState.OPEN) payable {
+        // method is payable, msg.value should be the match
+        setFundingState(FundingState.MATCHED);
+        emit CallMatched(msg.value);
+        //TODO #2
+        // mint crowd-commissioned NFT 
+    }
+
+
+    function refund(address[] memory addresses, uint256[] memory amounts)
+        external
+        onlyLoudverse
+        requireState(FundingState.FAILED)
+    {
+        // insecure
+        //TODO #4
+        // might have to track internally
+        // for now assumes Loudverse will supply correct amounts for refund
+        for (uint256 i = 1; i < addresses.length; i++) {
+            bool success = _attemptETHTransfer(addresses[i], amounts[i]);
+            require(success);
+        }
+
+        emit RefundCompleted(addresses, amounts);
+    }
+
+    //======== PRIVATE =========
+    function setFundingState(FundingState fundingState_) private {
+        fundingState = fundingState_;
+        emit FundingStateChanged(fundingState_);
+    }
+
+    function _attemptETHTransfer(address to, uint256 value)
+        private
+        returns (bool)
+    {
+        // Here increase the gas limit a reasonable amount above the default, and try
+        // to send ETH to the recipient.
+        // NOTE: This might allow the recipient to attempt  a limited reentrancy attack.
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, ) = to.call{value: value, gas: 30000}("");
+        return success;
+    }
 }

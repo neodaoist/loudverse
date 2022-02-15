@@ -11,52 +11,59 @@ contract CallForFundsFactory {
         address indexed creator,
         string title,
         string description,
+        string indexed image,
         string category,
         string genre,
-        uint8 timeline,
+        string subgenre,
+        uint8 timelineInDays,
         uint256 minFundingAmount,
-        string deliverableFormat
+        string deliverableMedium
     );
 
-    constructor(address _logicAddress) {
-        logicAddress = _logicAddress;
+    constructor(address logicAddress_) {
+        logicAddress = logicAddress_;
     }
 
     function createCallForFunds(
-        address _creator,
-        string memory _title,
-        string memory _description,
-        string memory _category,
-        string memory _genre,
-        uint8 _timeline,
-        uint256 _minFundingAmount,
-        string memory _deliverableFormat
+        string memory title_,
+        string memory description_,
+        string memory image_,
+        string memory category_,
+        string memory genre_,
+        string memory subgenre_,
+        uint8 timelineInDays_,
+        uint256 minFundingAmount_,
+        string memory deliverableMedium_
     ) external returns (address proxy) {
         proxy = address(
             new CallForFundsProxy{
-                salt: keccak256(abi.encode(_creator, _title))
+                salt: keccak256(abi.encode(msg.sender, title_))
             }(
-                _creator,
-                _title,
-                _description,
-                _category,
-                _genre,
-                _timeline,
-                _minFundingAmount,
-                _deliverableFormat
+                msg.sender,
+                title_,
+                description_,
+                image_,
+                category_,
+                genre_,
+                subgenre_,
+                deliverableMedium_,
+                timelineInDays_,
+                minFundingAmount_
             )
         );
 
         emit CallForFundsCreated(
             proxy,
-            _creator,
-            _title,
-            _description,
-            _category,
-            _genre,
-            _timeline,
-            _minFundingAmount,
-            _deliverableFormat
+            msg.sender,
+            title_,
+            description_,
+            image_,
+            category_,
+            genre_,
+            subgenre_,
+            timelineInDays_,
+            minFundingAmount_,
+            deliverableMedium_
         );
     }
 }

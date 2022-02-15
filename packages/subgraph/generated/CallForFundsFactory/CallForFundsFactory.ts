@@ -10,20 +10,20 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class GrantCreated extends ethereum.Event {
-  get params(): GrantCreated__Params {
-    return new GrantCreated__Params(this);
+export class CallForFundsCreated extends ethereum.Event {
+  get params(): CallForFundsCreated__Params {
+    return new CallForFundsCreated__Params(this);
   }
 }
 
-export class GrantCreated__Params {
-  _event: GrantCreated;
+export class CallForFundsCreated__Params {
+  _event: CallForFundsCreated;
 
-  constructor(event: GrantCreated) {
+  constructor(event: CallForFundsCreated) {
     this._event = event;
   }
 
-  get grant(): Address {
+  get CallForFunds(): Address {
     return this._event.parameters[0].value.toAddress();
   }
 
@@ -39,82 +39,94 @@ export class GrantCreated__Params {
     return this._event.parameters[3].value.toString();
   }
 
-  get category(): string {
-    return this._event.parameters[4].value.toString();
+  get image(): Bytes {
+    return this._event.parameters[4].value.toBytes();
   }
 
-  get genre(): string {
+  get category(): string {
     return this._event.parameters[5].value.toString();
   }
 
-  get timeline(): i32 {
-    return this._event.parameters[6].value.toI32();
+  get genre(): string {
+    return this._event.parameters[6].value.toString();
+  }
+
+  get subgenre(): string {
+    return this._event.parameters[7].value.toString();
+  }
+
+  get timelineInDays(): i32 {
+    return this._event.parameters[8].value.toI32();
   }
 
   get minFundingAmount(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
+    return this._event.parameters[9].value.toBigInt();
   }
 
-  get deliverableFormat(): string {
-    return this._event.parameters[8].value.toString();
+  get deliverableMedium(): string {
+    return this._event.parameters[10].value.toString();
   }
 }
 
-export class GrantFactory extends ethereum.SmartContract {
-  static bind(address: Address): GrantFactory {
-    return new GrantFactory("GrantFactory", address);
+export class CallForFundsFactory extends ethereum.SmartContract {
+  static bind(address: Address): CallForFundsFactory {
+    return new CallForFundsFactory("CallForFundsFactory", address);
   }
 
-  createGrant(
-    _creator: Address,
+  createCallForFunds(
     _title: string,
     _description: string,
+    _image: string,
     _category: string,
     _genre: string,
-    _timeline: i32,
+    _subgenre: string,
+    _timelineInDays: i32,
     _minFundingAmount: BigInt,
-    _deliverableFormat: string
+    _deliverableMedium: string
   ): Address {
     let result = super.call(
-      "createGrant",
-      "createGrant(address,string,string,string,string,uint8,uint256,string):(address)",
+      "createCallForFunds",
+      "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
       [
-        ethereum.Value.fromAddress(_creator),
         ethereum.Value.fromString(_title),
         ethereum.Value.fromString(_description),
+        ethereum.Value.fromString(_image),
         ethereum.Value.fromString(_category),
         ethereum.Value.fromString(_genre),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timeline)),
+        ethereum.Value.fromString(_subgenre),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timelineInDays)),
         ethereum.Value.fromUnsignedBigInt(_minFundingAmount),
-        ethereum.Value.fromString(_deliverableFormat)
+        ethereum.Value.fromString(_deliverableMedium)
       ]
     );
 
     return result[0].toAddress();
   }
 
-  try_createGrant(
-    _creator: Address,
+  try_createCallForFunds(
     _title: string,
     _description: string,
+    _image: string,
     _category: string,
     _genre: string,
-    _timeline: i32,
+    _subgenre: string,
+    _timelineInDays: i32,
     _minFundingAmount: BigInt,
-    _deliverableFormat: string
+    _deliverableMedium: string
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "createGrant",
-      "createGrant(address,string,string,string,string,uint8,uint256,string):(address)",
+      "createCallForFunds",
+      "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
       [
-        ethereum.Value.fromAddress(_creator),
         ethereum.Value.fromString(_title),
         ethereum.Value.fromString(_description),
+        ethereum.Value.fromString(_image),
         ethereum.Value.fromString(_category),
         ethereum.Value.fromString(_genre),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timeline)),
+        ethereum.Value.fromString(_subgenre),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timelineInDays)),
         ethereum.Value.fromUnsignedBigInt(_minFundingAmount),
-        ethereum.Value.fromString(_deliverableFormat)
+        ethereum.Value.fromString(_deliverableMedium)
       ]
     );
     if (result.reverted) {
@@ -170,32 +182,32 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class CreateGrantCall extends ethereum.Call {
-  get inputs(): CreateGrantCall__Inputs {
-    return new CreateGrantCall__Inputs(this);
+export class CreateCallForFundsCall extends ethereum.Call {
+  get inputs(): CreateCallForFundsCall__Inputs {
+    return new CreateCallForFundsCall__Inputs(this);
   }
 
-  get outputs(): CreateGrantCall__Outputs {
-    return new CreateGrantCall__Outputs(this);
+  get outputs(): CreateCallForFundsCall__Outputs {
+    return new CreateCallForFundsCall__Outputs(this);
   }
 }
 
-export class CreateGrantCall__Inputs {
-  _call: CreateGrantCall;
+export class CreateCallForFundsCall__Inputs {
+  _call: CreateCallForFundsCall;
 
-  constructor(call: CreateGrantCall) {
+  constructor(call: CreateCallForFundsCall) {
     this._call = call;
   }
 
-  get _creator(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
   get _title(): string {
-    return this._call.inputValues[1].value.toString();
+    return this._call.inputValues[0].value.toString();
   }
 
   get _description(): string {
+    return this._call.inputValues[1].value.toString();
+  }
+
+  get _image(): string {
     return this._call.inputValues[2].value.toString();
   }
 
@@ -207,27 +219,31 @@ export class CreateGrantCall__Inputs {
     return this._call.inputValues[4].value.toString();
   }
 
-  get _timeline(): i32 {
-    return this._call.inputValues[5].value.toI32();
+  get _subgenre(): string {
+    return this._call.inputValues[5].value.toString();
+  }
+
+  get _timelineInDays(): i32 {
+    return this._call.inputValues[6].value.toI32();
   }
 
   get _minFundingAmount(): BigInt {
-    return this._call.inputValues[6].value.toBigInt();
+    return this._call.inputValues[7].value.toBigInt();
   }
 
-  get _deliverableFormat(): string {
-    return this._call.inputValues[7].value.toString();
+  get _deliverableMedium(): string {
+    return this._call.inputValues[8].value.toString();
   }
 }
 
-export class CreateGrantCall__Outputs {
-  _call: CreateGrantCall;
+export class CreateCallForFundsCall__Outputs {
+  _call: CreateCallForFundsCall;
 
-  constructor(call: CreateGrantCall) {
+  constructor(call: CreateCallForFundsCall) {
     this._call = call;
   }
 
-  get grantProxy(): Address {
+  get proxy(): Address {
     return this._call.outputValues[0].value.toAddress();
   }
 }

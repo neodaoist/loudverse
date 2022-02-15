@@ -10,9 +10,9 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class GrantProxy extends ethereum.SmartContract {
-  static bind(address: Address): GrantProxy {
-    return new GrantProxy("GrantProxy", address);
+export class CallForFundsProxy extends ethereum.SmartContract {
+  static bind(address: Address): CallForFundsProxy {
+    return new CallForFundsProxy("CallForFundsProxy", address);
   }
 
   category(): string {
@@ -45,20 +45,20 @@ export class GrantProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  deliverableFormat(): string {
+  deliverableMedium(): string {
     let result = super.call(
-      "deliverableFormat",
-      "deliverableFormat():(string)",
+      "deliverableMedium",
+      "deliverableMedium():(string)",
       []
     );
 
     return result[0].toString();
   }
 
-  try_deliverableFormat(): ethereum.CallResult<string> {
+  try_deliverableMedium(): ethereum.CallResult<string> {
     let result = super.tryCall(
-      "deliverableFormat",
-      "deliverableFormat():(string)",
+      "deliverableMedium",
+      "deliverableMedium():(string)",
       []
     );
     if (result.reverted) {
@@ -113,6 +113,21 @@ export class GrantProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
+  image(): string {
+    let result = super.call("image", "image():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_image(): ethereum.CallResult<string> {
+    let result = super.tryCall("image", "image():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
   logicAddress(): Address {
     let result = super.call("logicAddress", "logicAddress():(address)", []);
 
@@ -151,14 +166,33 @@ export class GrantProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  timeline(): i32 {
-    let result = super.call("timeline", "timeline():(uint8)", []);
+  subgenre(): string {
+    let result = super.call("subgenre", "subgenre():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_subgenre(): ethereum.CallResult<string> {
+    let result = super.tryCall("subgenre", "subgenre():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  timelineInDays(): i32 {
+    let result = super.call("timelineInDays", "timelineInDays():(uint8)", []);
 
     return result[0].toI32();
   }
 
-  try_timeline(): ethereum.CallResult<i32> {
-    let result = super.tryCall("timeline", "timeline():(uint8)", []);
+  try_timelineInDays(): ethereum.CallResult<i32> {
+    let result = super.tryCall(
+      "timelineInDays",
+      "timelineInDays():(uint8)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -211,24 +245,32 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[2].value.toString();
   }
 
-  get _category(): string {
+  get _image(): string {
     return this._call.inputValues[3].value.toString();
   }
 
-  get _genre(): string {
+  get _category(): string {
     return this._call.inputValues[4].value.toString();
   }
 
-  get _timeline(): i32 {
-    return this._call.inputValues[5].value.toI32();
+  get _genre(): string {
+    return this._call.inputValues[5].value.toString();
+  }
+
+  get _subgenre(): string {
+    return this._call.inputValues[6].value.toString();
+  }
+
+  get _deliverableMedium(): string {
+    return this._call.inputValues[7].value.toString();
+  }
+
+  get _timelineInDays(): i32 {
+    return this._call.inputValues[8].value.toI32();
   }
 
   get _minFundingAmount(): BigInt {
-    return this._call.inputValues[6].value.toBigInt();
-  }
-
-  get _deliverableFormat(): string {
-    return this._call.inputValues[7].value.toString();
+    return this._call.inputValues[9].value.toBigInt();
   }
 }
 

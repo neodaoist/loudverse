@@ -9,7 +9,6 @@ const Wallet = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
-  console.log(showModal);
 
   return (
     <>
@@ -28,7 +27,6 @@ const Wallet = () => {
         >
           <Box display="grid" cols={2} justifyContent="center" justifySelf="center">
             {data.connectors.map(connector => {
-              console.log(connector);
               const handleClick = () => {
                 connect(connector);
                 setShowModal(false);
