@@ -1,15 +1,24 @@
 //import FundingCall from "../../components/Cards/FundingCall";
 
-
-// export = Quadratic;
-
-export class Quadratic {
+class Quadratic {
     matchAmounts: Map<bigint, bigint>;  // contract address, amount
+    poolAddress: bigint;
 
     constructor(fundingRound: bigint) {
         this.matchAmounts = new Map<bigint, bigint>();
+        this.poolAddress = fundingRound;
+        console.log("IN the constructor.  Yay!");
     };
 
+    /** Entry point for ending a funding round -- typically called from Github action
+     * @param matchPoolAddress
+     */
+    public doRoundEnd() {
+        console.log("Processing round end for " + this.poolAddress);
+        this.computeMatchForRound();
+        this.normalizeFunding(this.poolAddress);
+        this.applyFunding();
+    }
     /**
      * Returns the match amount, in wei, for one contract.  Computes the match as needed as a side-effect
      * @param contractId
@@ -36,7 +45,7 @@ export class Quadratic {
      * @private
      */
     private getCommunityFundForContract(contractId: bigint) : Array<bigint> {
-        // FIXME: Call The Graph function here
+        // FIXME: Call The Graph function here, hardcoded for now
         const fundingAmounts: Array<bigint> = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
         return fundingAmounts;
     }
@@ -60,12 +69,37 @@ export class Quadratic {
 
     };
 
-    private normalizeFunding() {
-        
+    private normalizeFunding(matchPoolAddress: bigint) {
+        const matchFundsAvailable = this.getAvailableFundsForRound(matchPoolAddress);
+        console.log("Available match pool is " + matchFundsAvailable);
+        let matchAccumulate = BigInt(0);
+        for(let amount of this.matchAmounts.values()) {
+            matchAccumulate += amount;
+        }
+        const adjustmentCoefficient: number = Number(matchFundsAvailable) / Number(matchAccumulate);
+        if(matchFundsAvailable > matchAccumulate) {
+            console.log("Funding pool has sufficient funds.  No normalization needed");
+        } else {
+            console.log("Ideal match: " + matchAccumulate + ", match available: " + matchFundsAvailable + ", adjustment: " + adjustmentCoefficient);
+        }
+        for(let contract of this.matchAmounts.keys()) {
+            // Do multiplication as number to avoid integer rounding to 0
+            this.matchAmounts.set(contract, BigInt(Number(this.matchAmounts.get(contract)) * adjustmentCoefficient));
+        }
     };
 
+    /**
+     *
+     * @private
+     */
+    private getAvailableFundsForRound(matchPoolAddress: bigint) : bigint {
+        return BigInt(3 * 10^18);  // FIXME: Hardcoded
+    }
+
     private applyFunding() {
-        //
+        for(const contract of this.matchAmounts.keys()) {
+            console.log("Match address ")
+        }
     }
 
     // Shameless copy-pasta from https://golb.hplar.ch/2018/09/javascript-bigint.html
@@ -92,3 +126,4 @@ export class Quadratic {
 
 }
 
+export default Quadratic;
