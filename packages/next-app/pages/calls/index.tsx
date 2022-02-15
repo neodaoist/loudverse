@@ -1,6 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack, Text } from "degen";
+import PageWrapper from "../../components/Layout/PageWrapper";
 import FundingCall from "../../components/Cards/FundingCall";
 import PageWrapper from "../../components/Layout/PageWrapper";
 import { getAllCallsForFunds } from "../../graph/functions";

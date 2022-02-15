@@ -1,8 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import Head from "next/head";
-import styles from "../../styles/Home.module.css"; // change
 import FullPageCallDetails from "../../components/FullPageProject";
-import { getCallForFundsByID, getAllCallsForFunds } from "../../graph/functions";
+import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import PageWrapper from "../../components/Layout/PageWrapper";
 
