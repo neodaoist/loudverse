@@ -113,8 +113,8 @@ const Home: NextPage = () => {
       <Link href="/calls/create">
         <a>create call</a>
       </Link>
-      <Link href="/calls/42">
-        <a>call 42</a>
+      <Link href="/calls/0">
+        <a>call 0</a>
       </Link>
       <Link href="/users">
         <a>users</a>
