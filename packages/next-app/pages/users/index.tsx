@@ -16,7 +16,6 @@ const Users: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Users!</a>
         </h1>
       </main>
-
     </div>
   );
 };
