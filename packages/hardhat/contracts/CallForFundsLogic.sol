@@ -2,30 +2,26 @@
 pragma solidity ^0.8.2;
 
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
+import {CryptoCredential} from "./CryptoCredential.sol";
 
-contract CallForFundsLogic is CallForFundsStorage {
+contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     //======== EVENTS =========
-    event FundingStateChanged(
-        FundingState indexed newFundingState
-    );
+    event FundingStateChanged(FundingState indexed newFundingState);
 
     event ContributionReceivedETH(
         address indexed donator,
         uint256 indexed amount
     );
 
-    event CallMatched(
-        uint256 indexed amountMatched
-        // , address indexed crowdNFTAddress
-    );
+    // , address indexed crowdNFTAddress
+    event CallMatched(uint256 indexed amountMatched);
 
-    event StreamStarted(
-        // ???
-    );
+    // ???
+    event StreamStarted();
 
     event WorkDelivered(
         string indexed deliverableURI
-        // , address indexed nftAddress 
+        // , address indexed nftAddress
     );
 
     event RefundCompleted(
@@ -48,7 +44,6 @@ contract CallForFundsLogic is CallForFundsStorage {
         require(fundingState == fundingState_);
         _;
     }
-    
 
     // Plain ETH transfers.
     receive() external payable {
@@ -58,8 +53,14 @@ contract CallForFundsLogic is CallForFundsStorage {
         }
     }
 
+    constructor() CryptoCredential(loudverseAdmin) {}
+
     //======== CREATOR METHODS =========
-    function startStream() external onlyCreator requireState(FundingState.MATCHED) {
+    function startStream()
+        external
+        onlyCreator
+        requireState(FundingState.MATCHED)
+    {
         //TODO #1
         // Superfluid
         setFundingState(FundingState.STREAMING);
@@ -79,14 +80,38 @@ contract CallForFundsLogic is CallForFundsStorage {
     }
 
     //======== PLATFORM METHODS =========
-    function matchCallForFunds(uint256) external onlyLoudverse requireState(FundingState.OPEN) payable {
+    function matchCallForFunds(uint256)
+        external
+        payable
+        onlyLoudverse
+        requireState(FundingState.OPEN)
+    {
         // method is payable, msg.value should be the match
         setFundingState(FundingState.MATCHED);
         emit CallMatched(msg.value);
         //TODO #2
-        // mint crowd-commissioned NFT 
+        // mint crowd-commissioned NFT
     }
 
+    function mintCryptoCredential(
+        address creator, //to
+        uint256 id,
+        uint256 amount, // can probably hardcode to 1?
+        string memory creationTitle,
+        Skill skill,
+        string memory totalFunding,
+        string memory totalFunders
+    ) public onlyLoudverse {
+        issueCredential(
+            creator,
+            id,
+            amount,
+            creationTitle,
+            skill,
+            totalFunding,
+            totalFunders
+        );
+    }
 
     function refund(address[] memory addresses, uint256[] memory amounts)
         external
