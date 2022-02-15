@@ -20,33 +20,6 @@ const Home: NextPage = () => {
           <Heading level="1">Be seen. Be heard. Be experienced.</Heading>
         </Box>
       </Box>
-      {/* Three image row */}
-      <Box display="flex" justifyContent="space-between" marginBottom="16">
-        <Box textAlign="center">
-          <Image
-            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-            width="330"
-            height="250"
-          />
-          <Text size="extraLarge">Crowdfunding</Text>
-        </Box>
-        <Box textAlign="center">
-          <Image
-            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-            width="330"
-            height="250"
-          />
-          <Text size="extraLarge">Commissioning</Text>
-        </Box>
-        <Box textAlign="center">
-          <Image
-            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-            width="330"
-            height="250"
-          />
-          <Text size="extraLarge">Credentialing</Text>
-        </Box>
-      </Box>
       {/* Three paragraphs */}
       <Box marginBottom="8">
         <Text size="extraLarge">
@@ -67,6 +40,33 @@ const Home: NextPage = () => {
             <strong> creative work</strong> with the Ethereum blockchain in ways never before possible
           </p>
         </Text>
+      </Box>
+      {/* Three image row */}
+      <Box display="flex" justifyContent="space-between" marginBottom="16">
+        <Box textAlign="center">
+          <Image
+            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
+            width="330"
+            height="250"
+          />
+          <Heading level="2">Crowdfunding</Heading>
+        </Box>
+        <Box textAlign="center">
+          <Image
+            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
+            width="330"
+            height="250"
+          />
+          <Heading level="2">Commissioning</Heading>
+        </Box>
+        <Box textAlign="center">
+          <Image
+            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
+            width="330"
+            height="250"
+          />
+          <Heading level="2">Credentialing</Heading>
+        </Box>
       </Box>
       {divider}
       {/* Mixed content rows */}
