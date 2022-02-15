@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Box, Button, Heading, Text } from "degen";
 import CenterColumn from "../components/Layout/CenterColumn";
+import CtaBar from "../components/Layout/CtaBar";
 
 const Home: NextPage = () => {
   const divider = <Box borderTopWidth="0.5" borderColor="foregroundSecondary" marginX="40" marginBottom="16"></Box>;
@@ -75,7 +76,8 @@ const Home: NextPage = () => {
             <Heading level="2">Credentialing</Heading>
           </Box>
         </Box>
-        <Box>[------------------ bar with CTA -------------------------------]</Box>
+        {/* Need to get live values in here */}
+        <CtaBar distAmt="2.7" numOfCreators="5" />
         {divider}
         {/* Mixed content rows */}
         <Box marginBottom="16">
