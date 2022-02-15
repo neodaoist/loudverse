@@ -1,6 +1,4 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import styles from "../../styles/Home.module.css"; // change
 import { useRouter } from "next/router";
 import FullPageUser from "../../components/FullPageUser";
 
