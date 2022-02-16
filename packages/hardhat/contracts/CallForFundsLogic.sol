@@ -16,13 +16,11 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     // , address indexed crowdNFTAddress
     event CallMatched(uint256 indexed amountMatched);
 
-    // ???
+    // TODO
     event StreamStarted();
 
-    event WorkDelivered(
-        string indexed deliverableURI
-        // , address indexed nftAddress
-    );
+    // , address indexed nftAddress
+    event WorkDelivered(string deliverableURI);
 
     event RefundCompleted(
         address[] indexed addresses,
@@ -47,10 +45,7 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
 
     // Plain ETH transfers.
     receive() external payable {
-        // is this a safe req to make?
-        if (fundingState != FundingState.OPEN) {
-            emit ContributionReceivedETH(msg.sender, msg.value);
-        }
+        emit ContributionReceivedETH(msg.sender, msg.value);
     }
 
     constructor() CryptoCredential(loudverseAdmin) {}

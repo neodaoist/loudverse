@@ -11,7 +11,7 @@ contract CallForFundsFactory {
         address indexed creator,
         string title,
         string description,
-        string indexed image,
+        string image,
         string category,
         string genre,
         string subgenre,

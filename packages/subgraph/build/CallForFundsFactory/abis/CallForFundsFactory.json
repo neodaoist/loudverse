@@ -3,7 +3,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_logicAddress",
+        "name": "logicAddress_",
         "type": "address"
       }
     ],
@@ -38,7 +38,7 @@
         "type": "string"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "string",
         "name": "image",
         "type": "string"
@@ -87,47 +87,47 @@
     "inputs": [
       {
         "internalType": "string",
-        "name": "_title",
+        "name": "title_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_description",
+        "name": "description_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_image",
+        "name": "image_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_category",
+        "name": "category_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_genre",
+        "name": "genre_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_subgenre",
+        "name": "subgenre_",
         "type": "string"
       },
       {
         "internalType": "uint8",
-        "name": "_timelineInDays",
+        "name": "timelineInDays_",
         "type": "uint8"
       },
       {
         "internalType": "uint256",
-        "name": "_minFundingAmount",
+        "name": "minFundingAmount_",
         "type": "uint256"
       },
       {
         "internalType": "string",
-        "name": "_deliverableMedium",
+        "name": "deliverableMedium_",
         "type": "string"
       }
     ],

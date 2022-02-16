@@ -68,6 +68,25 @@ export class CallForFundsProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
+  deliverableURI(): string {
+    let result = super.call("deliverableURI", "deliverableURI():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_deliverableURI(): ethereum.CallResult<string> {
+    let result = super.tryCall(
+      "deliverableURI",
+      "deliverableURI():(string)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
   description(): string {
     let result = super.call("description", "description():(string)", []);
 
@@ -128,14 +147,18 @@ export class CallForFundsProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  logicAddress(): Address {
-    let result = super.call("logicAddress", "logicAddress():(address)", []);
+  loudverseAdmin(): Address {
+    let result = super.call("loudverseAdmin", "loudverseAdmin():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_logicAddress(): ethereum.CallResult<Address> {
-    let result = super.tryCall("logicAddress", "logicAddress():(address)", []);
+  try_loudverseAdmin(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "loudverseAdmin",
+      "loudverseAdmin():(address)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -233,43 +256,43 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _creator(): Address {
+  get creator_(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _title(): string {
+  get title_(): string {
     return this._call.inputValues[1].value.toString();
   }
 
-  get _description(): string {
+  get description_(): string {
     return this._call.inputValues[2].value.toString();
   }
 
-  get _image(): string {
+  get image_(): string {
     return this._call.inputValues[3].value.toString();
   }
 
-  get _category(): string {
+  get category_(): string {
     return this._call.inputValues[4].value.toString();
   }
 
-  get _genre(): string {
+  get genre_(): string {
     return this._call.inputValues[5].value.toString();
   }
 
-  get _subgenre(): string {
+  get subgenre_(): string {
     return this._call.inputValues[6].value.toString();
   }
 
-  get _deliverableMedium(): string {
+  get deliverableMedium_(): string {
     return this._call.inputValues[7].value.toString();
   }
 
-  get _timelineInDays(): i32 {
+  get timelineInDays_(): i32 {
     return this._call.inputValues[8].value.toI32();
   }
 
-  get _minFundingAmount(): BigInt {
+  get minFundingAmount_(): BigInt {
     return this._call.inputValues[9].value.toBigInt();
   }
 }

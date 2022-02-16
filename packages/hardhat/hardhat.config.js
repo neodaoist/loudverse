@@ -14,6 +14,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
+const rinkebyURL = `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`;
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -23,8 +25,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.4",
   networks: {
-    matic: {
-      url: "https://rpc-mumbai.maticvigil.com",
+    rinkeby: {
+      url: rinkebyURL,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
@@ -35,7 +37,7 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY,
+      rinkeby: process.env.ETHERSCAN_API,
     },
   },
 };
