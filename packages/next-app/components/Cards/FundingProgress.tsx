@@ -25,7 +25,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraph
   }
 
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
       <Text size="extraLarge">[------Progress Bar--------]</Text>
       <Box display="flex" alignItems="flex-end" marginBottom="4">
         {callToAction}
