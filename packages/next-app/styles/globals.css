@@ -1,6 +1,7 @@
 /* Override degen colors */
 :root {
   --colors-foregroundSecondary: rgba(0, 132, 255, 0.1) !important;
+  --colors-foregroundTertiary: rgba(0, 0, 0, 0.1) !important;
 }
 
 html,
