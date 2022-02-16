@@ -9,7 +9,7 @@ const CtaBar = ({ distAmt, numOfCreators }) => {
       paddingY="4"
       display="flex"
       alignItems="center"
-      justifyContent="space-between"
+      justifyContent="space-around"
       borderColor="black"
       borderWidth="0.375"
       marginBottom="16"
