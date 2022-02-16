@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 const PageWrapper = ({ children }) => {
   return (
-    <Box width="viewWidth" height="viewHeight" display="flex" flexDirection="column">
+    <Box height="viewHeight" display="flex" flexDirection="column">
       <Navbar />
-      <Box marginX="16">{children}</Box>
+      <Box>{children}</Box>
     </Box>
   );
 };
