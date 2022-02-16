@@ -26,19 +26,19 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
           layout="fixed"
         />
       </Box>
-      <Box>
+      <Box marginBottom="4">
         <Text variant="label">Category</Text>
         <Text variant="large">{callForFunding.category}</Text>
       </Box>
-      <Box>
+      <Box marginBottom="4">
         <Text variant="label">Genre</Text>
         <Text variant="large">{callForFunding.genre}</Text>
       </Box>
-      <Box>
+      <Box marginBottom="4">
         <Text variant="label">Subgenre</Text>
         <Text variant="large">{callForFunding.subgenre}</Text>
       </Box>
-      <Box>
+      <Box marginBottom="4">
         <Text variant="label">Deliverable</Text>
         <Text variant="large">{callForFunding.deliverableMedium}</Text>
       </Box>

@@ -12,14 +12,18 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraph
     callToAction = (
       <>
         <Input label="Amount" placeholder="Enter your funding amount" disabled />
-        <Button>Fund</Button>
+        <Box marginLeft="4">
+          <Button>Fund</Button>
+        </Box>
       </>
     );
   } else {
     callToAction = (
       <>
         <Input label="Amount" placeholder="Connect to fund project" disabled />
-        <Button>Connect Wallet</Button>
+        <Box marginLeft="4">
+          <Button>Connect Wallet</Button>
+        </Box>
       </>
     );
   }
