@@ -2,13 +2,13 @@ import React from "react";
 import { Box, Button, Input, Text } from "degen";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraphType }) => {
-  let userConnected = false;
+  let isConnected = false;
   let isCallCreator = false;
   let callToAction;
 
   if (isCallCreator) {
     callToAction = <Button>Start Streaming Funds</Button>;
-  } else if (userConnected) {
+  } else if (isConnected) {
     callToAction = (
       <>
         <Input label="Amount" placeholder="Enter your funding amount" disabled />

@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack, Text } from "degen";
 import PageWrapper from "../../components/Layout/PageWrapper";
+import CtaBar from "../../components/Layout/CtaBar";
 import FundingCall from "../../components/Cards/FundingCall";
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
@@ -79,6 +80,7 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
       <PageWrapper>
+        <CtaBar distAmt="2.7" numOfCreators="5" />
         <Box marginBottom="8">
           <Text align="center" size="headingTwo">
             Open calls for funds
