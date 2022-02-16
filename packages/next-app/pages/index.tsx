@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { Box, Button, Heading, Text } from "degen";
+import { Box, Button, Heading, IconBookOpen, IconCollection, IconUsersSolid, Text } from "degen";
 import CenterColumn from "../components/Layout/CenterColumn";
 import CtaBar from "../components/Layout/CtaBar";
 
@@ -52,28 +52,22 @@ const Home: NextPage = () => {
         {/* Three image row */}
         <Box display="flex" justifyContent="space-between" marginBottom="16">
           <Box textAlign="center">
-            <Image
-              src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-              width="330"
-              height="250"
-            />
-            <Heading level="2">Crowdfunding</Heading>
+            <IconUsersSolid size="56" color="blue" />
+            <Heading level="2" color="blue">
+              Crowdfunding
+            </Heading>
           </Box>
           <Box textAlign="center">
-            <Image
-              src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-              width="330"
-              height="250"
-            />
-            <Heading level="2">Commissioning</Heading>
+            <IconBookOpen size="56" color="green" />
+            <Heading level="2" color="green">
+              Commissioning
+            </Heading>
           </Box>
           <Box textAlign="center">
-            <Image
-              src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-              width="330"
-              height="250"
-            />
-            <Heading level="2">Credentialing</Heading>
+            <IconCollection size="56" color="purple" />
+            <Heading level="2" color="purple">
+              Credentialing
+            </Heading>
           </Box>
         </Box>
         {/* Need to get live values in here */}
