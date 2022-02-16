@@ -1,7 +1,26 @@
 import Link from "next/link";
 import { Box, Button, Text } from "degen";
 
-const CtaBar = ({ distAmt, numOfCreators }) => {
+const CtaBar = ({
+  distAmt,
+  numOfCreators,
+  isHomePage,
+  isConnected,
+}: {
+  distAmt: string;
+  numOfCreators: string;
+  isHomePage?: boolean;
+  isConnected?: boolean;
+}) => {
+  let button;
+  if (isHomePage) {
+    button = <Button size="small">Open App</Button>;
+  } else if (isConnected) {
+    button = <Button size="small">Post call for funds</Button>;
+  } else {
+    button = <Button size="small">Connect</Button>;
+  }
+
   return (
     <Box
       height="16"
@@ -22,7 +41,7 @@ const CtaBar = ({ distAmt, numOfCreators }) => {
           </Text>
         </Box>
       </Link>
-      <Button size="small">Open App</Button>
+      {button}
     </Box>
   );
 };
