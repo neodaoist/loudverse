@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //
@@ -16,34 +18,31 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 //                                                                                                        //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-contract CrowdCommission is ERC1155, Ownable {
-    constructor() ERC1155("") {}
+contract SmartArt is ERC721, ERC721Burnable, AccessControl {
+    using Counters for Counters.Counter;
 
-    // Creative TODO Should most of this just be metadata ?
-    address public creator;
-    string public title;
-    string public description;
-    string public category; // (Music, Photography, Painting, Digital Art, Animation, Film, Sculpture, Poetry, Theater, Dance)
-    string public genre;
-    string public subgenre;
-    string public deliverableMedium;
-    uint8 public timelineInDays;
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    Counters.Counter private _tokenIdCounter;
 
-    // TODO Add Calls for Collaborators
-
-    // Financial
-    string public fundingRound;
-    mapping(address => uint256) public crowdCommissioners;
-    uint256 public matchingFunds;
-    uint256 public totalFunds;
-
-    function setURI(string memory newuri) public onlyOwner {
-        _setURI(newuri);
+    constructor() ERC721("SmartArt", "LOUD") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
-    function mintCrowdCommission(
-        // args
-    ) public onlyOwner {
+    function safeMint(address to) public onlyRole(MINTER_ROLE) {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _safeMint(to, tokenId);
+    }
 
+    // The following functions are overrides required by Solidity.
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, AccessControl)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
