@@ -4,12 +4,15 @@ import FullPageUser from "../../components/FullPageUser";
 import PageWrapper from "../../components/Layout/PageWrapper";
 import { User } from "../../graph/loudverse-graph-types";
 import { getAllUsers, getUserByID } from "../../graph/functions";
+import CenterColumn from "../../components/Layout/CenterColumn";
 
 const User = ({ user }: { user: User }) => {
   return (
-    <PageWrapper>
-      <FullPageUser user={user} />
-    </PageWrapper>
+    <CenterColumn>
+      <PageWrapper>
+        <FullPageUser user={user} />
+      </PageWrapper>
+    </CenterColumn>
   );
 };
 
