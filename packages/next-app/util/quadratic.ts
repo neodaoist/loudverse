@@ -5,20 +5,32 @@ import {CallForFunding} from "../graph/loudverse-graph-types";
 import {all} from "deepmerge";
 
 
+/**
+ * Holds the state of proposed mathcing and funding for a single CallForFunding during computation and normalization
+ */
+interface FundingState {
+    contributions: bigint,
+    idealTotal: bigint,
+    proposedMatch: bigint;
+}
+
 class Quadratic {
-    matchAmounts: Map<String, bigint>;  // contract address, amount
+    fundingStates: Map<String, FundingState>;  // contract address, amount
     poolAddress: String;
     failedContracts: Array<CallForFunding>;
+    eligibleContracts: Set<CallForFunding>;
 
     constructor(fundingRound: String) {
-        this.matchAmounts = new Map<String, bigint>();
+        this.fundingStates = new Map<String, FundingState>();
         this.poolAddress = fundingRound;
         this.failedContracts = [];
+        this.eligibleContracts = new Set<CallForFunding>();
     };
 
     /** Entry point for ending a funding round -- typically called from Github action
      */
     public async doRoundEnd() {
+
         console.log("Processing round end for " + this.poolAddress);
         await this.computeMatchForRound();
         console.log("Normalizing...");
@@ -32,10 +44,10 @@ class Quadratic {
      * @param contract
      */
     public getMatchForContract(contract: CallForFunding) : bigint {
-        if( ! this.matchAmounts.has(contract.id)) {
-            this.matchAmounts.set(contract.id,this.computeMatchForContract(contract));
+        if( ! this.fundingStates.has(contract.id)) {
+            this.fundingStates.set(contract.id,this.computeMatchForContract(contract));
         }
-        return this.matchAmounts.get(contract.id);
+        return this.fundingStates.get(contract.id).proposedMatch;
     };
 
     /**
@@ -43,24 +55,26 @@ class Quadratic {
      * @private
      * @param contract
      */
-    private computeMatchForContract(contract: CallForFunding) : bigint {
+    private computeMatchForContract(contract: CallForFunding) : FundingState {
         const fundingResult = Quadratic.computeMatch(this.getCommunityFundForContract(contract));
         // did we meet the minimum?
+        console.log("  Minimum: " + contract.minFundingAmount + ", Ideal total: " + fundingResult.idealTotal);
         if(fundingResult.idealTotal < contract.minFundingAmount) {
             // minimum not met -- close
             console.log("  Minimum not met with ideal -- close contract " + contract.id);
             this.failedContracts.push(contract);
-            this.matchAmounts.delete(contract.id);
+            this.fundingStates.delete(contract.id);
         } else {
             // minimum met -- match
-            console.log("  Adding match amount: " + fundingResult.matched + " to contract " + contract.id);
-            this.matchAmounts.set(contract.id, fundingResult.matched);
+            console.log("  Adding match amount: " + fundingResult.proposedMatch + " to contract " + contract.id);
+            this.fundingStates.set(contract.id, fundingResult);
+            this.eligibleContracts.add(contract);
         }
-        return fundingResult.matched;
+        return fundingResult;
     }
 
     /**
-     * Returns the quadratic match for
+     * Returns the quadratic match for a single CallForFunding
      * @private
      * @param contract
      */
@@ -68,7 +82,12 @@ class Quadratic {
 
         let fundingAmounts = new Array<bigint>();
         if(this.poolAddress === "test2") {
-            fundingAmounts = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
+            //fundingAmounts = [BigInt(100), BigInt(200), BigInt(100), BigInt(300)];
+            fundingAmounts = [BigInt(Math.floor((Math.random()*100))),
+                BigInt(Math.floor((Math.random()*100))),
+                BigInt(Math.floor((Math.random()*100))),
+                BigInt(Math.floor((Math.random()*100))),
+                        ]
         } else {
             for(let contribution of contract.contributions) {
                 fundingAmounts.push(contribution.amount);
@@ -83,7 +102,7 @@ class Quadratic {
      * @param contributions
      * @private
      */
-    private static computeMatch(contributions: Array<bigint>) : { idealTotal: bigint; matched: bigint; contributed: bigint } {
+    private static computeMatch(contributions: Array<bigint>) : FundingState {
         let matchAmount: number = Number(0);
         let contributedAmount: bigint = BigInt(0);
         // add up the community fund square roots
@@ -94,22 +113,22 @@ class Quadratic {
             //console.log("in loop.  amount=" + amount + " matchAmount=" + matchAmount + " contributedAmount=" + contributedAmount);
         }
         // square the result
-        console.log("Square: " + (matchAmount * matchAmount));
+        //console.log("Square: " + (matchAmount * matchAmount));
         let idealTotal: bigint = BigInt(Math.floor(matchAmount * matchAmount));
         if(idealTotal <= contributedAmount) // no match needed
         {
-            console.log("   Contributed: " + contributedAmount + ", Ideal total for contract: " + idealTotal + " -- NO MATCH");
+            console.log("  Contributed: " + contributedAmount + ", Ideal total for contract: " + idealTotal + " -- NO MATCH");
             return {
-                'contributed': contributedAmount,
-                'matched' : BigInt(0),
-                'idealTotal' : idealTotal
+                contributions: contributedAmount,
+                proposedMatch: BigInt(0),
+                idealTotal : idealTotal
             };
 
         } else {
-            console.log("   Contributed: " + contributedAmount + ", total for contract: " + idealTotal + ", match: " + (idealTotal - contributedAmount) );
+            console.log("  Contributed: " + contributedAmount + ", total for contract: " + idealTotal + ", match: " + (idealTotal - contributedAmount) );
             return {
-                'contributed': contributedAmount,
-                'matched': idealTotal - contributedAmount,
+                contributions: contributedAmount,
+                proposedMatch: idealTotal - contributedAmount,
                 'idealTotal': idealTotal
             }
         }
@@ -134,22 +153,39 @@ class Quadratic {
         }
     }
 
+    /**
+     * Simple normalization -- compute the ratio between ideal match and actual pool amount, apply to each contract's match
+     * @private
+     */
     private normalizeFunding() {
         const matchFundsAvailable = this.getAvailableFundsForRound(this.poolAddress);
+        console.log("Runoff: considering " + this.eligibleContracts.size + " calls for funds");
+        if(this.eligibleContracts.size === 0) {
+            return;
+        }
         let matchAccumulate = BigInt(0);
-        for(let amount of this.matchAmounts.values()) {
-            matchAccumulate += amount;
+        for(let contract of this.fundingStates.values()) {
+            matchAccumulate += contract.proposedMatch;
         }
         const adjustmentCoefficient: number = Number(matchFundsAvailable) / Number(matchAccumulate);
         console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + matchFundsAvailable);
         if(matchFundsAvailable > matchAccumulate) {
             console.log("Funding pool has sufficient funds.  No normalization needed");
+            return;
         } else {
             console.log("Ideal match: " + matchAccumulate + ", match available: " + matchFundsAvailable + ", adjustment: " + adjustmentCoefficient);
         }
-        for(let contract of this.matchAmounts.keys()) {
+        // Adjust the match amounts
+        for(let contract of this.fundingStates.keys()) {
+            let fundingState = this.fundingStates.get(contract);
             // Do multiplication as number to avoid integer rounding to 0
-            this.matchAmounts.set(contract, BigInt(Math.floor(Number(this.matchAmounts.get(contract)) * adjustmentCoefficient)));
+            fundingState.proposedMatch = BigInt(Math.floor(Number(fundingState.proposedMatch) * adjustmentCoefficient));
+            this.fundingStates.set(contract, fundingState);
+        }
+
+        if ( this.removeFarthestUnmet() ) {
+            // recurse
+            this.normalizeFunding();
         }
     };
 
@@ -159,7 +195,7 @@ class Quadratic {
      */
     private getAvailableFundsForRound(matchPoolAddress: String) : bigint {
         //if(matchPoolAddress === "test") {
-            return BigInt(3 * 10 ^ 18);
+            return BigInt( 3 * (10^18));
             /*
         }
         else
@@ -171,8 +207,8 @@ class Quadratic {
     }
 
     private applyFunding() {
-        for(const contract of this.matchAmounts.keys()) {
-            console.log("Match address " + contract + " with amount " + this.matchAmounts.get(contract));
+        for(const contract of this.fundingStates.keys()) {
+            console.log("Match address " + contract + " with amount " + this.fundingStates.get(contract).proposedMatch);
         }
     }
 
@@ -237,6 +273,35 @@ class Quadratic {
         //mockCalls[0].contributions = txLog;
         return mockCalls;
    }
+
+    /**
+     * Called in the case that we don't have enough in the funding pool to match all CallsForFunds.  Finds the CFF that's
+     * farthest from meeting its minimum and removes it.
+     * @private
+     * @return true if any funds were removed, false if all funds meet their minimums with current matching
+     */
+    private removeFarthestUnmet() : boolean {
+        let farthestDifference = BigInt(0);
+        let candidate: CallForFunding = undefined;
+        for(let contract of this.eligibleContracts) {
+            const fundingState = this.fundingStates.get(contract.id);
+            if(contract.minFundingAmount > fundingState.proposedMatch && (fundingState.proposedMatch - contract.minFundingAmount) > farthestDifference) {
+                // farther than the current candidate
+                farthestDifference = fundingState.proposedMatch - contract.minFundingAmount;
+                candidate = contract;
+            }
+        }
+        if(candidate != undefined) {
+            console.log("Instant runoff: removing contract " + candidate.id + " (" + candidate.title + ")");
+            this.failedContracts.push(candidate);
+            this.fundingStates.delete(candidate.id);
+            this.eligibleContracts.delete(candidate);
+            return true;
+        } else {
+            console.log("Instant runoff: all contracts meet their minimum");
+            return false;
+        }
+    }
 }
 
 export default Quadratic;
