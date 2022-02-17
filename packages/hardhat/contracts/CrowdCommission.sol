@@ -44,6 +44,16 @@ contract CrowdCommission is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         _setURI(newuri);
     }
 
+    function mintCrowdCommissions(
+        address[] memory funders,
+        uint256 id,
+        bytes memory data
+    ) public onlyOwner {
+        for (uint256 i = 1; i < funders.length; i++) {
+            _mint(funders[i], id, 1, data);
+        }
+    }
+
     function mint(
         address account,
         uint256 id,
