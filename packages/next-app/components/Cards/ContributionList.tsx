@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 
 const ContributionList = ({ contributionList }: { contributionList: Contribution[] }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
       <Box marginBottom="4">
         <Text size="extraLarge">Project Contributions</Text>
       </Box>

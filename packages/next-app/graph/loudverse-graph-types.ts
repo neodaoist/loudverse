@@ -28,6 +28,8 @@ export type CallForFunding = {
   creator: User;
   currentRoundFundsReceived: Scalars['BigInt'];
   deliverableMedium: Scalars['String'];
+  deliverableToken?: Maybe<Scalars['String']>;
+  deliverableURI?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   fundingState: Scalars['Int'];
   genre: Scalars['String'];
@@ -100,6 +102,34 @@ export type CallForFunding_Filter = {
   deliverableMedium_not_in?: InputMaybe<Array<Scalars['String']>>;
   deliverableMedium_not_starts_with?: InputMaybe<Scalars['String']>;
   deliverableMedium_starts_with?: InputMaybe<Scalars['String']>;
+  deliverableToken?: InputMaybe<Scalars['String']>;
+  deliverableToken_contains?: InputMaybe<Scalars['String']>;
+  deliverableToken_ends_with?: InputMaybe<Scalars['String']>;
+  deliverableToken_gt?: InputMaybe<Scalars['String']>;
+  deliverableToken_gte?: InputMaybe<Scalars['String']>;
+  deliverableToken_in?: InputMaybe<Array<Scalars['String']>>;
+  deliverableToken_lt?: InputMaybe<Scalars['String']>;
+  deliverableToken_lte?: InputMaybe<Scalars['String']>;
+  deliverableToken_not?: InputMaybe<Scalars['String']>;
+  deliverableToken_not_contains?: InputMaybe<Scalars['String']>;
+  deliverableToken_not_ends_with?: InputMaybe<Scalars['String']>;
+  deliverableToken_not_in?: InputMaybe<Array<Scalars['String']>>;
+  deliverableToken_not_starts_with?: InputMaybe<Scalars['String']>;
+  deliverableToken_starts_with?: InputMaybe<Scalars['String']>;
+  deliverableURI?: InputMaybe<Scalars['String']>;
+  deliverableURI_contains?: InputMaybe<Scalars['String']>;
+  deliverableURI_ends_with?: InputMaybe<Scalars['String']>;
+  deliverableURI_gt?: InputMaybe<Scalars['String']>;
+  deliverableURI_gte?: InputMaybe<Scalars['String']>;
+  deliverableURI_in?: InputMaybe<Array<Scalars['String']>>;
+  deliverableURI_lt?: InputMaybe<Scalars['String']>;
+  deliverableURI_lte?: InputMaybe<Scalars['String']>;
+  deliverableURI_not?: InputMaybe<Scalars['String']>;
+  deliverableURI_not_contains?: InputMaybe<Scalars['String']>;
+  deliverableURI_not_ends_with?: InputMaybe<Scalars['String']>;
+  deliverableURI_not_in?: InputMaybe<Array<Scalars['String']>>;
+  deliverableURI_not_starts_with?: InputMaybe<Scalars['String']>;
+  deliverableURI_starts_with?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   description_contains?: InputMaybe<Scalars['String']>;
   description_ends_with?: InputMaybe<Scalars['String']>;
@@ -218,6 +248,8 @@ export enum CallForFunding_OrderBy {
   Creator = 'creator',
   CurrentRoundFundsReceived = 'currentRoundFundsReceived',
   DeliverableMedium = 'deliverableMedium',
+  DeliverableToken = 'deliverableToken',
+  DeliverableUri = 'deliverableURI',
   Description = 'description',
   FundingState = 'fundingState',
   Genre = 'genre',
@@ -235,6 +267,7 @@ export type Contribution = {
   amount: Scalars['BigInt'];
   callForFunds: CallForFunding;
   id: Scalars['ID'];
+  timestamp: Scalars['BigInt'];
   user: User;
 };
 
@@ -269,6 +302,14 @@ export type Contribution_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  timestamp?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   user?: InputMaybe<Scalars['String']>;
   user_contains?: InputMaybe<Scalars['String']>;
   user_ends_with?: InputMaybe<Scalars['String']>;
@@ -289,6 +330,7 @@ export enum Contribution_OrderBy {
   Amount = 'amount',
   CallForFunds = 'callForFunds',
   Id = 'id',
+  Timestamp = 'timestamp',
   User = 'user'
 }
 

@@ -4,7 +4,14 @@ import { Box, Text } from "degen";
 
 const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
   return (
-    <Box display="flex" flexDirection="column" width="1/2" backgroundColor="foregroundSecondary" padding="4">
+    <Box
+      display="flex"
+      flexDirection="column"
+      width="1/2"
+      backgroundColor="foregroundSecondary"
+      borderRadius="medium"
+      padding="4"
+    >
       <Box display="flex" marginBottom="8">
         <Image src={userDetails.image} width="80" height="80" />
         <Box marginLeft="4">

@@ -64,6 +64,8 @@ type CallForFunding {
   timelineInDays: Int!
   minFundingAmount: BigInt!
   deliverableMedium: String!
+  deliverableURI: String
+  deliverableToken: String
   fundingState: Int!
   contributions(skip: Int = 0, first: Int = 100, orderBy: Contribution_orderBy, orderDirection: OrderDirection, where: Contribution_filter): [Contribution!]!
   currentRoundFundsReceived: BigInt!
@@ -207,6 +209,34 @@ input CallForFunding_filter {
   deliverableMedium_not_starts_with: String
   deliverableMedium_ends_with: String
   deliverableMedium_not_ends_with: String
+  deliverableURI: String
+  deliverableURI_not: String
+  deliverableURI_gt: String
+  deliverableURI_lt: String
+  deliverableURI_gte: String
+  deliverableURI_lte: String
+  deliverableURI_in: [String!]
+  deliverableURI_not_in: [String!]
+  deliverableURI_contains: String
+  deliverableURI_not_contains: String
+  deliverableURI_starts_with: String
+  deliverableURI_not_starts_with: String
+  deliverableURI_ends_with: String
+  deliverableURI_not_ends_with: String
+  deliverableToken: String
+  deliverableToken_not: String
+  deliverableToken_gt: String
+  deliverableToken_lt: String
+  deliverableToken_gte: String
+  deliverableToken_lte: String
+  deliverableToken_in: [String!]
+  deliverableToken_not_in: [String!]
+  deliverableToken_contains: String
+  deliverableToken_not_contains: String
+  deliverableToken_starts_with: String
+  deliverableToken_not_starts_with: String
+  deliverableToken_ends_with: String
+  deliverableToken_not_ends_with: String
   fundingState: Int
   fundingState_not: Int
   fundingState_gt: Int
@@ -245,6 +275,8 @@ enum CallForFunding_orderBy {
   timelineInDays
   minFundingAmount
   deliverableMedium
+  deliverableURI
+  deliverableToken
   fundingState
   contributions
   currentRoundFundsReceived
@@ -256,6 +288,7 @@ type Contribution {
   callForFunds: CallForFunding!
   user: User!
   amount: BigInt!
+  timestamp: BigInt!
 }
 
 input Contribution_filter {
@@ -303,6 +336,14 @@ input Contribution_filter {
   amount_lte: BigInt
   amount_in: [BigInt!]
   amount_not_in: [BigInt!]
+  timestamp: BigInt
+  timestamp_not: BigInt
+  timestamp_gt: BigInt
+  timestamp_lt: BigInt
+  timestamp_gte: BigInt
+  timestamp_lte: BigInt
+  timestamp_in: [BigInt!]
+  timestamp_not_in: [BigInt!]
 }
 
 enum Contribution_orderBy {
@@ -310,6 +351,7 @@ enum Contribution_orderBy {
   callForFunds
   user
   amount
+  timestamp
 }
 
 enum OrderDirection {

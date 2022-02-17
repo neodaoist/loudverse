@@ -3,7 +3,7 @@ import { Box, Tag, Text } from "degen";
 
 const ProjectHistory = ({ history }: { history: ProjectHistoryType[] }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4" height="80">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4" height="80">
       <Box marginBottom="4">
         <Text size="extraLarge">Crypto-Credentials</Text>
       </Box>
