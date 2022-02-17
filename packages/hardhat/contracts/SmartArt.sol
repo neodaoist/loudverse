@@ -2,10 +2,12 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import './ERC2981/ERC2981PerTokenRoyalties.sol';
+import "./ERC2981/ERC2981PerTokenRoyalties.sol";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //
@@ -19,27 +21,33 @@ import './ERC2981/ERC2981PerTokenRoyalties.sol';
 //                                                                                                        //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-contract SmartArt is ERC721, ERC721Burnable, AccessControl, ERC2981PerTokenRoyalties {
+contract SmartArt is
+    ERC721,
+    ERC721Enumerable,
+    ERC721URIStorage,
+    ERC721Burnable,
+    Ownable,
+    ERC2981PerTokenRoyalties
+{
     using Counters for Counters.Counter;
 
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     Counters.Counter private _tokenIdCounter;
 
-    constructor() ERC721("SmartArt", "LOUD") {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+    constructor() ERC721("SmartArt", "LOUD") {}
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
     }
 
-    /**
-    These 2 methods are from https://github.com/dievardump/EIP2981-implementation
-     */
-
-    /// @inheritdoc	ERC165
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        virtual
-        override(ERC721, ERC2981Base)
+        override(ERC721, ERC721Enumerable, ERC2981Base)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
@@ -49,40 +57,35 @@ contract SmartArt is ERC721, ERC721Burnable, AccessControl, ERC2981PerTokenRoyal
     /// @param to the recipient of the token
     /// @param royaltyRecipient the recipient for royalties (if royaltyValue > 0)
     /// @param royaltyValue the royalties asked for (EIP2981)
+    /// @param uri URI for token
     function mint(
         address to, // this will be the Creator address
         address royaltyRecipient, // this will be the Slicer address
-        uint256 royaltyValue // this will be 10% so 1000
-    ) external {
-        uint256 tokenId = nextTokenId;
-        _safeMint(to, tokenId, '');
+        uint256 royaltyValue, // this will be 10% so 1000
+        string memory uri
+    ) external onlyOwner {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _safeMint(to, tokenId, "");
+        _setTokenURI(tokenId, uri);
 
         if (royaltyValue > 0) {
             _setTokenRoyalty(tokenId, royaltyRecipient, royaltyValue);
         }
-
-        nextTokenId = tokenId + 1;
     }
 
-
-    /**
-    These 2 methods are from OpenZeppelin Contract Wizard
-     */
-
-    function safeMint(address to) public onlyRole(MINTER_ROLE) {
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    // The following functions are overrides required by Solidity.
-
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, AccessControl)
-        returns (bool)
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
     {
-        return super.supportsInterface(interfaceId);
+        super._burn(tokenId);
     }
 }
