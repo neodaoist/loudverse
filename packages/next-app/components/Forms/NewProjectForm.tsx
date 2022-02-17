@@ -3,7 +3,7 @@ import { Box, Button, FieldSet, Input, MediaPicker } from "degen";
 
 const NewProjectForm = () => {
   return (
-    <Box padding="4" width="1/2">
+    <Box width="full">
       <FieldSet legend="Post call for funds">
         <Input label="Title" placeholder="Give your project a compelling title" />
         <Input
