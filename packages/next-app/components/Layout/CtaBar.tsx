@@ -1,24 +1,27 @@
 import Link from "next/link";
 import { Box, Button, Text } from "degen";
+import Wallet from "./Wallet";
+import { ReactElement } from "react";
 
 const CtaBar = ({
   distAmt,
   numOfCreators,
   isHomePage,
-  isConnected,
 }: {
   distAmt: string;
   numOfCreators: string;
   isHomePage?: boolean;
   isConnected?: boolean;
 }) => {
-  let button;
+  let button: ReactElement;
   if (isHomePage) {
-    button = <Button size="small">Open App</Button>;
-  } else if (isConnected) {
-    button = <Button size="small">Post call for funds</Button>;
+    button = (
+      <Link href="/calls">
+        <Button size="small">Open App</Button>
+      </Link>
+    );
   } else {
-    button = <Button size="small">Connect</Button>;
+    button = <Wallet isCallsCta={true} />;
   }
 
   return (
@@ -33,14 +36,10 @@ const CtaBar = ({
       borderWidth="0.375"
       marginBottom="16"
     >
-      <Link href="/calls" passHref={true}>
-        <Box as="a">
-          <Text>
-            More than {distAmt} ETH will be distributed to {numOfCreators} creators this month. Join LOUDVERSE today to
-            start creating!
-          </Text>
-        </Box>
-      </Link>
+      <Text>
+        More than {distAmt} ETH will be distributed to {numOfCreators} creators this month. Join LOUDVERSE today to
+        start creating!
+      </Text>
       {button}
     </Box>
   );
