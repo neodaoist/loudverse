@@ -8,7 +8,7 @@ dataSources:
     name: CallForFundsFactory
     network: rinkeby
     source:
-      address: "0x604EF0c85e67fd04842775733506638a258d23Ba"
+      address: "0x557d3888f76cdDBaF0187d8871A851dE1A80568F"
       abi: CallForFundsFactory
       startBlock: 10179483
     mapping:
@@ -27,7 +27,7 @@ dataSources:
           handler: handleNewCallForFunds
 templates:
   - kind: ethereum/contract
-    name: CallForFundsLogic
+    name: CallForFunds
     network: rinkeby
     source:
       abi: CallForFundsLogic
@@ -35,14 +35,14 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: templates/CallForFundsLogic/CallForFundsLogic.wasm
+      file: templates/CallForFunds/CallForFunds.wasm
       entities:
         - CallForFunds
       abis:
         - name: CallForFundsLogic
-          file: CallForFundsLogic/abis/CallForFundsLogic.json
+          file: CallForFunds/abis/CallForFundsLogic.json
         - name: CallForFundsProxy
-          file: CallForFundsLogic/abis/CallForFundsProxy.json
+          file: CallForFunds/abis/CallForFundsProxy.json
       eventHandlers:
-        - event: ContributionReceivedETH(indexed address,indexed uint256)
+        - event: ContributionReceivedETH(indexed address,uint256)
           handler: handleETHContribution

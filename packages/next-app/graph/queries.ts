@@ -19,6 +19,7 @@ export const ALL_CALLS = (): DocumentNode => gql`
       contributions {
         id
       }
+      minFundingAmount
       currentRoundFundsReceived
       lifetimeFundsReceived
     }
@@ -68,6 +69,7 @@ export const CALL_BY_ID = (address: string): DocumentNode => {
         contributions {
           id
         }
+        minFundingAmount
         currentRoundFundsReceived
         lifetimeFundsReceived
       }

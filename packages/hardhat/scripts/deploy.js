@@ -46,7 +46,7 @@ async function main() {
   }
 
   // wait for polygonscan before verifying
-  // await new Promise((resolve) => setTimeout(resolve, 60000));
+  await new Promise((resolve) => setTimeout(resolve, 60000));
   try {
     await run("verify:verify", {
       address: logic.address,

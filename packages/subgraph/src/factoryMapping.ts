@@ -1,13 +1,18 @@
 import { CallForFundsCreated } from "../generated/CallForFundsFactory/CallForFundsFactory";
-import { CallForFunding } from "../generated/schema";
+import { CallForFunds } from "../generated/templates";
 import { findOrCreateUser } from "./helpers";
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
+import { CallForFunding } from "../generated/schema";
 
 export function handleNewCallForFunds(event: CallForFundsCreated): void {
+  // initialize new CallForFunds to track events for
+  CallForFunds.create(event.params.CallForFunds);
+
   let creatorAddress = event.params.creator.toHexString();
   let creator = findOrCreateUser(creatorAddress);
 
   let proxyAddress = event.params.CallForFunds.toHexString();
+  log.info("Handling Event: NewCallForFunds from Factory", []);
   let newCallForFunds = new CallForFunding(proxyAddress);
 
   newCallForFunds.creator = creator.id;

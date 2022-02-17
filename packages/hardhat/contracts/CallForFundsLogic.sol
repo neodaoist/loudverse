@@ -8,10 +8,7 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     //======== EVENTS =========
     event FundingStateChanged(FundingState indexed newFundingState);
 
-    event ContributionReceivedETH(
-        address indexed donator,
-        uint256 indexed amount
-    );
+    event ContributionReceivedETH(address indexed donator, uint256 amount);
 
     // , address indexed crowdNFTAddress
     event CallMatched(uint256 indexed amountMatched);
