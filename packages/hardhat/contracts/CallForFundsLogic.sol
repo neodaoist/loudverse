@@ -4,7 +4,13 @@ pragma solidity ^0.8.2;
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 import {CryptoCredential} from "./CryptoCredential.sol";
 
+interface ICallForFundsFactory {
+    function proxies(address) external returns (bool);
+}
+
 contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
+    address public factory;
+
     //======== EVENTS =========
     event FundingStateChanged(FundingState indexed newFundingState);
 
@@ -32,6 +38,12 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
 
     modifier onlyLoudverse() {
         require(msg.sender == loudverseAdmin);
+        _;
+    }
+
+    modifier onlyProxies() {
+        bool isProxy = ICallForFundsFactory(factory).proxies(msg.sender);
+        require(isProxy);
         _;
     }
 
@@ -72,6 +84,10 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     }
 
     //======== PLATFORM METHODS =========
+    function setFactory(address factoryAddress) external onlyLoudverse {
+        factory = factoryAddress;
+    }
+
     function matchCallForFunds(uint256)
         external
         payable
