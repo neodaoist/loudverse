@@ -17,10 +17,21 @@ async function main() {
 
   console.log(`Deploying to ${networkName}`);
 
+  const CrowdCommission = await ethers.getContractFactory("CrowdCommission");
+  const crowdCommission = await CrowdCommission.deploy();
+  await crowdCommission.deployed();
+
+  const SmartArt = await ethers.getContractFactory("SmartArt");
+  const smartArt = await SmartArt.deploy();
+  await smartArt.deployed();
+
   const CallForFundsLogic = await ethers.getContractFactory(
     "CallForFundsLogic"
   );
-  const logic = await CallForFundsLogic.deploy();
+  const logic = await CallForFundsLogic.deploy(
+    crowdCommission.address,
+    smartArt.address
+  );
   await logic.deployed();
 
   const CallForFundsFactory = await ethers.getContractFactory(
@@ -67,6 +78,10 @@ async function main() {
     process.env.PRIVATE_KEY,
     new ethers.providers.JsonRpcProvider(rinkebyURL)
   );
+
+  await crowdCommission.connect(deployer).transferOwnership(logic.address);
+  await smartArt.connect(deployer).transferOwnership(logic.address);
+
   const factoryWithSigner = factory.connect(deployer);
 
   const solarpunkProxy = await factoryWithSigner.createCallForFunds(
