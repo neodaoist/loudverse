@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Button, Input, Text } from "degen";
+import { CallForFunding } from "../../graph/loudverse-graph-types";
 
-const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraphType }) => {
+const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   let isConnected = false;
   let isCallCreator = false;
   let callToAction;

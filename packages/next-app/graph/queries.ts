@@ -18,6 +18,11 @@ export const ALL_CALLS = (): DocumentNode => gql`
       fundingState
       contributions {
         id
+        user {
+          id
+        }
+        amount
+        timestamp
       }
       minFundingAmount
       currentRoundFundsReceived
