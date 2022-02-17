@@ -8,7 +8,41 @@ interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
 }
 
+interface ICallForFundsLogic {
+    function mintCrowdCommission(
+        address[] calldata funders,
+        uint256 id,
+        bytes memory data
+    ) public;
+
+    function mintSmartArt(
+        address to,
+        address royaltyRecipient,
+        uint256 royaltyValue,
+        string memory uri
+    ) public;
+}
+
+interface ICrowdCommission {
+    function mintCrowdCommissions(
+        address[] memory funders,
+        uint256 id,
+        bytes memory data
+    ) public;
+}
+
+interface ISmartArt {
+    function mint(
+        address to,
+        address royaltyRecipient,
+        uint256 royaltyValue,
+        string memory uri
+    ) external;
+}
+
 contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
+    address public immutable crowdCommission;
+    address public immutable smartArt;
     address public factory;
 
     //======== EVENTS =========
@@ -57,7 +91,12 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         emit ContributionReceivedETH(msg.sender, msg.value);
     }
 
-    constructor() CryptoCredential(loudverseAdmin) {}
+    constructor(address crowdCommission_, address smartArt_)
+        CryptoCredential(loudverseAdmin)
+    {
+        crowdCommission = crowdCommission_;
+        smartArt = smartArt_;
+    }
 
     //======== CREATOR METHODS =========
     function startStream()
@@ -81,6 +120,15 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
 
         //TODO #3 depending on time
         // smart-art
+        // TODO SLICERSO
+        address slicerAddress = address(0);
+
+        ICallForFundsLogic(logicAddress).mintSmartArt(
+            msg.sender,
+            slicerAddress,
+            1000,
+            deliverableURI_
+        );
     }
 
     //======== PLATFORM METHODS =========
@@ -88,17 +136,17 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         factory = factoryAddress;
     }
 
-    function matchCallForFunds(uint256)
-        external
-        payable
-        onlyLoudverse
-        requireState(FundingState.OPEN)
-    {
+    function matchCallForFunds(
+        address[] calldata funders,
+        uint256 id,
+        bytes memory data
+    ) external payable onlyLoudverse requireState(FundingState.OPEN) {
         // method is payable, msg.value should be the match
         setFundingState(FundingState.MATCHED);
         emit CallMatched(msg.value);
         //TODO #2
         // mint crowd-commissioned NFT
+        ICallForFundsLogic(logicAddress).mintCrowdCommission(funders, id, data);
     }
 
     function mintCryptoCredential(
@@ -136,6 +184,28 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         }
 
         emit RefundCompleted(addresses, amounts);
+    }
+
+    //======== PROXY METHODS =========
+    function mintCrowdCommission(
+        address[] calldata funders,
+        uint256 id,
+        bytes memory data
+    ) public onlyProxies {
+        ICrowdCommission(crowdCommission).mintCrowdCommissions(
+            funders,
+            id,
+            data
+        );
+    }
+
+    function mintSmartArt(
+        address to, // this will be the Creator address
+        address royaltyRecipient, // this will be the Slicer address
+        uint256 royaltyValue, // this will be 10% so 1000
+        string memory uri
+    ) public onlyProxies {
+        ISmartArt(smartArt).mint(to, royaltyRecipient, royaltyValue, uri);
     }
 
     //======== PRIVATE =========
