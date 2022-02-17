@@ -2,21 +2,51 @@ import { gql, DocumentNode } from "@apollo/client";
 
 export const ALL_CALLS = (): DocumentNode => gql`
   {
-    grants(first: 1000) {
+    callForFundings(first: 1000) {
       id
       creator {
         id
       }
+      title
+      description
+      image
+      category
+      genre
+      subgenre
+      timelineInDays
+      deliverableMedium
+      fundingState
+      contributions {
+        id
+        user {
+          id
+        }
+        amount
+        timestamp
+      }
+      minFundingAmount
+      currentRoundFundsReceived
+      lifetimeFundsReceived
     }
   }
 `;
 
 export const ALL_USERS = (): DocumentNode => gql`
   {
-    calls(first: 1000) {
+    users(first: 1000) {
       id
-      grants {
+      callsForFunds {
         id
+        title
+        description
+        image
+        category
+        genre
+        subgenre
+      }
+      contributions {
+        id
+        amount
       }
     }
   }
@@ -27,11 +57,26 @@ export const CALL_BY_ID = (address: string): DocumentNode => {
 
   return gql`
     {
-      calls(where:{ id: "${address}"}) {
+      callForFundings(where:{ id: "${address}"}) {
         id
         creator {
           id
         }
+        title
+        description
+        image
+        category
+        genre
+        subgenre
+        timelineInDays
+        deliverableMedium
+        fundingState
+        contributions {
+          id
+        }
+        minFundingAmount
+        currentRoundFundsReceived
+        lifetimeFundsReceived
       }
     }`;
 };
@@ -42,8 +87,18 @@ export const USER_BY_ID = (address: string): DocumentNode => {
   {
     users(where: { id: "${address}"}) {
       id
-      grants {
+      callsForFunds {
         id
+        title
+        description
+        image
+        category
+        genre
+        subgenre
+      }
+      contributions {
+        id
+        amount
       }
     }
   }`;

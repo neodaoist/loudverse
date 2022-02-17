@@ -4,23 +4,30 @@ pragma solidity ^0.8.2;
 contract CallForFundsStorage {
     enum FundingState {
         OPEN,
-        CLOSED,
+        FAILED,
         MATCHED,
+        STREAMING,
         DELIVERED
     }
 
-    address public logicAddress;
+    // change later to multisig?
+    address public constant loudverseAdmin =
+        0xA4E987fb3808d9FC206112967477793Ea8389450;
+
+    address internal logicAddress;
 
     address public creator;
     string public title;
     string public description;
-    string public category; //(Music, Photography, Painting, Digital Art, Animation, Film, Sculpture, Poetry, Play, Dance)
+    string public image;
+    string public category;
     string public genre;
+    string public subgenre;
+    string public deliverableMedium;
+    uint8 public timelineInDays;
     uint256 public minFundingAmount;
-    string public deliverableFormat;
-    // @Funding Round
-    // @Calls for collaborators (optional)
-    uint8 public timeline; // number of days?
+
+    string public deliverableURI;
+
     FundingState public fundingState;
-    //details
 }

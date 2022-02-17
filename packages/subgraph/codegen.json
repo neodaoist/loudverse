@@ -1,0 +1,8 @@
+{
+    "generates": {
+        "./types/loudverse-graph-types.ts": {
+            "schema": "./types/loudverse-graph-schema.graphql",
+            "plugins": ["typescript", "typescript-operations"]
+        }
+    }
+}
