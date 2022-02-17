@@ -8,10 +8,12 @@ import {
 } from "../generated/templates/CallForFundsLogic/CallForFundsLogic";
 import { findOrCreateContributionByUserForCall } from "./helpers";
 import { CallForFunding } from "../generated/schema";
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 
 export function handleETHContribution(event: ContributionReceivedETH): void {
+  log.info("ETHCONTRIBUTION", []);
   let callAddress = event.address.toHexString();
+  log.info("Handling Event: ETHReceived at {}...", [callAddress]);
   let userAddress = event.params.donator.toHexString();
   let amount = event.params.amount;
 
