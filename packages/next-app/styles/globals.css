@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Override degen colors */
+/* :root {
+  --colors-foregroundSecondary: green !important;
+} */

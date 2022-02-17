@@ -39,8 +39,8 @@ export class CallForFundsCreated__Params {
     return this._event.parameters[3].value.toString();
   }
 
-  get image(): Bytes {
-    return this._event.parameters[4].value.toBytes();
+  get image(): string {
+    return this._event.parameters[4].value.toString();
   }
 
   get category(): string {
@@ -74,29 +74,29 @@ export class CallForFundsFactory extends ethereum.SmartContract {
   }
 
   createCallForFunds(
-    _title: string,
-    _description: string,
-    _image: string,
-    _category: string,
-    _genre: string,
-    _subgenre: string,
-    _timelineInDays: i32,
-    _minFundingAmount: BigInt,
-    _deliverableMedium: string
+    title_: string,
+    description_: string,
+    image_: string,
+    category_: string,
+    genre_: string,
+    subgenre_: string,
+    timelineInDays_: i32,
+    minFundingAmount_: BigInt,
+    deliverableMedium_: string
   ): Address {
     let result = super.call(
       "createCallForFunds",
       "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
       [
-        ethereum.Value.fromString(_title),
-        ethereum.Value.fromString(_description),
-        ethereum.Value.fromString(_image),
-        ethereum.Value.fromString(_category),
-        ethereum.Value.fromString(_genre),
-        ethereum.Value.fromString(_subgenre),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timelineInDays)),
-        ethereum.Value.fromUnsignedBigInt(_minFundingAmount),
-        ethereum.Value.fromString(_deliverableMedium)
+        ethereum.Value.fromString(title_),
+        ethereum.Value.fromString(description_),
+        ethereum.Value.fromString(image_),
+        ethereum.Value.fromString(category_),
+        ethereum.Value.fromString(genre_),
+        ethereum.Value.fromString(subgenre_),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(timelineInDays_)),
+        ethereum.Value.fromUnsignedBigInt(minFundingAmount_),
+        ethereum.Value.fromString(deliverableMedium_)
       ]
     );
 
@@ -104,29 +104,29 @@ export class CallForFundsFactory extends ethereum.SmartContract {
   }
 
   try_createCallForFunds(
-    _title: string,
-    _description: string,
-    _image: string,
-    _category: string,
-    _genre: string,
-    _subgenre: string,
-    _timelineInDays: i32,
-    _minFundingAmount: BigInt,
-    _deliverableMedium: string
+    title_: string,
+    description_: string,
+    image_: string,
+    category_: string,
+    genre_: string,
+    subgenre_: string,
+    timelineInDays_: i32,
+    minFundingAmount_: BigInt,
+    deliverableMedium_: string
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createCallForFunds",
       "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
       [
-        ethereum.Value.fromString(_title),
-        ethereum.Value.fromString(_description),
-        ethereum.Value.fromString(_image),
-        ethereum.Value.fromString(_category),
-        ethereum.Value.fromString(_genre),
-        ethereum.Value.fromString(_subgenre),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(_timelineInDays)),
-        ethereum.Value.fromUnsignedBigInt(_minFundingAmount),
-        ethereum.Value.fromString(_deliverableMedium)
+        ethereum.Value.fromString(title_),
+        ethereum.Value.fromString(description_),
+        ethereum.Value.fromString(image_),
+        ethereum.Value.fromString(category_),
+        ethereum.Value.fromString(genre_),
+        ethereum.Value.fromString(subgenre_),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(timelineInDays_)),
+        ethereum.Value.fromUnsignedBigInt(minFundingAmount_),
+        ethereum.Value.fromString(deliverableMedium_)
       ]
     );
     if (result.reverted) {
@@ -169,7 +169,7 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _logicAddress(): Address {
+  get logicAddress_(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
@@ -199,39 +199,39 @@ export class CreateCallForFundsCall__Inputs {
     this._call = call;
   }
 
-  get _title(): string {
+  get title_(): string {
     return this._call.inputValues[0].value.toString();
   }
 
-  get _description(): string {
+  get description_(): string {
     return this._call.inputValues[1].value.toString();
   }
 
-  get _image(): string {
+  get image_(): string {
     return this._call.inputValues[2].value.toString();
   }
 
-  get _category(): string {
+  get category_(): string {
     return this._call.inputValues[3].value.toString();
   }
 
-  get _genre(): string {
+  get genre_(): string {
     return this._call.inputValues[4].value.toString();
   }
 
-  get _subgenre(): string {
+  get subgenre_(): string {
     return this._call.inputValues[5].value.toString();
   }
 
-  get _timelineInDays(): i32 {
+  get timelineInDays_(): i32 {
     return this._call.inputValues[6].value.toI32();
   }
 
-  get _minFundingAmount(): BigInt {
+  get minFundingAmount_(): BigInt {
     return this._call.inputValues[7].value.toBigInt();
   }
 
-  get _deliverableMedium(): string {
+  get deliverableMedium_(): string {
     return this._call.inputValues[8].value.toString();
   }
 }

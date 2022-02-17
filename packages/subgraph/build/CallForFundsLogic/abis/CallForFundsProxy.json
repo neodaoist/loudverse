@@ -3,52 +3,52 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_creator",
+        "name": "creator_",
         "type": "address"
       },
       {
         "internalType": "string",
-        "name": "_title",
+        "name": "title_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_description",
+        "name": "description_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_image",
+        "name": "image_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_category",
+        "name": "category_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_genre",
+        "name": "genre_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_subgenre",
+        "name": "subgenre_",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_deliverableMedium",
+        "name": "deliverableMedium_",
         "type": "string"
       },
       {
         "internalType": "uint8",
-        "name": "_timelineInDays",
+        "name": "timelineInDays_",
         "type": "uint8"
       },
       {
         "internalType": "uint256",
-        "name": "_minFundingAmount",
+        "name": "minFundingAmount_",
         "type": "uint256"
       }
     ],
@@ -88,6 +88,19 @@
   {
     "inputs": [],
     "name": "deliverableMedium",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "deliverableURI",
     "outputs": [
       {
         "internalType": "string",
@@ -152,7 +165,7 @@
   },
   {
     "inputs": [],
-    "name": "logicAddress",
+    "name": "loudverseAdmin",
     "outputs": [
       {
         "internalType": "address",
