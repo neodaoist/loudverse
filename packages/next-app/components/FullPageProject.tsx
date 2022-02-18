@@ -19,23 +19,23 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
   //   timeline: "90 days",
   //   fundingState: "open",
   // };
-  const txLog = [
-    {
-      user: { id: "@funder1.eth" },
-      amount: "100",
-      timestamp: "Sun Feb 13 2022 20:13:28",
-    },
-    {
-      user: { id: "@funder2.eth" },
-      amount: "20",
-      timestamp: "Sun Feb 13 2022 20:13:28",
-    },
-    {
-      user: { id: "@funder3.eth" },
-      amount: "35",
-      timestamp: "Sun Feb 13 2022 20:13:28",
-    },
-  ];
+  // const txLog = [
+  //   {
+  //     user: { id: "@funder1.eth" },
+  //     amount: "100",
+  //     timestamp: "Sun Feb 13 2022 20:13:28",
+  //   },
+  //   {
+  //     user: { id: "@funder2.eth" },
+  //     amount: "20",
+  //     timestamp: "Sun Feb 13 2022 20:13:28",
+  //   },
+  //   {
+  //     user: { id: "@funder3.eth" },
+  //     amount: "35",
+  //     timestamp: "Sun Feb 13 2022 20:13:28",
+  //   },
+  // ];
 
   return (
     <Box display="flex" height="full">
@@ -44,7 +44,7 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
         <CallDetails callForFunding={call} />
         <Stack flex={1} justify="stretch">
           <FundingProgress callForFunding={call} />
-          <ContributionList contributionList={txLog} />
+          <ContributionList contributionList={call.contributions} />
           {/* <ContributionList contributionList={call.contributions} /> */}
         </Stack>
       </Stack>

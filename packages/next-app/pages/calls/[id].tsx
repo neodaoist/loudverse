@@ -1,14 +1,18 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import FullPageCallDetails from "../../components/FullPageProject";
+import type { GetStaticPaths, GetStaticProps } from "next";
+
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
+import FullPageCallDetails from "../../components/FullPageProject";
 import PageWrapper from "../../components/Layout/PageWrapper";
+import CenterColumn from "../../components/Layout/CenterColumn";
 
 const Call = ({ call }: { call: CallForFunding }) => {
   return (
-    <PageWrapper>
-      <FullPageCallDetails call={call} />
-    </PageWrapper>
+    <CenterColumn>
+      <PageWrapper>
+        <FullPageCallDetails call={call} />
+      </PageWrapper>
+    </CenterColumn>
   );
 };
 

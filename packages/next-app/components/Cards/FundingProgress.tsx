@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Button, Input, Text } from "degen";
+import { CallForFunding } from "../../graph/loudverse-graph-types";
 
-const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraphType }) => {
+const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   let isConnected = false;
   let isCallCreator = false;
   let callToAction;
@@ -12,20 +13,24 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFundsGraph
     callToAction = (
       <>
         <Input label="Amount" placeholder="Enter your funding amount" disabled />
-        <Button>Fund</Button>
+        <Box marginLeft="4">
+          <Button>Fund</Button>
+        </Box>
       </>
     );
   } else {
     callToAction = (
       <>
         <Input label="Amount" placeholder="Connect to fund project" disabled />
-        <Button>Connect Wallet</Button>
+        <Box marginLeft="4">
+          <Button>Connect Wallet</Button>
+        </Box>
       </>
     );
   }
 
   return (
-    <Box backgroundColor="foregroundSecondary" padding="4">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
       <Text size="extraLarge">[------Progress Bar--------]</Text>
       <Box display="flex" alignItems="flex-end" marginBottom="4">
         {callToAction}
