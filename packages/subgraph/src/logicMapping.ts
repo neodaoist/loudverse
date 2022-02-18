@@ -5,7 +5,7 @@ import {
   RefundCompleted,
   StreamStarted,
   WorkDelivered,
-} from "../generated/templates/CallForFundsLogic/CallForFundsLogic";
+} from "../generated/templates/CallForFunds/CallForFundsLogic";
 import { findOrCreateContributionByUserForCall } from "./helpers";
 import { CallForFunding } from "../generated/schema";
 import { BigInt, log } from "@graphprotocol/graph-ts";

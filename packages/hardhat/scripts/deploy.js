@@ -30,7 +30,10 @@ async function main() {
   );
   const logic = await CallForFundsLogic.deploy(
     crowdCommission.address,
-    smartArt.address
+    smartArt.address,
+    "0xeD5B5b32110c3Ded02a07c8b8e97513FAfb883B6",
+    "0xF4C5310E51F6079F601a5fb7120bC72a70b96e2A",
+    "0xa623b2DD931C5162b7a0B25852f4024Db48bb1A0"
   );
   await logic.deployed();
 
@@ -44,6 +47,8 @@ async function main() {
     Contracts: {
       logic: logic.address,
       factory: factory.address,
+      crowdCommission: crowdCommission.address,
+      smartArt: smartArt.address,
     },
   };
 

@@ -3,6 +3,7 @@ import { Box, Button, FieldSet, Input, MediaPicker } from "degen";
 import { useContract, useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
+import { cffFactoryAddress } from "../../utils";
 
 const NewProjectForm = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const NewProjectForm = () => {
   const [{ data, error, loading }, getSigner] = useSigner();
 
   const contract = useContract({
-    addressOrName: "0x557d3888f76cdDBaF0187d8871A851dE1A80568F",
+    addressOrName: cffFactoryAddress,
     contractInterface: CallForFundsFactory.abi,
     signerOrProvider: data,
   });

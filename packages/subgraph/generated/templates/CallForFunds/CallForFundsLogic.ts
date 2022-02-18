@@ -10,66 +10,6 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class BurnBatch extends ethereum.Event {
-  get params(): BurnBatch__Params {
-    return new BurnBatch__Params(this);
-  }
-}
-
-export class BurnBatch__Params {
-  _event: BurnBatch;
-
-  constructor(event: BurnBatch) {
-    this._event = event;
-  }
-
-  get burner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get owner(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get ids(): Array<BigInt> {
-    return this._event.parameters[2].value.toBigIntArray();
-  }
-
-  get amounts(): Array<BigInt> {
-    return this._event.parameters[3].value.toBigIntArray();
-  }
-}
-
-export class BurnSingle extends ethereum.Event {
-  get params(): BurnSingle__Params {
-    return new BurnSingle__Params(this);
-  }
-}
-
-export class BurnSingle__Params {
-  _event: BurnSingle;
-
-  constructor(event: BurnSingle) {
-    this._event = event;
-  }
-
-  get burner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get owner(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-}
-
 export class CallMatched extends ethereum.Event {
   get params(): CallMatched__Params {
     return new CallMatched__Params(this);
@@ -128,66 +68,6 @@ export class FundingStateChanged__Params {
   }
 }
 
-export class MintBatch extends ethereum.Event {
-  get params(): MintBatch__Params {
-    return new MintBatch__Params(this);
-  }
-}
-
-export class MintBatch__Params {
-  _event: MintBatch;
-
-  constructor(event: MintBatch) {
-    this._event = event;
-  }
-
-  get minter(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get to(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get ids(): Array<BigInt> {
-    return this._event.parameters[2].value.toBigIntArray();
-  }
-
-  get amounts(): Array<BigInt> {
-    return this._event.parameters[3].value.toBigIntArray();
-  }
-}
-
-export class MintSingle extends ethereum.Event {
-  get params(): MintSingle__Params {
-    return new MintSingle__Params(this);
-  }
-}
-
-export class MintSingle__Params {
-  _event: MintSingle;
-
-  constructor(event: MintSingle) {
-    this._event = event;
-  }
-
-  get minter(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get to(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-}
-
 export class RefundCompleted extends ethereum.Event {
   get params(): RefundCompleted__Params {
     return new RefundCompleted__Params(this);
@@ -224,28 +104,6 @@ export class StreamStarted__Params {
   }
 }
 
-export class URI extends ethereum.Event {
-  get params(): URI__Params {
-    return new URI__Params(this);
-  }
-}
-
-export class URI__Params {
-  _event: URI;
-
-  constructor(event: URI) {
-    this._event = event;
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get value(): string {
-    return this._event.parameters[1].value.toString();
-  }
-}
-
 export class WorkDelivered extends ethereum.Event {
   get params(): WorkDelivered__Params {
     return new WorkDelivered__Params(this);
@@ -267,67 +125,6 @@ export class WorkDelivered__Params {
 export class CallForFundsLogic extends ethereum.SmartContract {
   static bind(address: Address): CallForFundsLogic {
     return new CallForFundsLogic("CallForFundsLogic", address);
-  }
-
-  balanceOf(account: Address, id: BigInt): BigInt {
-    let result = super.call(
-      "balanceOf",
-      "balanceOf(address,uint256):(uint256)",
-      [
-        ethereum.Value.fromAddress(account),
-        ethereum.Value.fromUnsignedBigInt(id)
-      ]
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_balanceOf(account: Address, id: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "balanceOf",
-      "balanceOf(address,uint256):(uint256)",
-      [
-        ethereum.Value.fromAddress(account),
-        ethereum.Value.fromUnsignedBigInt(id)
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  balanceOfBatch(accounts: Array<Address>, ids: Array<BigInt>): Array<BigInt> {
-    let result = super.call(
-      "balanceOfBatch",
-      "balanceOfBatch(address[],uint256[]):(uint256[])",
-      [
-        ethereum.Value.fromAddressArray(accounts),
-        ethereum.Value.fromUnsignedBigIntArray(ids)
-      ]
-    );
-
-    return result[0].toBigIntArray();
-  }
-
-  try_balanceOfBatch(
-    accounts: Array<Address>,
-    ids: Array<BigInt>
-  ): ethereum.CallResult<Array<BigInt>> {
-    let result = super.tryCall(
-      "balanceOfBatch",
-      "balanceOfBatch(address[],uint256[]):(uint256[])",
-      [
-        ethereum.Value.fromAddressArray(accounts),
-        ethereum.Value.fromUnsignedBigIntArray(ids)
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
   category(): string {
@@ -353,6 +150,29 @@ export class CallForFundsLogic extends ethereum.SmartContract {
 
   try_creator(): ethereum.CallResult<Address> {
     let result = super.tryCall("creator", "creator():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  crowdCommission(): Address {
+    let result = super.call(
+      "crowdCommission",
+      "crowdCommission():(address)",
+      []
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_crowdCommission(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "crowdCommission",
+      "crowdCommission():(address)",
+      []
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -417,6 +237,21 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
+  factory(): Address {
+    let result = super.call("factory", "factory():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_factory(): ethereum.CallResult<Address> {
+    let result = super.tryCall("factory", "factory():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   fundingState(): i32 {
     let result = super.call("fundingState", "fundingState():(uint8)", []);
 
@@ -462,21 +297,6 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  issuer(): Address {
-    let result = super.call("issuer", "issuer():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_issuer(): ethereum.CallResult<Address> {
-    let result = super.tryCall("issuer", "issuer():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
   loudverseAdmin(): Address {
     let result = super.call("loudverseAdmin", "loudverseAdmin():(address)", []);
 
@@ -519,6 +339,21 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  smartArt(): Address {
+    let result = super.call("smartArt", "smartArt():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_smartArt(): ethereum.CallResult<Address> {
+    let result = super.tryCall("smartArt", "smartArt():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   subgenre(): string {
     let result = super.call("subgenre", "subgenre():(string)", []);
 
@@ -534,23 +369,23 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  timelineInDays(): i32 {
-    let result = super.call("timelineInDays", "timelineInDays():(uint8)", []);
+  timelineInDays(): BigInt {
+    let result = super.call("timelineInDays", "timelineInDays():(uint96)", []);
 
-    return result[0].toI32();
+    return result[0].toBigInt();
   }
 
-  try_timelineInDays(): ethereum.CallResult<i32> {
+  try_timelineInDays(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "timelineInDays",
-      "timelineInDays():(uint8)",
+      "timelineInDays():(uint96)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toI32());
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   title(): string {
@@ -561,25 +396,6 @@ export class CallForFundsLogic extends ethereum.SmartContract {
 
   try_title(): ethereum.CallResult<string> {
     let result = super.tryCall("title", "title():(string)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toString());
-  }
-
-  tokenURI(id: BigInt): string {
-    let result = super.call("tokenURI", "tokenURI(uint256):(string)", [
-      ethereum.Value.fromUnsignedBigInt(id)
-    ]);
-
-    return result[0].toString();
-  }
-
-  try_tokenURI(id: BigInt): ethereum.CallResult<string> {
-    let result = super.tryCall("tokenURI", "tokenURI(uint256):(string)", [
-      ethereum.Value.fromUnsignedBigInt(id)
-    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -604,96 +420,32 @@ export class ConstructorCall__Inputs {
   constructor(call: ConstructorCall) {
     this._call = call;
   }
+
+  get crowdCommission_(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get smartArt_(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get host(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get cfa(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+
+  get ethx(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
 }
 
 export class ConstructorCall__Outputs {
   _call: ConstructorCall;
 
   constructor(call: ConstructorCall) {
-    this._call = call;
-  }
-}
-
-export class BurnCall extends ethereum.Call {
-  get inputs(): BurnCall__Inputs {
-    return new BurnCall__Inputs(this);
-  }
-
-  get outputs(): BurnCall__Outputs {
-    return new BurnCall__Outputs(this);
-  }
-}
-
-export class BurnCall__Inputs {
-  _call: BurnCall;
-
-  constructor(call: BurnCall) {
-    this._call = call;
-  }
-
-  get from(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get id(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get deleteURI(): boolean {
-    return this._call.inputValues[3].value.toBoolean();
-  }
-}
-
-export class BurnCall__Outputs {
-  _call: BurnCall;
-
-  constructor(call: BurnCall) {
-    this._call = call;
-  }
-}
-
-export class BurnBatchCall extends ethereum.Call {
-  get inputs(): BurnBatchCall__Inputs {
-    return new BurnBatchCall__Inputs(this);
-  }
-
-  get outputs(): BurnBatchCall__Outputs {
-    return new BurnBatchCall__Outputs(this);
-  }
-}
-
-export class BurnBatchCall__Inputs {
-  _call: BurnBatchCall;
-
-  constructor(call: BurnBatchCall) {
-    this._call = call;
-  }
-
-  get from(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get ids(): Array<BigInt> {
-    return this._call.inputValues[1].value.toBigIntArray();
-  }
-
-  get amounts(): Array<BigInt> {
-    return this._call.inputValues[2].value.toBigIntArray();
-  }
-
-  get deleteURI(): boolean {
-    return this._call.inputValues[3].value.toBoolean();
-  }
-}
-
-export class BurnBatchCall__Outputs {
-  _call: BurnBatchCall;
-
-  constructor(call: BurnBatchCall) {
     this._call = call;
   }
 }
@@ -745,8 +497,16 @@ export class MatchCallForFundsCall__Inputs {
     this._call = call;
   }
 
-  get value0(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+  get funders(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
+  }
+
+  get id(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[2].value.toBytes();
   }
 }
 
@@ -758,20 +518,58 @@ export class MatchCallForFundsCall__Outputs {
   }
 }
 
-export class MintCall extends ethereum.Call {
-  get inputs(): MintCall__Inputs {
-    return new MintCall__Inputs(this);
+export class MintCrowdCommissionCall extends ethereum.Call {
+  get inputs(): MintCrowdCommissionCall__Inputs {
+    return new MintCrowdCommissionCall__Inputs(this);
   }
 
-  get outputs(): MintCall__Outputs {
-    return new MintCall__Outputs(this);
+  get outputs(): MintCrowdCommissionCall__Outputs {
+    return new MintCrowdCommissionCall__Outputs(this);
   }
 }
 
-export class MintCall__Inputs {
-  _call: MintCall;
+export class MintCrowdCommissionCall__Inputs {
+  _call: MintCrowdCommissionCall;
 
-  constructor(call: MintCall) {
+  constructor(call: MintCrowdCommissionCall) {
+    this._call = call;
+  }
+
+  get funders(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
+  }
+
+  get id(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[2].value.toBytes();
+  }
+}
+
+export class MintCrowdCommissionCall__Outputs {
+  _call: MintCrowdCommissionCall;
+
+  constructor(call: MintCrowdCommissionCall) {
+    this._call = call;
+  }
+}
+
+export class MintSmartArtCall extends ethereum.Call {
+  get inputs(): MintSmartArtCall__Inputs {
+    return new MintSmartArtCall__Inputs(this);
+  }
+
+  get outputs(): MintSmartArtCall__Outputs {
+    return new MintSmartArtCall__Outputs(this);
+  }
+}
+
+export class MintSmartArtCall__Inputs {
+  _call: MintSmartArtCall;
+
+  constructor(call: MintSmartArtCall) {
     this._call = call;
   }
 
@@ -779,127 +577,23 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get id(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get royaltyRecipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get royaltyValue(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 
   get uri(): string {
     return this._call.inputValues[3].value.toString();
   }
-
-  get data(): Bytes {
-    return this._call.inputValues[4].value.toBytes();
-  }
 }
 
-export class MintCall__Outputs {
-  _call: MintCall;
+export class MintSmartArtCall__Outputs {
+  _call: MintSmartArtCall;
 
-  constructor(call: MintCall) {
-    this._call = call;
-  }
-}
-
-export class MintBatchCall extends ethereum.Call {
-  get inputs(): MintBatchCall__Inputs {
-    return new MintBatchCall__Inputs(this);
-  }
-
-  get outputs(): MintBatchCall__Outputs {
-    return new MintBatchCall__Outputs(this);
-  }
-}
-
-export class MintBatchCall__Inputs {
-  _call: MintBatchCall;
-
-  constructor(call: MintBatchCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get ids(): Array<BigInt> {
-    return this._call.inputValues[1].value.toBigIntArray();
-  }
-
-  get amounts(): Array<BigInt> {
-    return this._call.inputValues[2].value.toBigIntArray();
-  }
-
-  get uris(): Array<string> {
-    return this._call.inputValues[3].value.toStringArray();
-  }
-
-  get data(): Bytes {
-    return this._call.inputValues[4].value.toBytes();
-  }
-}
-
-export class MintBatchCall__Outputs {
-  _call: MintBatchCall;
-
-  constructor(call: MintBatchCall) {
-    this._call = call;
-  }
-}
-
-export class MintCryptoCredentialCall extends ethereum.Call {
-  get inputs(): MintCryptoCredentialCall__Inputs {
-    return new MintCryptoCredentialCall__Inputs(this);
-  }
-
-  get outputs(): MintCryptoCredentialCall__Outputs {
-    return new MintCryptoCredentialCall__Outputs(this);
-  }
-}
-
-export class MintCryptoCredentialCall__Inputs {
-  _call: MintCryptoCredentialCall;
-
-  constructor(call: MintCryptoCredentialCall) {
-    this._call = call;
-  }
-
-  get creator(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get id(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get creationTitle(): string {
-    return this._call.inputValues[3].value.toString();
-  }
-
-  get skill(): i32 {
-    return this._call.inputValues[4].value.toI32();
-  }
-
-  get totalFunding(): string {
-    return this._call.inputValues[5].value.toString();
-  }
-
-  get totalFunders(): string {
-    return this._call.inputValues[6].value.toString();
-  }
-}
-
-export class MintCryptoCredentialCall__Outputs {
-  _call: MintCryptoCredentialCall;
-
-  constructor(call: MintCryptoCredentialCall) {
+  constructor(call: MintSmartArtCall) {
     this._call = call;
   }
 }
@@ -938,62 +632,32 @@ export class RefundCall__Outputs {
   }
 }
 
-export class SetBaseURICall extends ethereum.Call {
-  get inputs(): SetBaseURICall__Inputs {
-    return new SetBaseURICall__Inputs(this);
+export class SetFactoryCall extends ethereum.Call {
+  get inputs(): SetFactoryCall__Inputs {
+    return new SetFactoryCall__Inputs(this);
   }
 
-  get outputs(): SetBaseURICall__Outputs {
-    return new SetBaseURICall__Outputs(this);
+  get outputs(): SetFactoryCall__Outputs {
+    return new SetFactoryCall__Outputs(this);
   }
 }
 
-export class SetBaseURICall__Inputs {
-  _call: SetBaseURICall;
+export class SetFactoryCall__Inputs {
+  _call: SetFactoryCall;
 
-  constructor(call: SetBaseURICall) {
+  constructor(call: SetFactoryCall) {
     this._call = call;
   }
 
-  get newBaseURI(): string {
-    return this._call.inputValues[0].value.toString();
-  }
-}
-
-export class SetBaseURICall__Outputs {
-  _call: SetBaseURICall;
-
-  constructor(call: SetBaseURICall) {
-    this._call = call;
-  }
-}
-
-export class SetIssuerCall extends ethereum.Call {
-  get inputs(): SetIssuerCall__Inputs {
-    return new SetIssuerCall__Inputs(this);
-  }
-
-  get outputs(): SetIssuerCall__Outputs {
-    return new SetIssuerCall__Outputs(this);
-  }
-}
-
-export class SetIssuerCall__Inputs {
-  _call: SetIssuerCall;
-
-  constructor(call: SetIssuerCall) {
-    this._call = call;
-  }
-
-  get newIssuer(): Address {
+  get factoryAddress(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
 
-export class SetIssuerCall__Outputs {
-  _call: SetIssuerCall;
+export class SetFactoryCall__Outputs {
+  _call: SetFactoryCall;
 
-  constructor(call: SetIssuerCall) {
+  constructor(call: SetFactoryCall) {
     this._call = call;
   }
 }

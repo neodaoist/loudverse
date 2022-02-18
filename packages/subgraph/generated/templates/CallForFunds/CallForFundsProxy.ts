@@ -204,23 +204,23 @@ export class CallForFundsProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  timelineInDays(): i32 {
-    let result = super.call("timelineInDays", "timelineInDays():(uint8)", []);
+  timelineInDays(): BigInt {
+    let result = super.call("timelineInDays", "timelineInDays():(uint96)", []);
 
-    return result[0].toI32();
+    return result[0].toBigInt();
   }
 
-  try_timelineInDays(): ethereum.CallResult<i32> {
+  try_timelineInDays(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "timelineInDays",
-      "timelineInDays():(uint8)",
+      "timelineInDays():(uint96)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toI32());
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   title(): string {
