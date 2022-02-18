@@ -119,7 +119,9 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         requireState(FundingState.MATCHED)
     {
         (int256 ethxBalance, , ,) = _ethx.realtimeBalanceOfNow(address(this));
-        int96 flowRate = ethxBalance/(timelineInDays * 86400); // Safe in 0.8.0
+        int96 timelineInSeconds = int96(timelineInDays) * 86400;
+        int96 ethxBalanceInt96 = int96(ethxBalance);
+        int96 flowRate = ethxBalanceInt96/timelineInSeconds; // Safe in 0.8.0
 
         // Start stream
         _host.callAgreement(
