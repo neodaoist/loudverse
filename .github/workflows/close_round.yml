@@ -27,4 +27,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Computed Double-Constrained Quadratic Funding
-      run: node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_address }}"
+      run: node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_address }}
