@@ -12,22 +12,23 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
         <Text size="extraLarge">Project Contributions</Text>
       </Box>
       <Box overflow="scroll" maxHeight="48">
-        {contributionList.map((contribution, i) => {
-          const date = new Date(contribution?.timestamp * 1000).toDateString().toString();
+        {contributionList?.length &&
+          contributionList.map((contribution, i) => {
+            const date = new Date(contribution?.timestamp * 1000).toDateString().toString();
 
-          return (
-            <Box key={i} marginBottom="4">
-              {/* TODO add timestamp to graph schema */}
-              <Text>
-                <Link href={`/users/${contribution?.user.id}`} passHref>
-                  <a>{toTrimmedAddress(contribution?.user.id)}</a>
-                </Link>{" "}
-                funded {ethers.utils.formatEther(contribution?.amount)} ETH
-              </Text>
-              <Text size="small">{date}</Text>
-            </Box>
-          );
-        })}
+            return (
+              <Box key={i} marginBottom="4">
+                {/* TODO add timestamp to graph schema */}
+                <Text>
+                  <Link href={`/users/${contribution?.user.id}`} passHref>
+                    <a>{toTrimmedAddress(contribution?.user.id)}</a>
+                  </Link>{" "}
+                  funded {ethers.utils.formatEther(contribution?.amount)} ETH
+                </Text>
+                <Text size="small">{date}</Text>
+              </Box>
+            );
+          })}
       </Box>
     </Box>
   );

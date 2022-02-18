@@ -99,13 +99,15 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       </Box>
       <Box marginBottom="4">
         <Text size="large">
-          {Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? "0")).toFixed(3)} ETH from{" "}
-          {callForFunding?.contributions.length} funders. <br /> with estimated Z match
+          {/* {callForFunding?.lifetimeFundsReceived
+            ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)
+            : 0} */}{" "}
+          ETH from {callForFunding?.contributions.length} funders. <br /> with estimated Z match
         </Text>
       </Box>
       <Box marginBottom="4">
         <Text size="large">
-          Funding goal {Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} ETH
+          {/* Funding goal {Number(ethers.utils.formatEther(callForFunding?.minFundingAmount)).toFixed(3)} ETH */}
         </Text>
       </Box>
       <Box>
