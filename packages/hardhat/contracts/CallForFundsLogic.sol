@@ -2,7 +2,6 @@
 pragma solidity ^0.8.2;
 
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
-import {CryptoCredential} from "./CryptoCredential.sol";
 
 interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
@@ -40,7 +39,7 @@ interface ISmartArt {
     ) external;
 }
 
-contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
+contract CallForFundsLogic is CallForFundsStorage {
     address public immutable crowdCommission;
     address public immutable smartArt;
     address public factory;
