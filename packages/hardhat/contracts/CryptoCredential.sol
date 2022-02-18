@@ -2,6 +2,7 @@
 pragma solidity ^0.8.2;
 
 import "./ERC1238/extensions/ERC1238URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 // Resources:
 // https://github.com/ethereum/EIPs/issues/1238
@@ -9,6 +10,10 @@ import "./ERC1238/extensions/ERC1238URIStorage.sol";
 // https://vitalik.ca/general/2022/01/26/soulbound.html
 
 contract CryptoCredential is ERC1238, ERC1238URIStorage {
+    using Counters for Counters.Counter;
+
+    Counters.Counter private _tokenIdCounter;
+
     enum Skill {
         Music,
         Photography,
@@ -39,13 +44,14 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
     // This is the method I was thinking that we can use to issue new credentials, which builds the data and mints the NTT
     function issueCredential(
         address creator, //to
-        uint256 id,
         uint256 amount, // can probably hardcode to 1?
         string memory creationTitle,
         Skill skill,
         string memory totalFunding,
         string memory totalFunders
-    ) internal {
+    ) external onlyIssuer {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
         // for now just JSON stringify
         // eventually const tokenURI = "https://your-domain-name.com/credentials/tokens/1";
         string memory fullURI = string(
@@ -64,7 +70,38 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
 
         bytes memory bytes_; // null
 
-        _mintWithURI(creator, id, amount, fullURI, bytes_);
+        _mintWithURI(creator, tokenId, amount, fullURI, bytes_);
+    }
+
+    function issueCredentials(
+        address[] collaborators, //to
+        uint256 amount, // can probably hardcode to 1?
+        string memory creationTitle,
+        Skill skill,
+        string memory totalFunding,
+        string memory totalFunders
+    ) internal {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        // for now just JSON stringify
+        // eventually const tokenURI = "https://your-domain-name.com/credentials/tokens/1";
+        string memory fullURI = string(
+            abi.encodePacked(
+                "{ title: { 'Created ",
+                creationTitle,
+                " with ",
+                totalFunding,
+                " ETH from ",
+                totalFunders,
+                " funders.' } skill: { '",
+                skill,
+                "' } }"
+            )
+        );
+
+        bytes memory bytes_; // null
+
+        _mintBatchWithURI(collaborators, tokenId, amount, fullURI, bytes_);
     }
 
     // The modifier above and all the below methods are from the ERC1238 "Badge" example

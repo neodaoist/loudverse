@@ -84,27 +84,23 @@ abstract contract ERC1238URIStorage is IERC1238URIStorage, ERC1238 {
     }
 
     function _mintBatchWithURI(
-        address to,
-        uint256[] memory ids,
+        address[] to,
+        uint256 memory id,
         uint256[] memory amounts,
-        string[] memory uris,
+        string memory uri,
         bytes memory data
     ) internal virtual {
-        require(to != address(0), "ERC1238: mint to the zero address");
-        require(ids.length == amounts.length, "ERC1238: ids and amounts length mismatch");
-        require(ids.length == uris.length, "ERC1238: ids and URIs length mismatch");
-
         address minter = msg.sender;
 
-        for (uint256 i = 0; i < ids.length; i++) {
-            _beforeMint(minter, to, ids[i], amounts[i], data);
+        for (uint256 i = 0; i < to.length; i++) {
+            _beforeMint(minter, to, id, amounts[i], data);
 
-            _setTokenURI(ids[i], uris[i]);
+            _setTokenURI(id, uri);
 
-            _balances[ids[i]][to] += amounts[i];
+            _balances[id[i]][to] += amounts[i];
         }
 
-        emit MintBatch(minter, to, ids, amounts);
+        emit MintBatch(minter, to, id, amounts);
 
         _doSafeBatchMintAcceptanceCheck(minter, to, ids, amounts, data);
     }

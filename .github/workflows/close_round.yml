@@ -7,29 +7,33 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
+      matchpool_address:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Contract address'
+        description: 'Matchpool address'
         # Default value if no value is explicitly provided
         default: ''
         # Input has to be provided for the workflow to run
         required: true
-        
-      matchpool_address:
-        description: 'Match pool'
-        default: ''
-        required: true
-        
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  funding:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - uses: actions/checkout@v2
     # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Computing funding for contract ${{ github.event.inputs.name }} from pool ${{ github.event.inputs.matchpool_address }}"
+    - name: Where are we
+      run: find .
+    - name: Set up ts-node
+      run: cd packages/next-app/util && yarn add -D ts-node typescript
+    - name: Add ts-node types
+      run: cd packages/next-app/util && yarn add -D @types/node
+    - name: Computed Double-Constrained Quadratic Funding
+      run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_address }}
+
+
