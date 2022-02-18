@@ -34,7 +34,7 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
               };
 
               return (
-                <Button disabled={!connector.ready} key={connector.id} onClick={() => handleClick()}>
+                <Button size="small" disabled={!connector.ready} key={connector.id} onClick={() => handleClick()}>
                   {connector.name}
                   {!connector.ready && " (unsupported)"}
                 </Button>
@@ -57,9 +57,13 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
             </Link>
           )
         ) : !accountData ? (
-          <Button onClick={() => setShowModal(true)}>Connect Wallet</Button>
+          <Button size="small" onClick={() => setShowModal(true)}>
+            Connect Wallet
+          </Button>
         ) : (
-          <Button onClick={disconnect}>Disconnect Wallet</Button>
+          <Button size="small" onClick={disconnect}>
+            Disconnect Wallet
+          </Button>
         )}
       </Box>
     </>

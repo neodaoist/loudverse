@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "degen";
+import { Box, Stack, Text } from "degen";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import Image from "next/image";
 
@@ -8,44 +8,84 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
     <Box
       display="flex"
       flexDirection="column"
+      justifyContent="space-between"
       width="1/2"
-      backgroundColor="foregroundSecondary"
-      borderRadius="medium"
       padding="4"
+      height="auto"
+      alignItems="center"
+      backgroundColor="foregroundSecondary"
+      borderWidth="0.5"
+      borderColor="accent"
+      borderRadius="medium"
     >
-      <Box marginBottom="4">
-        <Text size="extraLarge">{callForFunding.title}</Text>
-        <Text>{callForFunding.description}</Text>
+      <Box margin="auto">
+        <Text align="center" size="extraLarge">
+          {callForFunding?.title}
+        </Text>
+        <Text align="center">{callForFunding?.description}</Text>
       </Box>
-      {/* <Image src={callForFunding.image} width="80" height="80" /> */}
-      <Box marginBottom="4">
+      {/* <Image src={callForFunding?.image} width="80" height="80" /> */}
+      <Box
+        display="flex"
+        position="relative"
+        width="full"
+        margin="4"
+        height="full"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Image
           src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-          width="120"
-          height="120"
-          layout="fixed"
+          layout="fill"
+          objectFit="cover"
         />
       </Box>
-      <Box marginBottom="4">
-        <Text variant="label">Category</Text>
-        <Text variant="large">{callForFunding.category}</Text>
-      </Box>
-      <Box marginBottom="4">
-        <Text variant="label">Genre</Text>
-        <Text variant="large">{callForFunding.genre}</Text>
-      </Box>
-      <Box marginBottom="4">
-        <Text variant="label">Subgenre</Text>
-        <Text variant="large">{callForFunding.subgenre}</Text>
-      </Box>
-      <Box marginBottom="4">
-        <Text variant="label">Deliverable</Text>
-        <Text variant="large">{callForFunding.deliverableMedium}</Text>
-      </Box>
-      <Box>
-        <Text variant="label">Timeline</Text>
-        <Text variant="large">{callForFunding.timelineInDays}</Text>
-      </Box>
+      <Stack direction="horizontal" align="center" space="max">
+        <Stack direction="vertical" align="center">
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Category
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.category}
+            </Text>
+          </Box>
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Genre
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.genre}
+            </Text>
+          </Box>
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Subgenre
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.subgenre}
+            </Text>
+          </Box>
+        </Stack>
+        <Stack direction="vertical" align="center">
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Deliverable
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.deliverableMedium}
+            </Text>
+          </Box>
+          <Box>
+            <Text align="center" variant="label">
+              Timeline
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.timelineInDays}
+            </Text>
+          </Box>
+        </Stack>
+      </Stack>
     </Box>
   );
 };

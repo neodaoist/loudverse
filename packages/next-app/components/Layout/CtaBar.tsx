@@ -34,7 +34,7 @@ const CtaBar = ({
       justifyContent="space-around"
       borderColor="black"
       borderWidth="0.375"
-      marginBottom="16"
+      marginBottom="8"
     >
       <Text>
         More than {distAmt} ETH will be distributed to {numOfCreators} creators this month. Join LOUDVERSE today to
