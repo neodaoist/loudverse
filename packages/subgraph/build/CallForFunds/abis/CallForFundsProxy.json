@@ -207,9 +207,9 @@
     "name": "timelineInDays",
     "outputs": [
       {
-        "internalType": "uint8",
+        "internalType": "uint96",
         "name": "",
-        "type": "uint8"
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",

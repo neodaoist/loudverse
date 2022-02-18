@@ -92,7 +92,6 @@ contract CallForFundsLogic is CallForFundsStorage {
     // Plain ETH transfers.
     receive() external payable {
         emit ContributionReceivedETH(msg.sender, msg.value);
-        _ethx.upgradeByETH();
     }
 
     ISuperfluid private _host; // The superfluid contract that initializes the stream
@@ -120,6 +119,8 @@ contract CallForFundsLogic is CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
+        _ethx.upgradeByETH{value: address(this).balance}();
+
         (int256 ethxBalance, , , ) = _ethx.realtimeBalanceOfNow(address(this));
         int96 timelineInSeconds = int96(timelineInDays) * 86400;
         int96 ethxBalanceInt96 = int96(ethxBalance);
