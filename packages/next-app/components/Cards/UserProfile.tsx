@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Box, Text } from "degen";
 
-const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
+const UserProfile = ({ userDetails }) => {
   return (
     <Box
       display="flex"
@@ -11,6 +11,8 @@ const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
       backgroundColor="foregroundSecondary"
       borderRadius="medium"
       padding="4"
+      borderWidth="0.5"
+      borderColor="accent"
     >
       <Box display="flex" marginBottom="8">
         <Image src={userDetails.image} width="80" height="80" />
@@ -35,7 +37,7 @@ const UserProfile = ({ userDetails }: { userDetails: UserDetailsType }) => {
       </Box>
       <Box>
         <Text variant="label">Favorite quote that describes me</Text>
-        <Text variant="large">"{userDetails.quote}"</Text>
+        <Text variant="large">&quot;{userDetails.quote}&quot;</Text>
       </Box>
     </Box>
   );

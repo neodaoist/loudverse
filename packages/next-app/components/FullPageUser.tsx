@@ -6,6 +6,7 @@ import { User } from "../graph/loudverse-graph-types";
 
 const FullPageUser = () =>
   // { user }: { user: User }
+
   {
     // Dummy data
     const user = {
