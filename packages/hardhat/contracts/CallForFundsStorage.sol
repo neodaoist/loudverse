@@ -24,7 +24,7 @@ contract CallForFundsStorage {
     string public genre;
     string public subgenre;
     string public deliverableMedium;
-    uint8 public timelineInDays;
+    uint96 public timelineInDays;
     uint256 public minFundingAmount;
 
     string public deliverableURI;
