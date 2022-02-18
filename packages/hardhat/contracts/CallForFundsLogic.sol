@@ -94,20 +94,22 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     // Plain ETH transfers.
     receive() external payable {
         emit ContributionReceivedETH(msg.sender, msg.value);
+        _ethx.upgradeByETH();
     }
 
     ISuperfluid private _host; // The superfluid contract that initializes the stream
     IConstantFlowAgreementV1 private _cfa; // The stored constant flow agreement class address
+    SETHProxy private _ethx;
 
     // Can find ISuperToken, host and cfa addresses at https://docs.superfluid.finance/superfluid/protocol-developers/networks
-    constructor(address crowdCommission_, address smartArt_, ISuperfluid host, IConstantFlowAgreementV1 cfa, ISuperToken token)
+    constructor(address crowdCommission_, address smartArt_, ISuperfluid host, IConstantFlowAgreementV1 cfa, SETHProxy ethx)
         CryptoCredential(loudverseAdmin)
     {
         crowdCommission = crowdCommission_;
         smartArt = smartArt_;
         _host = host;
         _cfa = cfa;
-        _token = token;
+        _ethx = ethx;
     }
 
     //======== CREATOR METHODS =========
@@ -116,15 +118,15 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        // balance should be return value of ETHx call
-        int96 flowRate = balance/(timelineInDays * 86400);
+        (uint256 ethxBalance, , ,) = _ethx.realtimeBalanceOfNow(address(this));
+        int96 flowRate = ethxBalance/(timelineInDays * 86400); // Safe in 0.8.0
 
         // Start stream
         _host.callAgreement(
             _cfa,
             abi.encodeWithSelector(
                 _cfa.createFlow.selector,
-                _token, // ETHx or whatever token being streamed
+                _ethx, // ETHx or whatever token being streamed, if this doesn't work use ISuperToken type
                 msg.sender, // plain address
                 flowRate, // wei/sec int96
                 new bytes(0) // placeholder - always pass in bytes(0)
