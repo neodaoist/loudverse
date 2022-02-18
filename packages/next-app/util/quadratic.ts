@@ -1,9 +1,6 @@
-//import FundingCall from "../../components/Cards/FundingCall";
-
 import {getAllCallsForFunds} from "../graph/functions";
 import {CallForFunding} from "../graph/loudverse-graph-types";
-import {all} from "deepmerge";
-
+import { ethers } from "ethers";
 
 /**
  * Holds the state of proposed mathcing and funding for a single CallForFunding during computation and normalization
@@ -193,17 +190,16 @@ class Quadratic {
      *
      * @private
      */
-    private getAvailableFundsForRound(matchPoolAddress: String) : bigint {
-        //if(matchPoolAddress === "test") {
-            return BigInt( 3 * (10^18));
-            /*
+    private async getAvailableFundsForRound(matchPoolAddress: String) : bigint {
+        if(matchPoolAddress === "test") {
+            return (BigInt(3) * BigInt(10**18));
         }
         else
         {
-            return BigInt(0);
-            // FIXME: Look up funding balance
+            const provider = new ethers.providers.JsonRpcProvider();
+            const balance = await provider.getBalance(matchPoolAddress.toString());
+            return balance.toBigInt();
         }
-             */
     }
 
     private applyFunding() {
