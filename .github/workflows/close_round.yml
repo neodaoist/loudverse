@@ -25,11 +25,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - uses: actions/checkout@v2
     # Runs a single command using the runners shell
     - name: Set up ts-node
       run: yarn add -D ts-node typescript
     - name: Add ts-node types
       run: yarn add -D @types/node
+    - name: Where are we
+      run: find .
     - name: Computed Double-Constrained Quadratic Funding
       run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_address }}
+
 
