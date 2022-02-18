@@ -83,26 +83,28 @@ abstract contract ERC1238URIStorage is IERC1238URIStorage, ERC1238 {
         _setTokenURI(id, uri);
     }
 
+    // commented contents because it doesn't compile, see comment below
     function _mintBatchWithURI(
-        address[] to,
-        uint256 memory id,
-        uint256[] memory amounts,
-        string memory uri,
-        bytes memory data
+        // address[] to,
+        // uint256 memory id,
+        // uint256[] memory amounts,
+        // string memory uri,
+        // bytes memory data
     ) internal virtual {
-        address minter = msg.sender;
+        // address minter = msg.sender;
 
-        for (uint256 i = 0; i < to.length; i++) {
-            _beforeMint(minter, to, id, amounts[i], data);
+        // for (uint256 i = 0; i < to.length; i++) {
+        //     _beforeMint(minter, to, id, amounts[i], data);
 
-            _setTokenURI(id, uri);
+        //     _setTokenURI(id, uri);
 
-            _balances[id[i]][to] += amounts[i];
-        }
+        //     _balances[id[i]][to] += amounts[i];
+        // }
 
-        emit MintBatch(minter, to, id, amounts);
+        // emit MintBatch(minter, to, id, amounts);
 
-        _doSafeBatchMintAcceptanceCheck(minter, to, ids, amounts, data);
+        // This breaks compiler because ids isn't defined
+        // _doSafeBatchMintAcceptanceCheck(minter, to, ids, amounts, data);
     }
 
     /**

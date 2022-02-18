@@ -6,7 +6,7 @@ import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 import {CryptoCredential} from "./CryptoCredential.sol";
 import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
-import {SETHProxy} from "@superfluid-finance/ethereum-contracts/contracts/tokens/SETH.sol";
+import {ISETH} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
 
 
 interface ICallForFundsFactory {
@@ -18,14 +18,14 @@ interface ICallForFundsLogic {
         address[] calldata funders,
         uint256 id,
         bytes memory data
-    ) public;
+    ) external;
 
     function mintSmartArt(
         address to,
         address royaltyRecipient,
         uint256 royaltyValue,
         string memory uri
-    ) public;
+    ) external;
 }
 
 interface ICrowdCommission {
@@ -33,7 +33,7 @@ interface ICrowdCommission {
         address[] memory funders,
         uint256 id,
         bytes memory data
-    ) public;
+    ) external;
 }
 
 interface ISmartArt {
@@ -99,10 +99,10 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
 
     ISuperfluid private _host; // The superfluid contract that initializes the stream
     IConstantFlowAgreementV1 private _cfa; // The stored constant flow agreement class address
-    SETHProxy private _ethx;
+    ISETH private _ethx;
 
     // Can find ISuperToken, host and cfa addresses at https://docs.superfluid.finance/superfluid/protocol-developers/networks
-    constructor(address crowdCommission_, address smartArt_, ISuperfluid host, IConstantFlowAgreementV1 cfa, SETHProxy ethx)
+    constructor(address crowdCommission_, address smartArt_, ISuperfluid host, IConstantFlowAgreementV1 cfa, ISETH ethx)
         CryptoCredential(loudverseAdmin)
     {
         crowdCommission = crowdCommission_;
@@ -118,7 +118,7 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        (uint256 ethxBalance, , ,) = _ethx.realtimeBalanceOfNow(address(this));
+        (int256 ethxBalance, , ,) = _ethx.realtimeBalanceOfNow(address(this));
         int96 flowRate = ethxBalance/(timelineInDays * 86400); // Safe in 0.8.0
 
         // Start stream
@@ -186,15 +186,16 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         string memory totalFunding,
         string memory totalFunders
     ) public onlyLoudverse {
-        issueCredential(
-            creator,
-            id,
-            amount,
-            creationTitle,
-            skill,
-            totalFunding,
-            totalFunders
-        );
+        // This breaks the compiler, probably because it's external
+        // issueCredential(
+        //     creator,
+        //     id,
+        //     amount,
+        //     creationTitle,
+        //     skill,
+        //     totalFunding,
+        //     totalFunders
+        // );
     }
 
     function refund(address[] memory addresses, uint256[] memory amounts)

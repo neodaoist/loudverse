@@ -23,7 +23,12 @@ const rinkebyURL = `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`;
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: {
+    compilers: [
+      {version: '0.8.4'},
+      {version: '0.7.6'},
+    ]
+  },
   networks: {
     rinkeby: {
       url: rinkebyURL,

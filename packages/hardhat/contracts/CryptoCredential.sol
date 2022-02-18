@@ -74,7 +74,7 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
     }
 
     function issueCredentials(
-        address[] collaborators, //to
+        address[] memory collaborators, //to
         uint256 amount, // can probably hardcode to 1?
         string memory creationTitle,
         Skill skill,
@@ -100,8 +100,8 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
         );
 
         bytes memory bytes_; // null
-
-        _mintBatchWithURI(collaborators, tokenId, amount, fullURI, bytes_);
+        // Breaks compiler now because this function had an issue
+        // _mintBatchWithURI(collaborators, tokenId, amount, fullURI, bytes_);
     }
 
     // The modifier above and all the below methods are from the ERC1238 "Badge" example
@@ -131,7 +131,7 @@ contract CryptoCredential is ERC1238, ERC1238URIStorage {
         string[] memory uris,
         bytes memory data
     ) external onlyIssuer {
-        _mintBatchWithURI(to, ids, amounts, uris, data);
+        // _mintBatchWithURI(to, ids, amounts, uris, data);
     }
 
     function burn(
