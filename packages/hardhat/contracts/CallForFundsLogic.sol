@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
+pragma abicoder v2;
 
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
+import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
+import {ISETH} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
 
 interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
@@ -12,14 +16,14 @@ interface ICallForFundsLogic {
         address[] calldata funders,
         uint256 id,
         bytes memory data
-    ) public;
+    ) external;
 
     function mintSmartArt(
         address to,
         address royaltyRecipient,
         uint256 royaltyValue,
         string memory uri
-    ) public;
+    ) external;
 }
 
 interface ICrowdCommission {
@@ -27,7 +31,7 @@ interface ICrowdCommission {
         address[] memory funders,
         uint256 id,
         bytes memory data
-    ) public;
+    ) external;
 }
 
 interface ISmartArt {
@@ -88,13 +92,26 @@ contract CallForFundsLogic is CallForFundsStorage {
     // Plain ETH transfers.
     receive() external payable {
         emit ContributionReceivedETH(msg.sender, msg.value);
+        _ethx.upgradeByETH();
     }
 
-    constructor(address crowdCommission_, address smartArt_)
-        CryptoCredential(loudverseAdmin)
-    {
+    ISuperfluid private _host; // The superfluid contract that initializes the stream
+    IConstantFlowAgreementV1 private _cfa; // The stored constant flow agreement class address
+    ISETH private _ethx;
+
+    // Can find ISuperToken, host and cfa addresses at https://docs.superfluid.finance/superfluid/protocol-developers/networks
+    constructor(
+        address crowdCommission_,
+        address smartArt_,
+        ISuperfluid host,
+        IConstantFlowAgreementV1 cfa,
+        ISETH ethx
+    ) {
         crowdCommission = crowdCommission_;
         smartArt = smartArt_;
+        _host = host;
+        _cfa = cfa;
+        _ethx = ethx;
     }
 
     //======== CREATOR METHODS =========
@@ -103,8 +120,24 @@ contract CallForFundsLogic is CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        //TODO #1
-        // Superfluid
+        (int256 ethxBalance, , , ) = _ethx.realtimeBalanceOfNow(address(this));
+        int96 timelineInSeconds = int96(timelineInDays) * 86400;
+        int96 ethxBalanceInt96 = int96(ethxBalance);
+        int96 flowRate = ethxBalanceInt96 / timelineInSeconds; // Safe in 0.8.0
+
+        // Start stream
+        _host.callAgreement(
+            _cfa,
+            abi.encodeWithSelector(
+                _cfa.createFlow.selector,
+                _ethx, // ETHx or whatever token being streamed, if this doesn't work use ISuperToken type
+                msg.sender, // plain address
+                flowRate, // wei/sec int96
+                new bytes(0) // placeholder - always pass in bytes(0)
+            ),
+            "0x" //userData
+        );
+
         setFundingState(FundingState.STREAMING);
     }
 
@@ -146,26 +179,6 @@ contract CallForFundsLogic is CallForFundsStorage {
         //TODO #2
         // mint crowd-commissioned NFT
         ICallForFundsLogic(logicAddress).mintCrowdCommission(funders, id, data);
-    }
-
-    function mintCryptoCredential(
-        address creator, //to
-        uint256 id,
-        uint256 amount, // can probably hardcode to 1?
-        string memory creationTitle,
-        Skill skill,
-        string memory totalFunding,
-        string memory totalFunders
-    ) public onlyLoudverse {
-        issueCredential(
-            creator,
-            id,
-            amount,
-            creationTitle,
-            skill,
-            totalFunding,
-            totalFunders
-        );
     }
 
     function refund(address[] memory addresses, uint256[] memory amounts)

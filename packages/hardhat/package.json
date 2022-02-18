@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.26.0",
+    "@superfluid-finance/ethereum-contracts": "^1.0.0-rc.11",
     "@openzeppelin/contracts": "^4.5.0"
   },
   "devDependencies": {
