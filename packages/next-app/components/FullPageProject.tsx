@@ -38,17 +38,22 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
   // ];
 
   return (
-    <Box display="flex" height="full">
-      {/* <Box>First row (connect button, anything else)</Box> */}
-      <Stack flex={1} justify="stretch" direction="horizontal">
-        <CallDetails callForFunding={call} />
-        <Stack flex={1} justify="stretch">
-          <FundingProgress callForFunding={call} />
-          <ContributionList contributionList={call.contributions} />
-          {/* <ContributionList contributionList={call.contributions} /> */}
+    <>
+      <Text align="center" size="headingTwo">
+        Call for Funds
+      </Text>
+      <Box display="flex" height="fit" width="full" marginTop="4">
+        {/* <Box>First row (connect button, anything else)</Box> */}
+        <Stack flex={1} justify="stretch" direction="horizontal">
+          <CallDetails callForFunding={call} />
+          <Stack flex={1} justify="stretch">
+            <FundingProgress callForFunding={call} />
+            <ContributionList contributionList={call?.contributions} />
+            {/* <ContributionList contributionList={call.contributions} /> */}
+          </Stack>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </>
   );
 };
 

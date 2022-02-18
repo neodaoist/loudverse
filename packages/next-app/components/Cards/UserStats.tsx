@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Text } from "degen";
 
-const UserStats = ({ stats }: { stats: UserStatsType }) => {
+const UserStats = ({ stats }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4" borderWidth="0.5" borderColor="accent">
       <Box marginBottom="4">
         <Text size="large">
           Raised {stats.raised} DAI for {stats.projects} projects

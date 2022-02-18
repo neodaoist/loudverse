@@ -4,15 +4,12 @@ import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import FullPageCallDetails from "../../components/FullPageProject";
 import PageWrapper from "../../components/Layout/PageWrapper";
-import CenterColumn from "../../components/Layout/CenterColumn";
 
 const Call = ({ call }: { call: CallForFunding }) => {
   return (
-    <CenterColumn>
-      <PageWrapper>
-        <FullPageCallDetails call={call} />
-      </PageWrapper>
-    </CenterColumn>
+    <PageWrapper>
+      <FullPageCallDetails call={call} />
+    </PageWrapper>
   );
 };
 

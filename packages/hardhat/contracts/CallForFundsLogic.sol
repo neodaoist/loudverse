@@ -3,11 +3,9 @@ pragma solidity ^0.8.2;
 pragma abicoder v2;
 
 import {CallForFundsStorage} from "./CallForFundsStorage.sol";
-import {CryptoCredential} from "./CryptoCredential.sol";
 import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {ISETH} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
-
 
 interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
@@ -45,7 +43,7 @@ interface ISmartArt {
     ) external;
 }
 
-contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
+contract CallForFundsLogic is CallForFundsStorage {
     address public immutable crowdCommission;
     address public immutable smartArt;
     address public factory;
@@ -102,9 +100,13 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
     ISETH private _ethx;
 
     // Can find ISuperToken, host and cfa addresses at https://docs.superfluid.finance/superfluid/protocol-developers/networks
-    constructor(address crowdCommission_, address smartArt_, ISuperfluid host, IConstantFlowAgreementV1 cfa, ISETH ethx)
-        CryptoCredential(loudverseAdmin)
-    {
+    constructor(
+        address crowdCommission_,
+        address smartArt_,
+        ISuperfluid host,
+        IConstantFlowAgreementV1 cfa,
+        ISETH ethx
+    ) {
         crowdCommission = crowdCommission_;
         smartArt = smartArt_;
         _host = host;
@@ -118,8 +120,8 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        (int256 ethxBalance, , ,) = _ethx.realtimeBalanceOfNow(address(this));
-        int96 flowRate = ethxBalance/(timelineInDays * 86400); // Safe in 0.8.0
+        (int256 ethxBalance, , , ) = _ethx.realtimeBalanceOfNow(address(this));
+        int96 flowRate = ethxBalance / (timelineInDays * 86400); // Safe in 0.8.0
 
         // Start stream
         _host.callAgreement(
@@ -175,27 +177,6 @@ contract CallForFundsLogic is CryptoCredential, CallForFundsStorage {
         //TODO #2
         // mint crowd-commissioned NFT
         ICallForFundsLogic(logicAddress).mintCrowdCommission(funders, id, data);
-    }
-
-    function mintCryptoCredential(
-        address creator, //to
-        uint256 id,
-        uint256 amount, // can probably hardcode to 1?
-        string memory creationTitle,
-        Skill skill,
-        string memory totalFunding,
-        string memory totalFunders
-    ) public onlyLoudverse {
-        // This breaks the compiler, probably because it's external
-        // issueCredential(
-        //     creator,
-        //     id,
-        //     amount,
-        //     creationTitle,
-        //     skill,
-        //     totalFunding,
-        //     totalFunders
-        // );
     }
 
     function refund(address[] memory addresses, uint256[] memory amounts)

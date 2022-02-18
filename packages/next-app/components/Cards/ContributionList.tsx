@@ -2,22 +2,34 @@ import React from "react";
 import { Box, Tag, Text } from "degen";
 import { Contribution } from "../../graph/loudverse-graph-types";
 import { ethers } from "ethers";
+import { toTrimmedAddress } from "../../utils";
+import Link from "next/link";
 
 const ContributionList = ({ contributionList }: { contributionList: Contribution[] }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
+    <Box padding="4" backgroundColor="foregroundSecondary" borderWidth="0.5" borderColor="accent" borderRadius="medium">
       <Box marginBottom="4">
         <Text size="extraLarge">Project Contributions</Text>
       </Box>
-      {contributionList.map((contribution, i) => (
-        <Box key={i} marginBottom="4">
-          {/* TODO add timestamp to graph schema */}
-          <Text size="small">{contribution.timestamp}</Text>
-          <Text>
-            {contribution.user.id} funded {ethers.utils.formatEther(contribution.amount)} ETH
-          </Text>
-        </Box>
-      ))}
+      <Box overflow="scroll" maxHeight="48">
+        {contributionList?.length &&
+          contributionList.map((contribution, i) => {
+            const date = new Date(contribution?.timestamp * 1000).toDateString().toString();
+
+            return (
+              <Box key={i} marginBottom="4">
+                {/* TODO add timestamp to graph schema */}
+                <Text>
+                  <Link href={`/users/${contribution?.user.id}`} passHref>
+                    <a>{toTrimmedAddress(contribution?.user.id)}</a>
+                  </Link>{" "}
+                  funded {ethers.utils.formatEther(contribution?.amount)} ETH
+                </Text>
+                <Text size="small">{date}</Text>
+              </Box>
+            );
+          })}
+      </Box>
     </Box>
   );
 };
