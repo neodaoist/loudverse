@@ -134,8 +134,13 @@ const Home: NextPage = () => {
             </Box>
           </Box>
           {divider}
-          <Box>
-            <Text size="large">© 2022 LOUDVERSE. All rights reserved.</Text>
+          <Box marginBottom="8">
+            <Box marginBottom="2">
+              <Text size="large">© 2022 LOUDVERSE. All rights reserved.</Text>
+            </Box>
+            <Text>
+              💚 <em>Helping artists ship creative work</em> 💚
+            </Text>
           </Box>
           {/* <h2>Keeping links for convenience for the moment</h2>
           <Link href="/calls">
