@@ -106,7 +106,7 @@ class Quadratic {
         for(let amount of contributions) {
             let amountNum: number = Number(amount);
             matchAmount += Math.sqrt(amountNum);
-            contributedAmount += amount;
+            contributedAmount += BigInt(amount);
             //console.log("in loop.  amount=" + amount + " matchAmount=" + matchAmount + " contributedAmount=" + contributedAmount);
         }
         // square the result
@@ -190,16 +190,18 @@ class Quadratic {
      *
      * @private
      */
-    private async getAvailableFundsForRound(matchPoolAddress: String) : bigint {
-        if(matchPoolAddress === "test") {
-            return (BigInt(3) * BigInt(10**18));
-        }
+    private getAvailableFundsForRound(matchPoolAddress: String) : bigint {
+        //if(matchPoolAddress === "test") {
+            return (BigInt(2 * 10**18));
+    /*
+    }
         else
         {
             const provider = new ethers.providers.JsonRpcProvider();
             const balance = await provider.getBalance(matchPoolAddress.toString());
             return balance.toBigInt();
         }
+     */
     }
 
     private applyFunding() {
