@@ -503,6 +503,10 @@ export class DeliverCall__Inputs {
   get deliverableURI_(): string {
     return this._call.inputValues[0].value.toString();
   }
+
+  get slicerAddress(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
 }
 
 export class DeliverCall__Outputs {

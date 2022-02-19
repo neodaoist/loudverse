@@ -8,7 +8,7 @@ dataSources:
     name: CallForFundsFactory
     network: rinkeby
     source:
-      address: "0xA4aD51d9A279B5aD9Fd0AceA39FB76311037dcfc"
+      address: "0x146f4d0CB5221E27CB4E85e8e9eeD586b6738A15"
       abi: CallForFundsFactory
       startBlock: 10179483
     mapping:
