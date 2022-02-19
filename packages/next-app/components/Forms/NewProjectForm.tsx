@@ -47,18 +47,18 @@ const NewProjectForm = () => {
   };
 
   return (
-    <Box width="full" justifyContent="center" marginX="16">
+    <Box width="3/4" justifyContent="center" marginX="16">
       <FieldSet legend="Open new call for funds">
         <Input
           name="title"
           onChange={e => handleChange(e)}
-          label="title"
+          label="Title"
           placeholder="Give your project a compelling title"
         />
         <Input
           name="description"
           onChange={e => handleChange(e)}
-          label="description"
+          label="Description"
           placeholder="Describe your product's vision - Why is it awesome? How will it make a positive contibution to the world?"
         />
         <Box display="flex">
