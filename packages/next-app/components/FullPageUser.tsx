@@ -10,7 +10,7 @@ const FullPageUser = () =>
   {
     // Dummy data
     const user = {
-      image: "https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg",
+      image: "/../public/wellwisher.png",
       name: "@wellwisher.eth",
       tagline: "A composer with a flair for the pragmatic",
       website: "https://wellwisher.xyz",

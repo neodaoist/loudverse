@@ -35,7 +35,11 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         alignItems="center"
       >
         <Box height="76">
-          <Image src="/../public/wellwisher.png" layout="fill" objectFit="contain" />
+          <Image
+            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
+            layout="fill"
+            objectFit="contain"
+          />
         </Box>
       </Box>
       <Stack direction="horizontal" align="center" space="16">
