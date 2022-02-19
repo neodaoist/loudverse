@@ -17,6 +17,8 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     },
   });
 
+  console.log(callForFunding?.minFundingAmount);
+
   let callToAction;
 
   useEffect(() => {
@@ -94,14 +96,15 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
 
       {/* <Text size="extraLarge">[------Progress Bar--------]</Text> */}
       <ProgressBar percent={percentFunded} />
+      <Text align="center">Minimum Funding Amount: {ethers.utils.formatEther(callForFunding.minFundingAmount)}</Text>
       <Box display="flex" alignItems="flex-end" marginBottom="4">
         {callToAction}
       </Box>
       <Box marginBottom="4">
         <Text size="large">
-          {/* {callForFunding?.lifetimeFundsReceived
+          {callForFunding?.lifetimeFundsReceived
             ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)
-            : 0} */}{" "}
+            : 0}{" "}
           ETH from {callForFunding?.contributions.length} funders. <br /> with estimated Z match
         </Text>
       </Box>
