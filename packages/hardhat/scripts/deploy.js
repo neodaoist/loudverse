@@ -97,12 +97,10 @@ async function main() {
     "Classical Music", // _genre
     "String Quartet", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((1).toFixed(10), // _minFundingAmount
+    ethers.utils.parseEther((1).toFixed(10)), // _minFundingAmount
     "Recording as audio/mp3, Score as text/pdf" // _deliverableMedium
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
-  console.log(JSON.stringify(solarpunkProxyReceipt.events[0]));
-
   const buffigweiProxy = await factoryWithSigner.createCallForFunds(
     "Buff Buffigwei", // _title
     "An immersive animation that tells the story when small becomes big", // _description
@@ -111,9 +109,10 @@ async function main() {
     "TODO", // _genre
     "TODO", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((0.5).toFixed(10), // _minFundingAmount
+    ethers.utils.parseEther((0.5).toFixed(10)), // _minFundingAmount
     "TODO" // _deliverableMedium
   );
+
   const buffigweiProxyReceipt = await buffigweiProxy.wait();
   console.log(buffigweiProxyReceipt);
 
