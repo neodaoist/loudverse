@@ -2,6 +2,8 @@ import { getAllCallsForFunds } from "../graph/functions";
 import { CallForFunding } from "../graph/loudverse-graph-types";
 import { Contract, ethers } from "ethers";
 import CFFLogicJSON from "../abis/CallForFundsLogic.json";
+import {SigningKey} from "@ethersproject/signing-key";
+import {HexString} from "walletlink/dist/types";
 
 /**
  * Holds the state of proposed mathcing and funding for a single CallForFunding during computation and normalization
@@ -222,12 +224,20 @@ class Quadratic {
     console.log("Round results:");
     console.log("Failed calls for funds:");
 
+
     const logicABI = CFFLogicJSON.abi;
-    const deployer = new ethers.Wallet(this.poolKey as string, ethers.getDefaultProvider());
+
+    const rinkebyURL = "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02";
+    const deployer = new ethers.Wallet(
+        HexString(this.poolKey.toString()),
+        new ethers.providers.JsonRpcProvider(rinkebyURL)
+  );
 
     const initializeProxyWDeployer = ({ proxyAddress }: { proxyAddress: string }) => {
       return new ethers.Contract(proxyAddress, logicABI, deployer);
     };
+
+
 
     for (const contract of this.failedContracts) {
       console.log(contract.id + " (" + contract.title + ") min: " + contract.minFundingAmount);
@@ -242,7 +252,7 @@ class Quadratic {
       const tx = await initializeProxyWDeployer({ proxyAddress: contract.id }).matchCallForFunds(
         funders,
         lcv,
-        ethers.utils.formatBytes32String(""),
+        ethers.utils.formatBytes32String(""), {gasLimit: 2000000}
       );
       console.log(tx.wait());
 
