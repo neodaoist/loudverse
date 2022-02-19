@@ -27,8 +27,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # Runs a single command using the runners shell
-    - name: Where are we
-      run: find .
     - name: Set up ts-node
       run: cd packages/next-app/util && yarn add -D ts-node typescript
     - name: Add ts-node types
