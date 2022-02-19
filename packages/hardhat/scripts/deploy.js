@@ -97,7 +97,7 @@ async function main() {
     "Classical Music", // _genre
     "String Quartet", // _subgenre
     90, // _timelineInDays
-    1, // _minFundingAmount
+    ethers.utils.parseEther((1).toFixed(10), // _minFundingAmount
     "Recording as audio/mp3, Score as text/pdf" // _deliverableMedium
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
@@ -111,7 +111,7 @@ async function main() {
     "TODO", // _genre
     "TODO", // _subgenre
     90, // _timelineInDays
-    1, // _minFundingAmount
+    ethers.utils.parseEther((0.5).toFixed(10), // _minFundingAmount
     "TODO" // _deliverableMedium
   );
   const buffigweiProxyReceipt = await buffigweiProxy.wait();
