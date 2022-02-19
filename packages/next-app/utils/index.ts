@@ -18,7 +18,7 @@ const uploadNFT = async (): Promise<string> => {
   return metadata.url;
 };
 
-export const cffFactoryAddress = "0x72fAA2810Eaf7A86266A08A1667D1a8715E3Ab7C";
+export const cffFactoryAddress = "0xA4aD51d9A279B5aD9Fd0AceA39FB76311037dcfc";
 
 export function toTrimmedAddress(value: string): string {
   if (!value) return "";

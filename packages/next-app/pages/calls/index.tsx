@@ -1,6 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import { Box, Stack, Text } from "degen";
+import { Box, Stack, Text, Heading } from "degen";
 
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
@@ -18,10 +18,8 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
       </Head> */}
       <PageWrapper>
         <CtaBar distAmt="2.7" numOfCreators="5" />
-        <Box marginBottom="2">
-          <Text align="center" size="headingTwo">
-            Open Calls for Funds
-          </Text>
+        <Box marginBottom="4" marginLeft="4">
+          <Heading level="2">Open Calls for Funds</Heading>
         </Box>
         <Stack flex={1} direction="horizontal" space="0" wrap>
           {calls.map((call, i) => (

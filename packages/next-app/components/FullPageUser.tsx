@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "degen";
+import { Box, Heading, Stack, Text } from "degen";
 import UserProfile from "./Cards/UserProfile";
 import UserStats from "./Cards/UserStats";
 import ProjectHistory from "./Cards/ProjectHistory";
@@ -10,16 +10,16 @@ const FullPageUser = () =>
   {
     // Dummy data
     const user = {
-      image: "https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg",
+      image: "/../public/wellwisher.png",
       name: "@wellwisher.eth",
       tagline: "A composer with a flair for the pragmatic",
       website: "https://wellwisher.xyz",
       description: "Contemporary classical composer",
-      inspiration: "Dimitri Shostakovich",
+      inspiration: "Dmitri Shostakovich",
       quote: "Don't try to prove yourself. Improve yourself.",
     };
     const stats = {
-      raised: "1337",
+      raised: "1.337",
       projects: "2",
       collaborators: "3",
       current: "Solarpunk Strings",
@@ -44,14 +44,19 @@ const FullPageUser = () =>
     ];
 
     return (
-      <Box display="flex" width="full">
-        <Stack direction="horizontal" flex={1}>
-          <UserProfile userDetails={user} />
-          <Stack flex={1}>
-            <UserStats stats={stats} />
-            <ProjectHistory history={history} />
+      <Box>
+        <Box marginBottom="4">
+          <Heading level="2">User Profile</Heading>
+        </Box>
+        <Box display="flex" width="full">
+          <Stack direction="horizontal" flex={1}>
+            <UserProfile userDetails={user} />
+            <Stack flex={1}>
+              <UserStats stats={stats} />
+              <ProjectHistory history={history} />
+            </Stack>
           </Stack>
-        </Stack>
+        </Box>
       </Box>
     );
   };

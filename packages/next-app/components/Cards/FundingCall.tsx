@@ -4,6 +4,7 @@ import { CallForFunding } from "../../graph/loudverse-graph-types";
 import Image from "next/image";
 import { ethers } from "ethers";
 import Link from "next/link";
+import { toTrimmedAddress } from "../../utils";
 
 const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding; index: number }) => {
   const categoryColor = () => {
@@ -34,25 +35,39 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
         backgroundColor="foregroundSecondary"
         padding="4"
         borderRadius="medium"
-        minHeight="64"
+        minHeight="96"
         // onClick={() => router.push(`/calls/${callForFunding?.id}`)}
         // onClick={() => router.push(`/calls/${index}`)}
         cursor="pointer"
       >
         <Box>
-          <Box display="flex" justifyContent="space-between" alignItems="baseline">
-            <Text size="extraLarge">{callForFunding?.title}</Text>
-            <Tag tone={categoryColor()}>{callForFunding?.category}</Tag>
+          <Box display="flex" justifyContent="space-between" alignItems="baseline" marginY="2">
+            <Text size="extraLarge" weight="semiBold">
+              {callForFunding?.title}
+            </Text>
+            <Text transform="lowercase">
+              <Box marginLeft="2">
+                <Tag tone={categoryColor()}>{callForFunding?.category}</Tag>
+              </Box>
+            </Text>
           </Box>
           <Text>{callForFunding?.description}</Text>
+          {/* <Text align="center" variant="label">
+            Created by: {toTrimmedAddress(callForFunding?.creator.id)}
+          </Text> */}
         </Box>
-        <Box display="inline-block" marginX="auto" justifyContent="center" position="relative">
-          <Image
-            src={"https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg" ?? callForFunding?.image}
-            alt="Call For Funding's cover image"
-            width="128"
-            height="128"
-          />
+        <Box
+          marginX="auto"
+          justifyContent="center"
+          marginY="2"
+          display="flex"
+          position="relative"
+          width="full"
+          margin="4"
+          height="full"
+          alignItems="center"
+        >
+          <Image src={callForFunding?.image} alt="Call For Funding's cover image" layout="fill" objectFit="cover" />
         </Box>
         <Text>
           {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} ETH funded by ${

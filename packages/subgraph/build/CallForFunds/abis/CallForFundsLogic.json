@@ -10,21 +10,6 @@
         "internalType": "address",
         "name": "smartArt_",
         "type": "address"
-      },
-      {
-        "internalType": "contract ISuperfluid",
-        "name": "host",
-        "type": "address"
-      },
-      {
-        "internalType": "contract IConstantFlowAgreementV1",
-        "name": "cfa",
-        "type": "address"
-      },
-      {
-        "internalType": "contract ISETH",
-        "name": "ethx",
-        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -112,6 +97,45 @@
     ],
     "name": "WorkDelivered",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "_cfa",
+    "outputs": [
+      {
+        "internalType": "contract IConstantFlowAgreementV1",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_ethx",
+    "outputs": [
+      {
+        "internalType": "contract ISETH",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_host",
+    "outputs": [
+      {
+        "internalType": "contract ISuperfluid",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -404,7 +428,7 @@
     "inputs": [],
     "name": "startStream",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {

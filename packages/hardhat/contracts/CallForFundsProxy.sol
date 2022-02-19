@@ -17,7 +17,7 @@ contract CallForFundsProxy is CallForFundsStorage {
         string memory genre_,
         string memory subgenre_,
         string memory deliverableMedium_,
-        uint8 timelineInDays_,
+        uint96 timelineInDays_,
         uint256 minFundingAmount_
     ) {
         logicAddress = ICallForFundsFactory(msg.sender).logicAddress();

@@ -30,10 +30,7 @@ async function main() {
   );
   const logic = await CallForFundsLogic.deploy(
     crowdCommission.address,
-    smartArt.address,
-    "0xeD5B5b32110c3Ded02a07c8b8e97513FAfb883B6",
-    "0xF4C5310E51F6079F601a5fb7120bC72a70b96e2A",
-    "0xa623b2DD931C5162b7a0B25852f4024Db48bb1A0"
+    smartArt.address
   );
   await logic.deployed();
 
@@ -62,27 +59,15 @@ async function main() {
   }
 
   // wait for polygonscan before verifying
-  await new Promise((resolve) => setTimeout(resolve, 60000));
-  try {
-    await run("verify:verify", {
-      address: logic.address,
-      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
-    });
-
-    await run("verify:verify", {
-      address: factory.address,
-      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
-      constructorArguments: [logic.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await new Promise((resolve) => setTimeout(resolve, 30000));
 
   // automate first 5 grants being created
   const deployer = new ethers.Wallet(
     process.env.PRIVATE_KEY,
     new ethers.providers.JsonRpcProvider(rinkebyURL)
   );
+
+  await logic.connect(deployer).setFactory(factory.address);
 
   await crowdCommission.connect(deployer).transferOwnership(logic.address);
   await smartArt.connect(deployer).transferOwnership(logic.address);
@@ -97,10 +82,11 @@ async function main() {
     "generative art", // _genre
     "fractal/algorithmic", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((1).toFixed(10)), // _minFundingAmount
+    1, // _minFundingAmount
     "image/jpeg" // _deliverableMedium
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
+
   const buffigweiProxy = await factoryWithSigner.createCallForFunds(
     "¿Quien Llamo Carlo?", // _title
     "@carlo-davidoff.eth is producing multilingual synthwave about identity lost and recovered", // _description
@@ -109,7 +95,7 @@ async function main() {
     "electronic", // _genre
     "synthwave", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((0.5).toFixed(10)), // _minFundingAmount
+    ethers.utils.parseUnits("0.5", "ether"), // _minFundingAmount
     "audio/mp3" // _deliverableMedium
   );
 
@@ -152,7 +138,7 @@ async function main() {
     "generative animation", // _genre
     "dynamic painting", // _subgenre
     90, // _timelineInDays
-    1, // _minFundingAmount
+    ethers.utils.parseUnits("1", "ether"), // _minFundingAmount
     "video/mp4" // _deliverableMedium
   );
   const carlosProxyReceipt = await carlosProxy.wait();
@@ -254,6 +240,65 @@ async function main() {
       });
       // console.log(tx);
     }
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 30000));
+
+  try {
+    await run("verify:verify", {
+      address: logic.address,
+      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
+      constructorArguments: [crowdCommission.address, smartArt.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await run("verify:verify", {
+      address: factory.address,
+      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
+      constructorArguments: [logic.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: crowdCommission.address,
+      contract: "contracts/CrowdCommission.sol:CrowdCommission",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: smartArt.address,
+      contract: "contracts/SmartArt.sol:SmartArt",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await run("verify:verify", {
+      address: solarpunkProxyReceipt.events[0].args[0],
+      contract: "contracts/CallForFundsProxy.sol:CallForFundsProxy",
+      constructorArguments: [
+        deployer.address,
+        "B is 4 Bufficorn", // _title
+        "@vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+        "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
+        "digital art", // _category
+        "generative art", // _genre
+        "fractal/algorithmic", // _subgenre
+        "image/jpeg", // _deliverableMedium
+        90, // _timelineInDays
+        1, // _minFundingAmount
+      ],
+    });
+  } catch (error) {
+    console.log(error);
   }
 }
 

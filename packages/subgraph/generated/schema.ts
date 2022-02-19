@@ -23,7 +23,7 @@ export class CallForFunding extends Entity {
     this.set("category", Value.fromString(""));
     this.set("genre", Value.fromString(""));
     this.set("subgenre", Value.fromString(""));
-    this.set("timelineInDays", Value.fromI32(0));
+    this.set("timelineInDays", Value.fromBigInt(BigInt.zero()));
     this.set("minFundingAmount", Value.fromBigInt(BigInt.zero()));
     this.set("deliverableMedium", Value.fromString(""));
     this.set("fundingState", Value.fromI32(0));
@@ -120,13 +120,13 @@ export class CallForFunding extends Entity {
     this.set("subgenre", Value.fromString(value));
   }
 
-  get timelineInDays(): i32 {
+  get timelineInDays(): BigInt {
     let value = this.get("timelineInDays");
-    return value!.toI32();
+    return value!.toBigInt();
   }
 
-  set timelineInDays(value: i32) {
-    this.set("timelineInDays", Value.fromI32(value));
+  set timelineInDays(value: BigInt) {
+    this.set("timelineInDays", Value.fromBigInt(value));
   }
 
   get minFundingAmount(): BigInt {

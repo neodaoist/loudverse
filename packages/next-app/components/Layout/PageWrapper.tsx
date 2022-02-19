@@ -5,7 +5,7 @@ const PageWrapper = ({ children }) => {
   return (
     <Box height="viewHeight" display="flex" alignItems="center" flexDirection="column">
       <Navbar />
-      <Box width="full" maxWidth="screenXl" marginX="16" backgroundColor="backgroundSecondary">
+      <Box width="full" maxWidth="screenXl" marginX="16" paddingBottom="16" backgroundColor="backgroundSecondary">
         {children}
       </Box>
     </Box>

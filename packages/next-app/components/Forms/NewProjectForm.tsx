@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { Box, Button, FieldSet, Input, MediaPicker } from "degen";
-import { useContract, useSigner } from "wagmi";
+import { Box, Button, FieldSet, Input, MediaPicker, Text } from "degen";
+import { useContract, useContractWrite, useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
 import { cffFactoryAddress } from "../../utils";
+import { useRouter } from "next/router";
+
+const initializeFactoryWSigner = signer => {
+  return new ethers.Contract(cffFactoryAddress, CallForFundsFactory.abi, signer);
+};
 
 const NewProjectForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: " ",
     description: " ",
@@ -18,16 +24,11 @@ const NewProjectForm = () => {
     deliverableMedium: " ",
   });
 
-  const [{ data, error, loading }, getSigner] = useSigner();
+  const [{ data }, getSigner] = useSigner();
 
-  const contract = useContract({
-    addressOrName: cffFactoryAddress,
-    contractInterface: CallForFundsFactory.abi,
-    signerOrProvider: data,
-  });
-
-  const onClick = () => {
-    contract.createCallForFunds(
+  const onClick = async () => {
+    const factoryWrite = initializeFactoryWSigner(await getSigner());
+    const tx = await factoryWrite.createCallForFunds(
       formData.title,
       formData.description,
       formData.image,
@@ -38,6 +39,12 @@ const NewProjectForm = () => {
       ethers.utils.parseEther(formData.minFundingAmount),
       formData.deliverableMedium,
     );
+
+    const receipt = await tx.wait();
+    if (receipt) {
+      console.log(receipt);
+      router.push(`/calls/${receipt.events[0].args[0]}`);
+    }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prevState => ({
@@ -47,116 +54,125 @@ const NewProjectForm = () => {
   };
 
   return (
-    <Box width="full" justifyContent="center" marginX="16">
-      <FieldSet legend="Create New Call For Funds">
+    <Box width="3/4" justifyContent="center" marginX="16">
+      <FieldSet legend="Open new call for funds">
         <Input
           name="title"
           onChange={e => handleChange(e)}
-          label="title"
+          label="Title"
           placeholder="Give your project a compelling title"
         />
         <Input
           name="description"
           onChange={e => handleChange(e)}
-          label="description"
+          label="Description"
           placeholder="Describe your product's vision - Why is it awesome? How will it make a positive contibution to the world?"
         />
+        <Box marginLeft="4">
+          <Text weight="semiBold">Select categories</Text>
+        </Box>
         <Box display="flex">
-          <select className="select" name="category" id="category-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Music">
-              Music
-            </option>
-            <option className="select-options" value="Photography">
-              Photography
-            </option>
-            <option className="select-options" value="Painting">
-              Painting
-            </option>
-            <option className="select-options" value="Digital Art">
-              Digital Art
-            </option>
-            <option className="select-options" value="Animation">
-              Animation
-            </option>
-            <option className="select-options" value="Film">
-              Film
-            </option>
-            <option className="select-options" value="Sculpture">
-              Sculpture
-            </option>
-            <option className="select-options" value="Poetry">
-              Poetry
-            </option>
-            <option className="select-options" value="Play">
-              Play
-            </option>
-            <option className="select-options" value="Dance">
-              Dance
-            </option>
-          </select>
-          <select className="select" name="genre" id="genre-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Ambient">
-              Ambient
-            </option>
-            <option className="select-options" value="Blues">
-              Blues
-            </option>
-            <option className="select-options" value="Country">
-              Country
-            </option>
-            <option className="select-options" value="Classical">
-              Classical
-            </option>
-            <option className="select-options" value="EDM">
-              EDM
-            </option>
-            <option className="select-options" value="Latin">
-              Latin
-            </option>
-            <option className="select-options" value="Hip Hop">
-              Hip Hop
-            </option>
-            <option className="select-options" value="Jazz">
-              Jazz
-            </option>
-            <option className="select-options" value="Rock">
-              Rock
-            </option>
-            <option className="select-options" value="World">
-              World
-            </option>
-          </select>
-          <select className="select" name="subgenre" id="subgenre-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Flute Sonata">
-              Flute Sonata
-            </option>
-            <option className="select-options" value="Orchestral">
-              Orchestral
-            </option>
-            <option className="select-options" value="Piano Sonata">
-              Piano Sonata
-            </option>
-            <option className="select-options" value="String Quartet">
-              String Quartet
-            </option>
-            <option className="select-options" value="Violin Sonata">
-              Violin Sonata
-            </option>
-          </select>
+          <Box>
+            <select className="select" name="category" id="category-select">
+              <option className="select-options" value="">
+                Category
+              </option>
+              <option className="select-options" value="Music">
+                Music
+              </option>
+              <option className="select-options" value="Photography">
+                Photography
+              </option>
+              <option className="select-options" value="Painting">
+                Painting
+              </option>
+              <option className="select-options" value="Digital Art">
+                Digital Art
+              </option>
+              <option className="select-options" value="Animation">
+                Animation
+              </option>
+              <option className="select-options" value="Film">
+                Film
+              </option>
+              <option className="select-options" value="Sculpture">
+                Sculpture
+              </option>
+              <option className="select-options" value="Poetry">
+                Poetry
+              </option>
+              <option className="select-options" value="Play">
+                Play
+              </option>
+              <option className="select-options" value="Dance">
+                Dance
+              </option>
+            </select>
+          </Box>
+          <Box marginLeft="8">
+            <select className="select" name="genre" id="genre-select">
+              <option className="select-options" value="">
+                Genre
+              </option>
+              <option className="select-options" value="Ambient">
+                Ambient
+              </option>
+              <option className="select-options" value="Blues">
+                Blues
+              </option>
+              <option className="select-options" value="Country">
+                Country
+              </option>
+              <option className="select-options" value="Classical">
+                Classical
+              </option>
+              <option className="select-options" value="EDM">
+                EDM
+              </option>
+              <option className="select-options" value="Latin">
+                Latin
+              </option>
+              <option className="select-options" value="Hip Hop">
+                Hip Hop
+              </option>
+              <option className="select-options" value="Jazz">
+                Jazz
+              </option>
+              <option className="select-options" value="Rock">
+                Rock
+              </option>
+              <option className="select-options" value="World">
+                World
+              </option>
+            </select>
+          </Box>
+          <Box marginLeft="8">
+            <select className="select" name="subgenre" id="subgenre-select">
+              <option className="select-options" value="">
+                Subgenre
+              </option>
+              <option className="select-options" value="Flute Sonata">
+                Flute Sonata
+              </option>
+              <option className="select-options" value="Orchestral">
+                Orchestral
+              </option>
+              <option className="select-options" value="Piano Sonata">
+                Piano Sonata
+              </option>
+              <option className="select-options" value="String Quartet">
+                String Quartet
+              </option>
+              <option className="select-options" value="Violin Sonata">
+                Violin Sonata
+              </option>
+            </select>
+          </Box>
         </Box>
         <Input
           name="minFundingAmount"
           label="Minimum funding goal"
-          placeholder="How much is the minimum funding you need"
+          placeholder="What is the minimum amount of ETH you need"
         />
         <Input
           name="deliverableMedium"

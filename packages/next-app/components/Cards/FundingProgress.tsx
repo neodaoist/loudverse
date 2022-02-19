@@ -3,27 +3,34 @@ import { Box, Button, Input, Text } from "degen";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
 import { useAccount, useSigner, useTransaction } from "wagmi";
+import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
 import { ethers } from "ethers";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   const [{ data: accountData }, disconnect] = useAccount();
-  // const [{ data, error, loading }, getSigner] = useSigner()
+  const [{ error, loading }, getSigner] = useSigner();
   const [isOwner, setIsOwner] = useState(false);
   const [amountToContribute, setAmountToContribute] = useState("0");
-  const [{ data, error, loading }, sendTransaction] = useTransaction({
+  const [{ data }, sendTransaction] = useTransaction({
     request: {
       to: callForFunding?.id,
       value: ethers.utils.parseEther(amountToContribute), // 1 ETH
     },
   });
 
+  console.log(callForFunding?.minFundingAmount);
+
   let callToAction;
 
   useEffect(() => {
+    console.log(`${accountData?.address}\n${callForFunding?.creator?.id}`);
     if (accountData?.address?.toLowerCase() === callForFunding?.creator?.id) {
       setIsOwner(true);
+      console.log("YESSSS");
+    } else {
+      console.log(`nooo`);
     }
-  }, [callForFunding, accountData]);
+  }, [callForFunding, accountData?.address, disconnect]);
 
   const fundingState = () => {
     switch (callForFunding?.fundingState) {
@@ -48,8 +55,26 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     percentFunded = "0";
   }
 
+  const initializeProxyWSigner = signer => {
+    return new ethers.Contract(callForFunding?.id, CallForFundsLogic.abi, signer);
+  };
+
+  const startStream = async () => {
+    const proxyWrite = initializeProxyWSigner(await getSigner());
+    const tx = await proxyWrite.startStream({ gasLimit: 10000000 });
+
+    const receipt = await tx.wait();
+    if (receipt) {
+      console.log(receipt);
+    }
+  };
+
   if (isOwner && callForFunding?.fundingState === 2) {
-    callToAction = <Button>Start Streaming Funds</Button>;
+    callToAction = (
+      <Box justifySelf="center">
+        <Button onClick={() => startStream()}>Start Streaming Funds</Button>
+      </Box>
+    );
   } else if (accountData?.address && !isOwner) {
     callToAction = (
       <>
@@ -85,23 +110,24 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   }
 
   return (
-    <Box padding="4" backgroundColor="foregroundSecondary" borderWidth="0.5" borderColor="accent" borderRadius="medium">
+    <Box padding="4" backgroundColor="foregroundSecondary" borderRadius="medium">
       <Box marginTop="2" marginBottom="4">
-        <Text size="extraLarge" align="center">
+        <Text size="extraLarge" weight="semiBold">
           {fundingState()}
         </Text>
       </Box>
 
       {/* <Text size="extraLarge">[------Progress Bar--------]</Text> */}
       <ProgressBar percent={percentFunded} />
-      <Box display="flex" alignItems="flex-end" marginBottom="4">
+      <Text align="center">Minimum Funding Amount: {ethers.utils.formatEther(callForFunding.minFundingAmount)}</Text>
+      <Box display="flex" justifyContent="center" marginY="4">
         {callToAction}
       </Box>
       <Box marginBottom="4">
         <Text size="large">
-          {/* {callForFunding?.lifetimeFundsReceived
+          {callForFunding?.lifetimeFundsReceived
             ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)
-            : 0} */}{" "}
+            : 0}{" "}
           ETH from {callForFunding?.contributions.length} funders. <br /> with estimated Z match
         </Text>
       </Box>

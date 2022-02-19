@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['h7.alamy.com'], // change to whatever we actually use
+    domains: ["h7.alamy.com", "infura-ipfs.io"], // change to whatever we actually use
   },
 };
 

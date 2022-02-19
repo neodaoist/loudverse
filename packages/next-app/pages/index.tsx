@@ -29,6 +29,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
+        <CtaBar distAmt="2.7" numOfCreators="5" isHomePage={true} />
         <Box textAlign="center">
           {/* Banner */}
           <Box marginTop="8">
@@ -91,7 +92,6 @@ const Home: NextPage = () => {
             </Text>
           </Box>
           {/* Need to get live values in here */}
-          <CtaBar distAmt="2.7" numOfCreators="5" isHomePage={true} />
           {divider}
           {/* Mixed content rows */}
           {/* ETH -> HAND -> PLUG */}
@@ -134,8 +134,13 @@ const Home: NextPage = () => {
             </Box>
           </Box>
           {divider}
-          <Box>
-            <Text size="large">© 2022 LOUDVERSE. All rights reserved.</Text>
+          <Box marginBottom="8">
+            <Box marginBottom="2">
+              <Text size="large">© 2022 LOUDVERSE. All rights reserved.</Text>
+            </Box>
+            <Text>
+              💚 <em>Helping artists ship creative work</em> 💚
+            </Text>
           </Box>
           {/* <h2>Keeping links for convenience for the moment</h2>
           <Link href="/calls">

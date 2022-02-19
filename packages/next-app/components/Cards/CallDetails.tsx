@@ -14,15 +14,15 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
       height="auto"
       alignItems="center"
       backgroundColor="foregroundSecondary"
-      borderWidth="0.5"
-      borderColor="accent"
       borderRadius="medium"
     >
       <Box margin="auto">
-        <Text align="center" size="extraLarge">
-          {callForFunding?.title}
-        </Text>
-        <Text align="center">{callForFunding?.description}</Text>
+        <Box marginBottom="2">
+          <Text size="extraLarge" weight="semiBold">
+            {callForFunding?.title}
+          </Text>
+        </Box>
+        <Text>{callForFunding?.description}</Text>
       </Box>
       {/* <Image src={callForFunding?.image} width="80" height="80" /> */}
       <Box
@@ -34,14 +34,10 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Image
-          src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-          layout="fill"
-          objectFit="cover"
-        />
+        <Image src={callForFunding?.image} layout="fill" objectFit="cover" />
       </Box>
-      <Stack direction="horizontal" align="center" space="max">
-        <Stack direction="vertical" align="center">
+      <Stack direction="vertical" align="center" space="max">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Category
@@ -67,7 +63,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
             </Text>
           </Box>
         </Stack>
-        <Stack direction="vertical" align="center">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Deliverable
@@ -76,12 +72,20 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
               {callForFunding?.deliverableMedium}
             </Text>
           </Box>
-          <Box>
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Minimum funding goal
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.minFundingAmount / 1000000000000000000} ETH
+            </Text>
+          </Box>
+          <Box margin="auto">
             <Text align="center" variant="label">
               Timeline
             </Text>
             <Text align="center" variant="large">
-              {callForFunding?.timelineInDays}
+              {callForFunding?.timelineInDays} days
             </Text>
           </Box>
         </Stack>
