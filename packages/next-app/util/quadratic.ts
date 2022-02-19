@@ -302,11 +302,4 @@ class Quadratic {
     }
 }
 
-
-/*
-Ideal match:             248663963222288128.
-Available match pool is 3000000000000000000
-
- */
-
 export default Quadratic;
