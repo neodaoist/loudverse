@@ -16,12 +16,14 @@ class Quadratic {
     poolAddress: String;
     failedContracts: Array<CallForFunding>;
     eligibleContracts: Set<CallForFunding>;
+    poolKey: String;
 
-    constructor(fundingRound: String) {
+    constructor(fundingRound: String, poolKey: String) {
         this.fundingStates = new Map<String, FundingState>();
         this.poolAddress = fundingRound;
         this.failedContracts = [];
         this.eligibleContracts = new Set<CallForFunding>();
+        this.poolKey = poolKey;
     };
 
     /** Entry point for ending a funding round -- typically called from Github action
@@ -205,9 +207,17 @@ class Quadratic {
     }
 
     private applyFunding() {
-        for(const contract of this.fundingStates.keys()) {
-            console.log("Match address " + contract + " with amount " + this.fundingStates.get(contract).proposedMatch);
+        console.log("--------");
+        console.log("Round results:");
+        console.log("Failed calls for funds:")
+        for(const contract of this.failedContracts) {
+            console.log(contract.id + " (" + contract.title + ") min: " + contract.minFundingAmount);
         }
+        console.log("---- Matches ----");
+        for(const contract of this.eligibleContracts) {
+            console.log("Match address " + contract + " with amount " + this.fundingStates.get(contract.id).proposedMatch);
+        }
+
     }
 
     // Shameless copy-pasta from https://golb.hplar.ch/2018/09/javascript-bigint.html
