@@ -34,9 +34,11 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Image src="/../public/wellwisher.png" layout="fill" objectFit="cover" />
+        <Box height="76">
+          <Image src="/../public/wellwisher.png" layout="fill" objectFit="contain" />
+        </Box>
       </Box>
-      <Stack direction="horizontal" align="center" space="max">
+      <Stack direction="horizontal" align="center" space="16">
         <Stack direction="vertical" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
@@ -72,12 +74,20 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
               {callForFunding?.deliverableMedium}
             </Text>
           </Box>
-          <Box>
+          <Box margin="auto">
+            <Text align="center" variant="label">
+              Minimum funding goal
+            </Text>
+            <Text align="center" variant="large">
+              {callForFunding?.minFundingAmount / 1000000000000000000} ETH
+            </Text>
+          </Box>
+          <Box margin="auto">
             <Text align="center" variant="label">
               Timeline
             </Text>
             <Text align="center" variant="large">
-              {callForFunding?.timelineInDays}
+              {callForFunding?.timelineInDays} days
             </Text>
           </Box>
         </Stack>
