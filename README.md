@@ -49,4 +49,4 @@ Let's jump in to see our dapp in action then show some behind-the-scenes and tec
 ## Team
 XYZ
 
-## 🌴🌱🌲 Join us at LOUDVΞRSΞ and help the next million artists take the green pill! 💚💊🍀
+## 🌴🌱🌲 Join us at LOUDVΞRSΞ and onboard the next million artists to web3! 💚💊🍀
