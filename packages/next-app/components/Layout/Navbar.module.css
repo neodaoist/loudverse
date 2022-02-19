@@ -1,13 +1,13 @@
 .solarFade {
   margin-right: 1em;
   opacity: 0;
-  animation: solarFade 1.4s;
+  animation: solarFade 2.5s;
 }
 
 .lunarFade {
   margin-right: 1em;
   opacity: 0;
-  animation: lunarFade 1.5s;
+  animation: lunarFade 3.5s;
   color: rgb(255, 235, 10);
 }
 
