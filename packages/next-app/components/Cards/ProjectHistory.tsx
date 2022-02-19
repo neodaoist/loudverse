@@ -3,16 +3,11 @@ import { Box, Tag, Text } from "degen";
 
 const ProjectHistory = ({ history }) => {
   return (
-    <Box
-      backgroundColor="foregroundSecondary"
-      borderRadius="medium"
-      padding="4"
-      height="80"
-      borderWidth="0.5"
-      borderColor="accent"
-    >
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4" height="80">
       <Box marginBottom="4">
-        <Text size="extraLarge">Project History</Text>
+        <Text size="extraLarge" weight="semiBold">
+          Project History
+        </Text>
       </Box>
       {history.map((project, i) => (
         <Box key={i} marginBottom="4">

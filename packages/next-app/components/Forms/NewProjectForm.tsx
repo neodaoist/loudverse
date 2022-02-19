@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, FieldSet, Input, MediaPicker } from "degen";
+import { Box, Button, FieldSet, Input, MediaPicker, Text } from "degen";
 import { useContract, useContractWrite, useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
@@ -68,11 +68,14 @@ const NewProjectForm = () => {
           label="Description"
           placeholder="Describe your product's vision - Why is it awesome? How will it make a positive contibution to the world?"
         />
+        <Box marginLeft="4">
+          <Text weight="semiBold">Select categories</Text>
+        </Box>
         <Box display="flex">
           <Box>
             <select className="select" name="category" id="category-select">
               <option className="select-options" value="">
-                Select category
+                Category
               </option>
               <option className="select-options" value="Music">
                 Music
@@ -109,7 +112,7 @@ const NewProjectForm = () => {
           <Box marginLeft="8">
             <select className="select" name="genre" id="genre-select">
               <option className="select-options" value="">
-                Select genre
+                Genre
               </option>
               <option className="select-options" value="Ambient">
                 Ambient
@@ -146,7 +149,7 @@ const NewProjectForm = () => {
           <Box marginLeft="8">
             <select className="select" name="subgenre" id="subgenre-select">
               <option className="select-options" value="">
-                Select subgenre
+                Subgenre
               </option>
               <option className="select-options" value="Flute Sonata">
                 Flute Sonata

@@ -3,7 +3,7 @@ import { Box, Text } from "degen";
 
 const UserStats = ({ stats }) => {
   return (
-    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4" borderWidth="0.5" borderColor="accent">
+    <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
       <Box marginBottom="4">
         <Text size="large">
           Raised {stats.raised} ETH for {stats.projects} projects

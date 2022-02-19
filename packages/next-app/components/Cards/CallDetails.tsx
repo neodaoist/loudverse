@@ -14,15 +14,15 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
       height="auto"
       alignItems="center"
       backgroundColor="foregroundSecondary"
-      borderWidth="0.5"
-      borderColor="accent"
       borderRadius="medium"
     >
       <Box margin="auto">
-        <Text align="center" size="extraLarge">
-          {callForFunding?.title}
-        </Text>
-        <Text align="center">{callForFunding?.description}</Text>
+        <Box marginBottom="2">
+          <Text size="extraLarge" weight="semiBold">
+            {callForFunding?.title}
+          </Text>
+        </Box>
+        <Text>{callForFunding?.description}</Text>
       </Box>
       {/* <Image src={callForFunding?.image} width="80" height="80" /> */}
       <Box

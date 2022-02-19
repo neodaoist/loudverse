@@ -11,8 +11,6 @@ const UserProfile = ({ userDetails }) => {
       backgroundColor="foregroundSecondary"
       borderRadius="medium"
       padding="4"
-      borderWidth="0.5"
-      borderColor="accent"
     >
       <Box display="flex" marginBottom="8">
         <Image src={userDetails.image} width="80" height="80" />

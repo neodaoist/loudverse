@@ -7,9 +7,11 @@ import Link from "next/link";
 
 const ContributionList = ({ contributionList }: { contributionList: Contribution[] }) => {
   return (
-    <Box padding="4" backgroundColor="foregroundSecondary" borderWidth="0.5" borderColor="accent" borderRadius="medium">
+    <Box padding="4" backgroundColor="foregroundSecondary" borderRadius="medium">
       <Box marginBottom="4">
-        <Text size="extraLarge">Project Contributions</Text>
+        <Text size="extraLarge" weight="semiBold">
+          Contribution History
+        </Text>
       </Box>
       <Box overflow="scroll" maxHeight="48">
         {contributionList?.length &&

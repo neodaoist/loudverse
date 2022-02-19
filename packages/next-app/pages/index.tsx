@@ -29,6 +29,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
+        <CtaBar distAmt="2.7" numOfCreators="5" isHomePage={true} />
         <Box textAlign="center">
           {/* Banner */}
           <Box marginTop="8">
@@ -91,7 +92,6 @@ const Home: NextPage = () => {
             </Text>
           </Box>
           {/* Need to get live values in here */}
-          <CtaBar distAmt="2.7" numOfCreators="5" isHomePage={true} />
           {divider}
           {/* Mixed content rows */}
           {/* ETH -> HAND -> PLUG */}

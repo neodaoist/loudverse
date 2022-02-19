@@ -21,7 +21,7 @@ const CtaBar = ({
       </Link>
     );
   } else {
-    button = <Wallet isCallsCta={true} />;
+    button = null;
   }
 
   return (
@@ -32,11 +32,11 @@ const CtaBar = ({
       display="flex"
       alignItems="center"
       justifyContent="space-around"
-      borderColor="black"
       borderWidth="0.375"
       marginBottom="8"
+      backgroundColor="blue"
     >
-      <Text>
+      <Text color="white" weight="semiBold">
         More than {distAmt} ETH will be distributed to {numOfCreators} creators this month. Join LOUDVERSE today to
         start creating!
       </Text>

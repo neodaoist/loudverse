@@ -110,9 +110,9 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   }
 
   return (
-    <Box padding="4" backgroundColor="foregroundSecondary" borderWidth="0.5" borderColor="accent" borderRadius="medium">
+    <Box padding="4" backgroundColor="foregroundSecondary" borderRadius="medium">
       <Box marginTop="2" marginBottom="4">
-        <Text size="extraLarge" align="center">
+        <Text size="extraLarge" weight="semiBold">
           {fundingState()}
         </Text>
       </Box>
