@@ -84,6 +84,8 @@ async function main() {
     new ethers.providers.JsonRpcProvider(rinkebyURL)
   );
 
+  await logic.connect(deployer).setFactory(factory.address)
+
   await crowdCommission.connect(deployer).transferOwnership(logic.address);
   await smartArt.connect(deployer).transferOwnership(logic.address);
 
