@@ -23,35 +23,17 @@ a {
 * {
   box-sizing: border-box;
 }
-/* 
-.select-hidden {
-  display: none;
-  visibility: hidden;
-  padding-right: 10px;
-}
+
 .select {
   cursor: pointer;
-  display: inline-block;
-  position: relative;
   font-size: 16px;
-}
-.select-styled {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 8px 15px;
+  padding: 12px;
+  border-radius: 8px;
+  width: 200px;
+  border-color: rgba(0, 132, 255, 0.1);
+  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .select-options {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
-  z-index: 999;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-} */
+  font-size: 18px;
+}

@@ -48,7 +48,7 @@ const NewProjectForm = () => {
 
   return (
     <Box width="full" justifyContent="center" marginX="16">
-      <FieldSet legend="Create New Call For Funds">
+      <FieldSet legend="Open new call for funds">
         <Input
           name="title"
           onChange={e => handleChange(e)}
@@ -62,101 +62,107 @@ const NewProjectForm = () => {
           placeholder="Describe your product's vision - Why is it awesome? How will it make a positive contibution to the world?"
         />
         <Box display="flex">
-          <select className="select" name="category" id="category-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Music">
-              Music
-            </option>
-            <option className="select-options" value="Photography">
-              Photography
-            </option>
-            <option className="select-options" value="Painting">
-              Painting
-            </option>
-            <option className="select-options" value="Digital Art">
-              Digital Art
-            </option>
-            <option className="select-options" value="Animation">
-              Animation
-            </option>
-            <option className="select-options" value="Film">
-              Film
-            </option>
-            <option className="select-options" value="Sculpture">
-              Sculpture
-            </option>
-            <option className="select-options" value="Poetry">
-              Poetry
-            </option>
-            <option className="select-options" value="Play">
-              Play
-            </option>
-            <option className="select-options" value="Dance">
-              Dance
-            </option>
-          </select>
-          <select className="select" name="genre" id="genre-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Ambient">
-              Ambient
-            </option>
-            <option className="select-options" value="Blues">
-              Blues
-            </option>
-            <option className="select-options" value="Country">
-              Country
-            </option>
-            <option className="select-options" value="Classical">
-              Classical
-            </option>
-            <option className="select-options" value="EDM">
-              EDM
-            </option>
-            <option className="select-options" value="Latin">
-              Latin
-            </option>
-            <option className="select-options" value="Hip Hop">
-              Hip Hop
-            </option>
-            <option className="select-options" value="Jazz">
-              Jazz
-            </option>
-            <option className="select-options" value="Rock">
-              Rock
-            </option>
-            <option className="select-options" value="World">
-              World
-            </option>
-          </select>
-          <select className="select" name="subgenre" id="subgenre-select">
-            <option className="select-options" value="">
-              Select
-            </option>
-            <option className="select-options" value="Flute Sonata">
-              Flute Sonata
-            </option>
-            <option className="select-options" value="Orchestral">
-              Orchestral
-            </option>
-            <option className="select-options" value="Piano Sonata">
-              Piano Sonata
-            </option>
-            <option className="select-options" value="String Quartet">
-              String Quartet
-            </option>
-            <option className="select-options" value="Violin Sonata">
-              Violin Sonata
-            </option>
-          </select>
+          <Box>
+            <select className="select" name="category" id="category-select">
+              <option className="select-options" value="">
+                Select category
+              </option>
+              <option className="select-options" value="Music">
+                Music
+              </option>
+              <option className="select-options" value="Photography">
+                Photography
+              </option>
+              <option className="select-options" value="Painting">
+                Painting
+              </option>
+              <option className="select-options" value="Digital Art">
+                Digital Art
+              </option>
+              <option className="select-options" value="Animation">
+                Animation
+              </option>
+              <option className="select-options" value="Film">
+                Film
+              </option>
+              <option className="select-options" value="Sculpture">
+                Sculpture
+              </option>
+              <option className="select-options" value="Poetry">
+                Poetry
+              </option>
+              <option className="select-options" value="Play">
+                Play
+              </option>
+              <option className="select-options" value="Dance">
+                Dance
+              </option>
+            </select>
+          </Box>
+          <Box marginLeft="8">
+            <select className="select" name="genre" id="genre-select">
+              <option className="select-options" value="">
+                Select genre
+              </option>
+              <option className="select-options" value="Ambient">
+                Ambient
+              </option>
+              <option className="select-options" value="Blues">
+                Blues
+              </option>
+              <option className="select-options" value="Country">
+                Country
+              </option>
+              <option className="select-options" value="Classical">
+                Classical
+              </option>
+              <option className="select-options" value="EDM">
+                EDM
+              </option>
+              <option className="select-options" value="Latin">
+                Latin
+              </option>
+              <option className="select-options" value="Hip Hop">
+                Hip Hop
+              </option>
+              <option className="select-options" value="Jazz">
+                Jazz
+              </option>
+              <option className="select-options" value="Rock">
+                Rock
+              </option>
+              <option className="select-options" value="World">
+                World
+              </option>
+            </select>
+          </Box>
+          <Box marginLeft="8">
+            <select className="select" name="subgenre" id="subgenre-select">
+              <option className="select-options" value="">
+                Select subgenre
+              </option>
+              <option className="select-options" value="Flute Sonata">
+                Flute Sonata
+              </option>
+              <option className="select-options" value="Orchestral">
+                Orchestral
+              </option>
+              <option className="select-options" value="Piano Sonata">
+                Piano Sonata
+              </option>
+              <option className="select-options" value="String Quartet">
+                String Quartet
+              </option>
+              <option className="select-options" value="Violin Sonata">
+                Violin Sonata
+              </option>
+            </select>
+          </Box>
         </Box>
         <Input
           name="minFundingAmount"
           label="Minimum funding goal"
-          placeholder="How much is the minimum funding you need"
+          placeholder="What is the minimum amount of ETH you need"
         />
         <Input
           name="deliverableMedium"
