@@ -6,11 +6,11 @@ const UserStats = ({ stats }) => {
     <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4" borderWidth="0.5" borderColor="accent">
       <Box marginBottom="4">
         <Text size="large">
-          Raised {stats.raised} DAI for {stats.projects} projects
+          Raised {stats.raised} ETH for {stats.projects} projects
         </Text>
       </Box>
       <Box marginBottom="4">
-        <Text size="large">Collaboarated with {stats.collaborators} creators</Text>
+        <Text size="large">Collaboarated with {stats.collaborators} other creators</Text>
       </Box>
       <Box>
         <Text size="large">Currently working on {stats.current}</Text>
