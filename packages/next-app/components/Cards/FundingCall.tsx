@@ -42,7 +42,9 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
         <Box>
           <Box display="flex" justifyContent="space-between" alignItems="baseline">
             <Text size="extraLarge">{callForFunding?.title}</Text>
-            <Tag tone={categoryColor()}>{callForFunding?.category}</Tag>
+            <Text transform="lowercase">
+              <Tag tone={categoryColor()}>{callForFunding?.category}</Tag>
+            </Text>
           </Box>
           <Text>{callForFunding?.description}</Text>
         </Box>
