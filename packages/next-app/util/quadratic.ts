@@ -205,7 +205,7 @@ class Quadratic {
    */
   private getAvailableFundsForRound(matchPoolAddress: String): bigint {
     //if(matchPoolAddress === "test") {
-    return BigInt(2 * 10 ** 18);
+    return BigInt(2 * 10 ** 16);
     /*
     }
         else

@@ -9,10 +9,14 @@ on:
     inputs:
       matchpool_address:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Matchpool address'
+        description: 'Matchpool amount'
         # Default value if no value is explicitly provided
         default: ''
         # Input has to be provided for the workflow to run
+        required: true
+      matchpool_key:
+        description: 'Key for funding matches'
+        default: 'test'
         required: true
 
 
