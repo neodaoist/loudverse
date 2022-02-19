@@ -1,7 +1,7 @@
 import { Box, Button, Text, IconSun, useTheme, IconMoon } from "degen";
 import Link from "next/link";
 import Wallet from "./Wallet";
-import Image from "next/image";
+import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const { mode, setMode } = useTheme();
@@ -35,11 +35,17 @@ const Navbar = () => {
       </Link>
       <Box display="flex">
         <Box display="flex" alignItems="center" width="auto" marginRight="6">
-          <Box cursor="pointer" paddingX="4" onClick={() => handleMode()}>
+          <Box display="flex" alignItems="center" cursor="pointer" paddingX="4" onClick={() => handleMode()}>
             {mode == "light" ? (
-              <IconMoon size="8" strokeWidth={"0.375"} color={"black"} />
+              <>
+                <span className={styles.solarFade}>Solarpunk Mode</span>
+                <IconMoon size="8" strokeWidth={"0.375"} color={"black"} />
+              </>
             ) : (
-              <IconSun size="8" strokeWidth={"0.375"} color={"yellow"} />
+              <>
+                <span className={styles.lunarFade}>Lunarpunk Mode</span>
+                <IconSun size="8" strokeWidth={"0.375"} color={"yellow"} />
+              </>
             )}
           </Box>
           <Link href="/calls" passHref={true}>
