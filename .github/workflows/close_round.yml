@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      matchpool_address:
+      matchpool_amount:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Matchpool amount'
         # Default value if no value is explicitly provided
@@ -38,6 +38,6 @@ jobs:
     - name: Add ts-node types
       run: cd packages/next-app/util && yarn add -D @types/node
     - name: Computed Double-Constrained Quadratic Funding
-      run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_address }}
+      run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_amount }} ${{ secrets.MATCH_POOL_KEY }}
 
 
