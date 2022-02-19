@@ -16,7 +16,7 @@ type CallForFunding @entity {
 
   subgenre: String!
 
-  timelineInDays: Int!
+  timelineInDays: BigInt!
 
   minFundingAmount: BigInt!
 

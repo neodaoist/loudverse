@@ -6,6 +6,7 @@ import FullPageCallDetails from "../../components/FullPageProject";
 import PageWrapper from "../../components/Layout/PageWrapper";
 
 const Call = ({ call }: { call: CallForFunding }) => {
+  console.log(call.fundingState);
   return (
     <PageWrapper>
       <FullPageCallDetails call={call} />

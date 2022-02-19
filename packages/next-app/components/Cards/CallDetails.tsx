@@ -34,11 +34,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Image
-          src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-          layout="fill"
-          objectFit="cover"
-        />
+        <Image src={callForFunding?.image} layout="fill" objectFit="cover" />
       </Box>
       <Stack direction="vertical" align="center" space="max">
         <Stack direction="horizontal" align="center">

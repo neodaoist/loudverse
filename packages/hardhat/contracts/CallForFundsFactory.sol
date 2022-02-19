@@ -16,7 +16,7 @@ contract CallForFundsFactory {
         string category,
         string genre,
         string subgenre,
-        uint8 timelineInDays,
+        uint96 timelineInDays,
         uint256 minFundingAmount,
         string deliverableMedium
     );
@@ -32,7 +32,7 @@ contract CallForFundsFactory {
         string memory category_,
         string memory genre_,
         string memory subgenre_,
-        uint8 timelineInDays_,
+        uint96 timelineInDays_,
         uint256 minFundingAmount_,
         string memory deliverableMedium_
     ) external returns (address proxy) {

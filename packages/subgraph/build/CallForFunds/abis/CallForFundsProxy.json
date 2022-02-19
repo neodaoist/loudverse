@@ -42,9 +42,9 @@
         "type": "string"
       },
       {
-        "internalType": "uint8",
+        "internalType": "uint96",
         "name": "timelineInDays_",
-        "type": "uint8"
+        "type": "uint96"
       },
       {
         "internalType": "uint256",
@@ -58,6 +58,45 @@
   {
     "stateMutability": "payable",
     "type": "fallback"
+  },
+  {
+    "inputs": [],
+    "name": "_cfa",
+    "outputs": [
+      {
+        "internalType": "contract IConstantFlowAgreementV1",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_ethx",
+    "outputs": [
+      {
+        "internalType": "contract ISETH",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_host",
+    "outputs": [
+      {
+        "internalType": "contract ISuperfluid",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],

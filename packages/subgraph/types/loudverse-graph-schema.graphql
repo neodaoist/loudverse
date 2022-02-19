@@ -61,7 +61,7 @@ type CallForFunding {
   category: String!
   genre: String!
   subgenre: String!
-  timelineInDays: Int!
+  timelineInDays: BigInt!
   minFundingAmount: BigInt!
   deliverableMedium: String!
   deliverableURI: String
@@ -179,14 +179,14 @@ input CallForFunding_filter {
   subgenre_not_starts_with: String
   subgenre_ends_with: String
   subgenre_not_ends_with: String
-  timelineInDays: Int
-  timelineInDays_not: Int
-  timelineInDays_gt: Int
-  timelineInDays_lt: Int
-  timelineInDays_gte: Int
-  timelineInDays_lte: Int
-  timelineInDays_in: [Int!]
-  timelineInDays_not_in: [Int!]
+  timelineInDays: BigInt
+  timelineInDays_not: BigInt
+  timelineInDays_gt: BigInt
+  timelineInDays_lt: BigInt
+  timelineInDays_gte: BigInt
+  timelineInDays_lte: BigInt
+  timelineInDays_in: [BigInt!]
+  timelineInDays_not_in: [BigInt!]
   minFundingAmount: BigInt
   minFundingAmount_not: BigInt
   minFundingAmount_gt: BigInt

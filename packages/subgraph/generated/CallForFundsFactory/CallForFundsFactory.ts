@@ -55,8 +55,8 @@ export class CallForFundsCreated__Params {
     return this._event.parameters[7].value.toString();
   }
 
-  get timelineInDays(): i32 {
-    return this._event.parameters[8].value.toI32();
+  get timelineInDays(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
   }
 
   get minFundingAmount(): BigInt {
@@ -80,13 +80,13 @@ export class CallForFundsFactory extends ethereum.SmartContract {
     category_: string,
     genre_: string,
     subgenre_: string,
-    timelineInDays_: i32,
+    timelineInDays_: BigInt,
     minFundingAmount_: BigInt,
     deliverableMedium_: string
   ): Address {
     let result = super.call(
       "createCallForFunds",
-      "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
+      "createCallForFunds(string,string,string,string,string,string,uint96,uint256,string):(address)",
       [
         ethereum.Value.fromString(title_),
         ethereum.Value.fromString(description_),
@@ -94,7 +94,7 @@ export class CallForFundsFactory extends ethereum.SmartContract {
         ethereum.Value.fromString(category_),
         ethereum.Value.fromString(genre_),
         ethereum.Value.fromString(subgenre_),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(timelineInDays_)),
+        ethereum.Value.fromUnsignedBigInt(timelineInDays_),
         ethereum.Value.fromUnsignedBigInt(minFundingAmount_),
         ethereum.Value.fromString(deliverableMedium_)
       ]
@@ -110,13 +110,13 @@ export class CallForFundsFactory extends ethereum.SmartContract {
     category_: string,
     genre_: string,
     subgenre_: string,
-    timelineInDays_: i32,
+    timelineInDays_: BigInt,
     minFundingAmount_: BigInt,
     deliverableMedium_: string
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createCallForFunds",
-      "createCallForFunds(string,string,string,string,string,string,uint8,uint256,string):(address)",
+      "createCallForFunds(string,string,string,string,string,string,uint96,uint256,string):(address)",
       [
         ethereum.Value.fromString(title_),
         ethereum.Value.fromString(description_),
@@ -124,7 +124,7 @@ export class CallForFundsFactory extends ethereum.SmartContract {
         ethereum.Value.fromString(category_),
         ethereum.Value.fromString(genre_),
         ethereum.Value.fromString(subgenre_),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(timelineInDays_)),
+        ethereum.Value.fromUnsignedBigInt(timelineInDays_),
         ethereum.Value.fromUnsignedBigInt(minFundingAmount_),
         ethereum.Value.fromString(deliverableMedium_)
       ]
@@ -242,8 +242,8 @@ export class CreateCallForFundsCall__Inputs {
     return this._call.inputValues[5].value.toString();
   }
 
-  get timelineInDays_(): i32 {
-    return this._call.inputValues[6].value.toI32();
+  get timelineInDays_(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
   }
 
   get minFundingAmount_(): BigInt {

@@ -30,10 +30,7 @@ async function main() {
   );
   const logic = await CallForFundsLogic.deploy(
     crowdCommission.address,
-    smartArt.address,
-    "0xeD5B5b32110c3Ded02a07c8b8e97513FAfb883B6",
-    "0xF4C5310E51F6079F601a5fb7120bC72a70b96e2A",
-    "0xa623b2DD931C5162b7a0B25852f4024Db48bb1A0"
+    smartArt.address
   );
   await logic.deployed();
 
@@ -62,21 +59,7 @@ async function main() {
   }
 
   // wait for polygonscan before verifying
-  await new Promise((resolve) => setTimeout(resolve, 60000));
-  try {
-    await run("verify:verify", {
-      address: logic.address,
-      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
-    });
-
-    await run("verify:verify", {
-      address: factory.address,
-      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
-      constructorArguments: [logic.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await new Promise((resolve) => setTimeout(resolve, 30000));
 
   // automate first 5 grants being created
   const deployer = new ethers.Wallet(
@@ -92,70 +75,71 @@ async function main() {
   const factoryWithSigner = factory.connect(deployer);
 
   const solarpunkProxy = await factoryWithSigner.createCallForFunds(
-    "Solarpunk Strings", // _title
-    "A musical Solarpunk experience with a Western Classical twist", // _description
-    "https://infura-ipfs.io/ipfs/QmcqEeTAi7U7oFEVVLE3J8NWeF1mjAbTzqx15YbFFb98ZH", // _image
-    "Music", // _category
-    "Classical Music", // _genre
-    "String Quartet", // _subgenre
+    "B is 4 Bufficorn", // _title
+    "@vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+    "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
+    "digital art", // _category
+    "generative art", // _genre
+    "fractal/algorithmic", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseUnits("1", "ether"), // _minFundingAmount
-    "Recording as audio/mp3, Score as text/pdf" // _deliverableMedium
+    1, // _minFundingAmount
+    "image/jpeg" // _deliverableMedium
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
+
   const buffigweiProxy = await factoryWithSigner.createCallForFunds(
-    "Buff Buffigwei", // _title
-    "An immersive animation that tells the story when small becomes big", // _description
-    "https://infura-ipfs.io/ipfs/QmcqEeTAi7U7oFEVVLE3J8NWeF1mjAbTzqx15YbFFb98ZH", // _image
-    "Animation", // _category
-    "TODO", // _genre
-    "TODO", // _subgenre
+    "¿Quien Llamo Carlo?", // _title
+    "@carlo-davidoff.eth is producing multilingual synthwave about identity lost and recovered", // _description
+    "https://infura-ipfs.io/ipfs/bafybeiaxrxtb3p5wyw3kba5domyec77suy5q52hqfy7vpfqzyuajbvytli", // _image
+    "music", // _category
+    "electronic", // _genre
+    "synthwave", // _subgenre
     90, // _timelineInDays
     ethers.utils.parseUnits("0.5", "ether"), // _minFundingAmount
-    "TODO" // _deliverableMedium
+    "audio/mp3" // _deliverableMedium
   );
 
   const buffigweiProxyReceipt = await buffigweiProxy.wait();
   console.log(buffigweiProxyReceipt);
 
   const temptedProxy = await factoryWithSigner.createCallForFunds(
-    "Tempted from Afar", // _title
-    "Reimaging desire in the digital age", // _description
-    "https://infura-ipfs.io/ipfs/QmcqEeTAi7U7oFEVVLE3J8NWeF1mjAbTzqx15YbFFb98ZH", // _image
-    "Dance", // _category
-    "TODO", // _genre
-    "TODO", // _subgenre
+    "those WERE the buffigwei we were looking for", // _title
+    "@DroidDetecta42.eth is writing an epic poem that revisits a post-crypto Tatooine", // _description
+    "https://infura-ipfs.io/ipfs/bafybeiem42ao4uyh3ul47oamchykik4tvjapl4gtoyspyskdjzik7grq4y", // _image
+    "poetry", // _category
+    "fan fiction poetry", // _genre
+    "Star Wars fan fiction", // _subgenre
     90, // _timelineInDays
     1, // _minFundingAmount
-    "TODO" // _deliverableMedium
+    "text/pdf" // _deliverableMedium
   );
   const temptedProxyReceipt = await temptedProxy.wait();
   console.log(temptedProxyReceipt);
 
   const poetryProxy = await factoryWithSigner.createCallForFunds(
-    "Those WERE the gwei we were looking for", // _title
-    "TODO", // _description
-    "https://infura-ipfs.io/ipfs/QmcqEeTAi7U7oFEVVLE3J8NWeF1mjAbTzqx15YbFFb98ZH", // _image
-    "Poetry", // _category
-    "TODO", // _genre
-    "TODO", // _subgenre
+    "Tempted from Afar", // _title
+    "@SilverSaraah.eth is reimagining desire in the digital age", // _description
+    "https://infura-ipfs.io/ipfs/bafkreigaaje35y5fswkz5rssoezq3ribu6mjayf7fxbgfyfue36veimxpq", // _image
+    "dance", // _category
+    "modern dance", // _genre
+    "interpretive modern dance", // _subgenre
     90, // _timelineInDays
     1, // _minFundingAmount
-    "TODO" // _deliverableMedium
+    "video/mp4" // _deliverableMedium
   );
   const poetryProxyReceipt = await poetryProxy.wait();
   console.log(poetryProxyReceipt);
 
   const carlosProxy = await factoryWithSigner.createCallForFunds(
-    "¿Quien Llamo Carlo?", // _title
-    "TODO", // _description
-    "https://infura-ipfs.io/ipfs/QmcqEeTAi7U7oFEVVLE3J8NWeF1mjAbTzqx15YbFFb98ZH", // _image
-    "Music", // _category
-    "TODO", // _genre
-    "TODO", // _subgenre
+    "Buff Buffigwei", // _title
+    "@stonelifter.eth is creating an immersive animation that tells the story of small becoming big", // _description
+    "https://infura-ipfs.io/ipfs/bafkreidh6cpdo65dyqot2pfx6glzx4h3z2emrkgtvbhdp7xyjfazycgfky", // _image
+    "animation", // _category
+    "generative animation", // _genre
+    "dynamic painting", // _subgenre
     90, // _timelineInDays
-    1, // _minFundingAmount
-    "TODO" // _deliverableMedium
+    ethers.utils.parseUnits("1", "ether"), // _minFundingAmount
+    "video/mp4" // _deliverableMedium
   );
   const carlosProxyReceipt = await carlosProxy.wait();
   console.log(carlosProxyReceipt);
@@ -256,6 +240,65 @@ async function main() {
       });
       // console.log(tx);
     }
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 30000));
+
+  try {
+    await run("verify:verify", {
+      address: logic.address,
+      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
+      constructorArguments: [crowdCommission.address, smartArt.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await run("verify:verify", {
+      address: factory.address,
+      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
+      constructorArguments: [logic.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: crowdCommission.address,
+      contract: "contracts/CrowdCommission.sol:CrowdCommission",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: smartArt.address,
+      contract: "contracts/SmartArt.sol:SmartArt",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await run("verify:verify", {
+      address: solarpunkProxyReceipt.events[0].args[0],
+      contract: "contracts/CallForFundsProxy.sol:CallForFundsProxy",
+      constructorArguments: [
+        deployer.address,
+        "B is 4 Bufficorn", // _title
+        "@vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+        "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
+        "digital art", // _category
+        "generative art", // _genre
+        "fractal/algorithmic", // _subgenre
+        "image/jpeg", // _deliverableMedium
+        90, // _timelineInDays
+        1, // _minFundingAmount
+      ],
+    });
+  } catch (error) {
+    console.log(error);
   }
 }
 
