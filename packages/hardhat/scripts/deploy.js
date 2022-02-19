@@ -84,7 +84,7 @@ async function main() {
     new ethers.providers.JsonRpcProvider(rinkebyURL)
   );
 
-  await logic.connect(deployer).setFactory(factory.address)
+  await logic.connect(deployer).setFactory(factory.address);
 
   await crowdCommission.connect(deployer).transferOwnership(logic.address);
   await smartArt.connect(deployer).transferOwnership(logic.address);
@@ -99,7 +99,7 @@ async function main() {
     "Classical Music", // _genre
     "String Quartet", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((1).toFixed(10)), // _minFundingAmount
+    ethers.utils.parseUnits("1", "ether"), // _minFundingAmount
     "Recording as audio/mp3, Score as text/pdf" // _deliverableMedium
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
@@ -111,7 +111,7 @@ async function main() {
     "TODO", // _genre
     "TODO", // _subgenre
     90, // _timelineInDays
-    ethers.utils.parseEther((0.5).toFixed(10)), // _minFundingAmount
+    ethers.utils.parseUnits("0.5", "ether"), // _minFundingAmount
     "TODO" // _deliverableMedium
   );
 
