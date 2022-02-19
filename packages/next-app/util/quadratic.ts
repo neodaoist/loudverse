@@ -245,7 +245,7 @@ class Quadratic {
     console.log("---- Matches ----");
     let lcv = 1;
     for (const contract of this.eligibleContracts) {
-      console.log("Match address " + contract + " with amount " + this.fundingStates.get(contract.id).proposedMatch);
+      console.log("Match address " + contract.id + " (" + contract.title + ") with amount " + this.fundingStates.get(contract.id).proposedMatch);
       const funders: string[] = contract.contributions.map(contribution => {
         return contribution.user.id;
       });
