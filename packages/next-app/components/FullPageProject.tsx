@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "degen";
+import { Box, Stack, Heading } from "degen";
 import CallDetails from "./Cards/CallDetails";
 import FundingProgress from "./Cards/FundingProgress";
 import ContributionList from "./Cards/ContributionList";
@@ -39,9 +39,9 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
 
   return (
     <>
-      <Text align="center" size="headingTwo">
-        Call for Funds
-      </Text>
+      <Box marginBottom="4">
+        <Heading level="2">Call for Funds</Heading>
+      </Box>
       <Box display="flex" height="fit" width="full" marginTop="4">
         {/* <Box>First row (connect button, anything else)</Box> */}
         <Stack flex={1} justify="stretch" direction="horizontal">
