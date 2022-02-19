@@ -5,6 +5,7 @@ import ProgressBar from "../ProgressBar";
 import { useAccount, useSigner, useTransaction } from "wagmi";
 import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
 import { ethers } from "ethers";
+import { uploadFinalDeliverable } from "../../utils";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   const [{ data: accountData }, disconnect] = useAccount();
@@ -61,7 +62,20 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
 
   const startStream = async () => {
     const proxyWrite = initializeProxyWSigner(await getSigner());
-    const tx = await proxyWrite.startStream({ gasLimit: 10000000 });
+    const tx = await proxyWrite.startStream();
+    // { gasLimit: 10000000 }
+
+    const receipt = await tx.wait();
+    if (receipt) {
+      console.log(receipt);
+    }
+  };
+
+  const uploadWork = async () => {
+    const proxyWrite = initializeProxyWSigner(await getSigner());
+    const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding });
+    console.log(deliverableURI);
+    const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
 
     const receipt = await tx.wait();
     if (receipt) {
@@ -73,6 +87,12 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     callToAction = (
       <Box justifySelf="center">
         <Button onClick={() => startStream()}>Start Streaming Funds</Button>
+      </Box>
+    );
+  } else if (isOwner && callForFunding?.fundingState === 3) {
+    callToAction = (
+      <Box justifySelf="center">
+        <Button onClick={() => uploadWork()}>Upload Work</Button>
       </Box>
     );
   } else if (accountData?.address && !isOwner) {

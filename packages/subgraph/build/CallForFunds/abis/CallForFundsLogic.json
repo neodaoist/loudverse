@@ -182,6 +182,11 @@
         "internalType": "string",
         "name": "deliverableURI_",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "slicerAddress",
+        "type": "address"
       }
     ],
     "name": "deliver",

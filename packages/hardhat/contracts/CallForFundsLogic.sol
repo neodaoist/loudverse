@@ -154,18 +154,13 @@ contract CallForFundsLogic is CallForFundsStorage {
         setFundingState(FundingState.STREAMING);
     }
 
-    function deliver(string memory deliverableURI_)
+    function deliver(string memory deliverableURI_, address slicerAddress)
         external
         onlyCreator
         requireState(FundingState.STREAMING)
     {
         deliverableURI = deliverableURI_;
         emit WorkDelivered(deliverableURI);
-
-        //TODO #3 depending on time
-        // smart-art
-        // TODO SLICERSO
-        address slicerAddress = address(0);
 
         ICallForFundsLogic(logicAddress).mintSmartArt(
             msg.sender,
