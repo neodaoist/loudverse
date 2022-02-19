@@ -40,8 +40,8 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
           objectFit="cover"
         />
       </Box>
-      <Stack direction="horizontal" align="center" space="max">
-        <Stack direction="vertical" align="center">
+      <Stack direction="vertical" align="center" space="max">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Category
@@ -67,7 +67,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
             </Text>
           </Box>
         </Stack>
-        <Stack direction="vertical" align="center">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Deliverable
