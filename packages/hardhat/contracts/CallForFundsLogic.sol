@@ -11,6 +11,18 @@ interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
 }
 
+interface ISuperfluidOverride {
+    function realtimeBalanceOfNow(address account)
+        external
+        view
+        returns (
+            int256 availableBalance,
+            uint256 deposit,
+            uint256 owedDeposit,
+            uint256 timestamp
+        );
+}
+
 interface ICallForFundsLogic {
     function mintCrowdCommission(
         address[] calldata funders,
@@ -94,43 +106,43 @@ contract CallForFundsLogic is CallForFundsStorage {
         emit ContributionReceivedETH(msg.sender, msg.value);
     }
 
-    ISuperfluid private _host; // The superfluid contract that initializes the stream
-    IConstantFlowAgreementV1 private _cfa; // The stored constant flow agreement class address
-    ISETH private _ethx;
-
     // Can find ISuperToken, host and cfa addresses at https://docs.superfluid.finance/superfluid/protocol-developers/networks
-    constructor(
-        address crowdCommission_,
-        address smartArt_,
-        ISuperfluid host,
-        IConstantFlowAgreementV1 cfa,
-        ISETH ethx
-    ) {
+    constructor(address crowdCommission_, address smartArt_) {
         crowdCommission = crowdCommission_;
         smartArt = smartArt_;
-        _host = host;
-        _cfa = cfa;
-        _ethx = ethx;
     }
 
     //======== CREATOR METHODS =========
     function startStream()
         external
+        payable
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        _ethx.upgradeByETH{value: address(this).balance}();
+        uint256 proxyBalance = address(this).balance;
+        (bool success, ) = address(_ethx).call{
+            value: proxyBalance,
+            gas: gasleft()
+        }(abi.encodeWithSignature("upgradeByETH()"));
+        require(success);
 
-        (int256 ethxBalance, , , ) = _ethx.realtimeBalanceOfNow(address(this));
+        address proxyAddress = address(this);
+        uint256 ethxBalNoInter = _ethx.balanceOf(proxyAddress);
+        uint256 ethxBalance = ISETH(_ethx).balanceOf(proxyAddress);
+        (int256 ethxBalanceINT, , , ) = _ethx.realtimeBalanceOfNow(
+            proxyAddress
+        );
+
+        int256 _ethxBalance = int256(uint256(ethxBalance));
         int96 timelineInSeconds = int96(timelineInDays) * 86400;
-        int96 ethxBalanceInt96 = int96(ethxBalance);
+        int96 ethxBalanceInt96 = int96(_ethxBalance);
         int96 flowRate = ethxBalanceInt96 / timelineInSeconds; // Safe in 0.8.0
 
         // Start stream
-        _host.callAgreement(
+        ISuperfluid(_host).callAgreement(
             _cfa,
             abi.encodeWithSelector(
-                _cfa.createFlow.selector,
+                IConstantFlowAgreementV1(_cfa).createFlow.selector,
                 _ethx, // ETHx or whatever token being streamed, if this doesn't work use ISuperToken type
                 msg.sender, // plain address
                 flowRate, // wei/sec int96
@@ -148,7 +160,6 @@ contract CallForFundsLogic is CallForFundsStorage {
         requireState(FundingState.STREAMING)
     {
         deliverableURI = deliverableURI_;
-        setFundingState(FundingState.DELIVERED);
         emit WorkDelivered(deliverableURI);
 
         //TODO #3 depending on time
@@ -162,6 +173,8 @@ contract CallForFundsLogic is CallForFundsStorage {
             1000,
             deliverableURI_
         );
+
+        setFundingState(FundingState.DELIVERED);
     }
 
     //======== PLATFORM METHODS =========
@@ -175,17 +188,17 @@ contract CallForFundsLogic is CallForFundsStorage {
         bytes memory data
     ) external payable onlyLoudverse requireState(FundingState.OPEN) {
         // method is payable, msg.value should be the match
-        setFundingState(FundingState.MATCHED);
         emit CallMatched(msg.value);
         //TODO #2
         // mint crowd-commissioned NFT
         ICallForFundsLogic(logicAddress).mintCrowdCommission(funders, id, data);
+        setFundingState(FundingState.MATCHED);
     }
 
     function refund(address[] memory addresses, uint256[] memory amounts)
         external
         onlyLoudverse
-        requireState(FundingState.FAILED)
+        requireState(FundingState.OPEN)
     {
         // insecure
         //TODO #4
@@ -197,6 +210,7 @@ contract CallForFundsLogic is CallForFundsStorage {
         }
 
         emit RefundCompleted(addresses, amounts);
+        setFundingState(FundingState.FAILED);
     }
 
     //======== PROXY METHODS =========

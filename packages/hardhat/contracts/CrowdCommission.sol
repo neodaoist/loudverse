@@ -36,7 +36,7 @@ contract CrowdCommission is
     // string public genre;
     // string public subgenre;
     // string public deliverableMedium;
-    // uint8 public timelineInDays;
+    // uint96 public timelineInDays;
     // Financial
     // string public fundingRound;
     // mapping(address => uint256) public crowdCommissioners;

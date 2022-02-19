@@ -127,6 +127,51 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     return new CallForFundsLogic("CallForFundsLogic", address);
   }
 
+  _cfa(): Address {
+    let result = super.call("_cfa", "_cfa():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__cfa(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_cfa", "_cfa():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _ethx(): Address {
+    let result = super.call("_ethx", "_ethx():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__ethx(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_ethx", "_ethx():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _host(): Address {
+    let result = super.call("_host", "_host():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__host(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_host", "_host():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   category(): string {
     let result = super.call("category", "category():(string)", []);
 
@@ -427,18 +472,6 @@ export class ConstructorCall__Inputs {
 
   get smartArt_(): Address {
     return this._call.inputValues[1].value.toAddress();
-  }
-
-  get host(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get cfa(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get ethx(): Address {
-    return this._call.inputValues[4].value.toAddress();
   }
 }
 

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { Box, Button, FieldSet, Input, MediaPicker } from "degen";
-import { useContract, useSigner } from "wagmi";
+import { useContract, useContractWrite, useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
 import { cffFactoryAddress } from "../../utils";
+import { useRouter } from "next/router";
+
+const initializeFactoryWSigner = signer => {
+  return new ethers.Contract(cffFactoryAddress, CallForFundsFactory.abi, signer);
+};
 
 const NewProjectForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: " ",
     description: " ",
@@ -18,16 +24,11 @@ const NewProjectForm = () => {
     deliverableMedium: " ",
   });
 
-  const [{ data, error, loading }, getSigner] = useSigner();
+  const [{ data }, getSigner] = useSigner();
 
-  const contract = useContract({
-    addressOrName: cffFactoryAddress,
-    contractInterface: CallForFundsFactory.abi,
-    signerOrProvider: data,
-  });
-
-  const onClick = () => {
-    contract.createCallForFunds(
+  const onClick = async () => {
+    const factoryWrite = initializeFactoryWSigner(await getSigner());
+    const tx = await factoryWrite.createCallForFunds(
       formData.title,
       formData.description,
       formData.image,
@@ -38,6 +39,12 @@ const NewProjectForm = () => {
       ethers.utils.parseEther(formData.minFundingAmount),
       formData.deliverableMedium,
     );
+
+    const receipt = await tx.wait();
+    if (receipt) {
+      console.log(receipt);
+      router.push(`/calls/${receipt.events[0].args[0]}`);
+    }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prevState => ({

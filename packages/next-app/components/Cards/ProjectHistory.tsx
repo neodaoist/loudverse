@@ -12,7 +12,7 @@ const ProjectHistory = ({ history }) => {
       borderColor="accent"
     >
       <Box marginBottom="4">
-        <Text size="extraLarge">Crypto-Credentials</Text>
+        <Text size="extraLarge">Project History</Text>
       </Box>
       {history.map((project, i) => (
         <Box key={i} marginBottom="4">

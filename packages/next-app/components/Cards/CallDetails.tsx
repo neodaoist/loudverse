@@ -34,16 +34,10 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Box height="76">
-          <Image
-            src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-            layout="fill"
-            objectFit="contain"
-          />
-        </Box>
+        <Image src={callForFunding?.image} layout="fill" objectFit="cover" />
       </Box>
-      <Stack direction="horizontal" align="center" space="16">
-        <Stack direction="vertical" align="center">
+      <Stack direction="vertical" align="center" space="max">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Category
@@ -69,7 +63,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
             </Text>
           </Box>
         </Stack>
-        <Stack direction="vertical" align="center">
+        <Stack direction="horizontal" align="center">
           <Box margin="auto">
             <Text align="center" variant="label">
               Deliverable
