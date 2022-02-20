@@ -33,7 +33,7 @@ contract SmartArt is
 
     Counters.Counter private _tokenIdCounter;
 
-    constructor() ERC721("SmartArt", "LOUD") {}
+    constructor() ERC721("Smart-Art", "LOUD") {}
 
     function tokenURI(uint256 tokenId)
         public

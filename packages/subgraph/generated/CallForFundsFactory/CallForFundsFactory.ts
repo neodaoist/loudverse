@@ -169,6 +169,27 @@ export class CallForFundsFactory extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
+
+  proxiesList(param0: BigInt): Address {
+    let result = super.call("proxiesList", "proxiesList(uint256):(address)", [
+      ethereum.Value.fromUnsignedBigInt(param0)
+    ]);
+
+    return result[0].toAddress();
+  }
+
+  try_proxiesList(param0: BigInt): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "proxiesList",
+      "proxiesList(uint256):(address)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {

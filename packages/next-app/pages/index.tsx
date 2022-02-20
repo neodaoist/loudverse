@@ -17,6 +17,8 @@ import {
 } from "degen";
 import CtaBar from "../components/Layout/CtaBar";
 import PageWrapper from "../components/Layout/PageWrapper";
+import logoDark from "../public/loudverse_logo_dark.png";
+import logoLight from "../public/loudverse_logo_light.png";
 
 const Home: NextPage = () => {
   const divider = <Box borderTopWidth="0.5" borderColor="foregroundTertiary" marginX="40" marginBottom="16"></Box>;
@@ -33,12 +35,7 @@ const Home: NextPage = () => {
         <Box textAlign="center">
           {/* Banner */}
           <Box marginTop="8">
-            <Image
-              src={mode == "light" ? `/../public/loudverse_logo_dark.png` : `/../public/loudverse_logo_light.png`}
-              width="1198"
-              height="82"
-              alt="logo"
-            />
+            <Image src={mode == "light" ? logoDark : logoLight} width="1198" height="82" alt="logo" />
             <Box marginY="8">
               <Heading level="1">Be seen. Be heard. Be experienced.</Heading>
             </Box>

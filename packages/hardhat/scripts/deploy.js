@@ -38,7 +38,15 @@ async function main() {
     "CallForFundsFactory"
   );
   const factory = await CallForFundsFactory.deploy(logic.address);
-  await factory.deployed(logic.address);
+  await factory.deployed();
+
+  console.log("ding");
+
+  const bonusFunderFactory = await ethers.getContractFactory("BonusFunder");
+  const bonusFunder = await bonusFunderFactory.deploy(factory.address);
+  await bonusFunder.deployed();
+
+  console.log("dong");
 
   const info = {
     Contracts: {
@@ -46,6 +54,7 @@ async function main() {
       factory: factory.address,
       crowdCommission: crowdCommission.address,
       smartArt: smartArt.address,
+      bonusFunder: bonusFunder.address,
     },
   };
 
@@ -275,6 +284,15 @@ async function main() {
     await run("verify:verify", {
       address: smartArt.address,
       contract: "contracts/SmartArt.sol:SmartArt",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: bonusFunder.address,
+      contract: "contracts/BonusFunder.sol:BonusFunder",
+      constructorArguments: [factory.address],
     });
   } catch (error) {
     console.log(error);

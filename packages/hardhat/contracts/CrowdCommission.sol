@@ -24,24 +24,10 @@ contract CrowdCommission is
     ERC1155Burnable,
     ERC1155Supply
 {
+    string public name = "Crowd-Commision";
+    string public symbol = "CROWD";
+
     constructor() NonTransferrableERC1155("") {}
-
-    // this info will be stored on nft.storage under /id
-    // Creative TODO Should most of this just be metadata ?
-
-    // address public creator;
-    // string public title;
-    // string public description;
-    // string public category; // (Music, Photography, Painting, Digital Art, Animation, Film, Sculpture, Poetry, Theater, Dance)
-    // string public genre;
-    // string public subgenre;
-    // string public deliverableMedium;
-    // uint96 public timelineInDays;
-    // Financial
-    // string public fundingRound;
-    // mapping(address => uint256) public crowdCommissioners;
-    // uint256 public matchingFunds;
-    // uint256 public totalFunds;
 
     // TODO Add Calls for Collaborators
 

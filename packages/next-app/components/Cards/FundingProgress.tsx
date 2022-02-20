@@ -19,17 +19,12 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     },
   });
 
-  console.log(callForFunding?.minFundingAmount);
-
   let callToAction;
 
   useEffect(() => {
-    console.log(`${accountData?.address}\n${callForFunding?.creator?.id}`);
     if (accountData?.address?.toLowerCase() === callForFunding?.creator?.id) {
       setIsOwner(true);
-      console.log("YESSSS");
     } else {
-      console.log(`nooo`);
     }
   }, [callForFunding, accountData?.address, disconnect]);
 
@@ -74,7 +69,6 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   const uploadWork = async () => {
     const proxyWrite = initializeProxyWSigner(await getSigner());
     const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding });
-    console.log(deliverableURI);
     const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
 
     const receipt = await tx.wait();
@@ -139,14 +133,16 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
 
       {/* <Text size="extraLarge">[------Progress Bar--------]</Text> */}
       <ProgressBar percent={percentFunded} />
-      <Text align="center">Minimum Funding Amount: {ethers.utils.formatEther(callForFunding.minFundingAmount)}</Text>
+      <Text align="center">
+        Minimum Funding Amount: {ethers.utils.formatEther(callForFunding?.minFundingAmount ?? 0)}
+      </Text>
       <Box display="flex" justifyContent="center" marginY="4">
         {callToAction}
       </Box>
       <Box marginBottom="4">
         <Text size="large">
           {callForFunding?.lifetimeFundsReceived
-            ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)
+            ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(3)
             : 0}{" "}
           ETH from {callForFunding?.contributions.length} funders. <br /> with estimated Z match
         </Text>

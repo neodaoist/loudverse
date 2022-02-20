@@ -6,6 +6,7 @@ import {CallForFundsProxy} from "./CallForFundsProxy.sol";
 contract CallForFundsFactory {
     address public immutable logicAddress;
     mapping(address => bool) public proxies;
+    address[] public proxiesList;
 
     event CallForFundsCreated(
         address indexed CallForFunds,
@@ -68,5 +69,6 @@ contract CallForFundsFactory {
         );
 
         proxies[proxy] = true;
+        proxiesList.push(proxy);
     }
 }
