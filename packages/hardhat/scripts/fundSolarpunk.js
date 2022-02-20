@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 const rinkebyURL = `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`;
 
-const solarpunkAddress = "";
+const solarpunkAddress = "0x536ba7Da1a7620B4c442877B887aCb325d65Ed86";
 
 async function main() {
   // automate first 5 grants being created
@@ -30,7 +30,7 @@ async function main() {
     const testValue = SolarpunkAmounts[i] / 100;
     console.log(testValue);
     const value = ethers.utils.parseEther(
-      (SolarpunkAmounts[i] / 100).toFixed(10)
+      (SolarpunkAmounts[i] / 10).toFixed(10)
     );
     const tx = await contributors[i].sendTransaction({
       to: solarpunkAddress,
