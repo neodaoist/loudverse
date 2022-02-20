@@ -20,13 +20,14 @@ class Quadratic {
   failedContracts: Array<CallForFunding>;
   eligibleContracts: Set<CallForFunding>;
   poolKey: String;
+  fundingAmount: bigint
 
-  constructor(fundingRound: String, poolKey: String) {
+  constructor(fundingAmount: String, poolKey: String) {
     this.fundingStates = new Map<String, FundingState>();
-    this.poolAddress = fundingRound;
     this.failedContracts = [];
     this.eligibleContracts = new Set<CallForFunding>();
     this.poolKey = poolKey;
+    this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
   }
 
   /** Entry point for ending a funding round -- typically called from Github action
@@ -207,7 +208,7 @@ class Quadratic {
    */
   private getAvailableFundsForRound(matchPoolAddress: String): bigint {
     //if(matchPoolAddress === "test") {
-    return BigInt(2 * 10 ** 16);
+    return BigInt(2 * 10 ** 17);
     /*
     }
         else
