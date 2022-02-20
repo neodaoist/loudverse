@@ -8,7 +8,7 @@ LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods lik
 ## Some behind-the-scenes
 ✍️ _**Crowd-Commissions**_ are ERC1155 non-transferrable tokens representing "proof of patronage”
 
-🧾 _**Double Constrained Quadratic Funding**_ calculates matching funds with both a fixed subsidy pool and minimum funding goals
+🧾 _**Double Constrained Quadratic Funding**_ calculates matching funds with both a fixed subsidy pool and minimum viable funding goals. 
 
 🎨 _**Smart-Art**_ is an ERC721 NFT that shares financial upside with collaborators and contributors using a royalty allocation table
 
