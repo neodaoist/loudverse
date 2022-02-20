@@ -54,6 +54,12 @@ const NewProjectForm = () => {
       [event.target.name]: event.target.value,
     }));
   };
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
   const handleFile = async (file: File) => {
     // const url = await uploadFile({ file: file, title: formData?.title, desc: formData.description });
     // console.log(url);
@@ -84,7 +90,7 @@ const NewProjectForm = () => {
         </Box>
         <Box display="flex">
           <Box>
-            <select className="select" name="category" id="category-select">
+            <select className="select" name="category" id="category-select" onChange={e => handleSelect(e)}>
               <option className="select-options" value="">
                 Category
               </option>
@@ -121,7 +127,7 @@ const NewProjectForm = () => {
             </select>
           </Box>
           <Box marginLeft="8">
-            <select className="select" name="genre" id="genre-select">
+            <select className="select" name="genre" id="genre-select" onChange={e => handleSelect(e)}>
               <option className="select-options" value="">
                 Genre
               </option>
@@ -158,7 +164,7 @@ const NewProjectForm = () => {
             </select>
           </Box>
           <Box marginLeft="8">
-            <select className="select" name="subgenre" id="subgenre-select">
+            <select className="select" name="subgenre" id="subgenre-select" onChange={e => handleSelect(e)}>
               <option className="select-options" value="">
                 Subgenre
               </option>
@@ -181,24 +187,25 @@ const NewProjectForm = () => {
           </Box>
         </Box>
         <Input
+          onChange={e => handleChange(e)}
           name="minFundingAmount"
           label="Minimum funding goal"
           placeholder="What is the minimum amount of ETH you need"
         />
         <Input
+          onChange={e => handleChange(e)}
           name="deliverableMedium"
           label="Deliverable"
           placeholder="Describe your final deliverable, e.g., MP3, JPG, PDF, etc. (could be multiple!) "
         />
         <Input
+          onChange={e => handleChange(e)}
           name="timelineInDays"
           label="Timeline in days"
           placeholder="How many days to deliver your project once it's funded"
         />
         <MediaPicker label="Cover image" compact onChange={file => handleFile(file)} />
-        <Button disabled={!data} onClick={() => onClick()}>
-          Open call for funds
-        </Button>
+        <Button onClick={() => onClick()}>Open call for funds</Button>
       </FieldSet>
     </Box>
   );
