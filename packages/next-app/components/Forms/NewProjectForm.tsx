@@ -3,7 +3,7 @@ import { Box, Button, FieldSet, Input, MediaPicker, Text } from "degen";
 import { useContract, useContractWrite, useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
-import { cffFactoryAddress } from "../../utils";
+import { cffFactoryAddress, uploadFile } from "../../utils";
 import { useRouter } from "next/router";
 
 const initializeFactoryWSigner = signer => {
@@ -15,13 +15,15 @@ const NewProjectForm = () => {
   const [formData, setFormData] = useState({
     title: " ",
     description: " ",
-    image: " ",
+    // image: " ",
+    image: "https://infura-ipfs.io/ipfs/bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm",
     category: " ",
     genre: " ",
     subgenre: " ",
     timelineInDays: "0",
     minFundingAmount: "0",
     deliverableMedium: " ",
+    file: null,
   });
 
   const [{ data }, getSigner] = useSigner();
@@ -51,6 +53,15 @@ const NewProjectForm = () => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+  const handleFile = async (file: File) => {
+    // const url = await uploadFile({ file: file, title: formData?.title, desc: formData.description });
+    // console.log(url);
+    // setFormData(prevState => ({
+    //   ...prevState,
+    //   image: url,
+    // }));
+    // console.log(url);
   };
 
   return (
@@ -184,7 +195,7 @@ const NewProjectForm = () => {
           label="Timeline in days"
           placeholder="How many days to deliver your project once it's funded"
         />
-        <MediaPicker label="Cover image" compact />
+        <MediaPicker label="Cover image" compact onChange={file => handleFile(file)} />
         <Button disabled={!data} onClick={() => onClick()}>
           Open call for funds
         </Button>

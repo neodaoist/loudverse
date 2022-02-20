@@ -20,6 +20,29 @@ async function fileFromPath(filePath) {
   return new File([content], path.basename(filePath), { type });
 }
 
+export const uploadFile = async ({
+  file,
+  title,
+  desc,
+}: {
+  file: File;
+  title: string;
+  desc: string;
+}): Promise<string> => {
+  const client = new NFTStorage({
+    token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQ4ZGYyNTcwMUIzMWI2MjlEODVkNmFiYTI2MDE0ODExQUZBRDI5YTkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NTMwOTcwNjc1OSwibmFtZSI6ImxvdWR2ZXJzZSJ9.61BQoBZL2OVGgHNE-emC8MNyenCkJbe1NXORn3LPkcM`,
+  });
+
+  const metadata = await client.store({
+    name: title,
+    description: desc,
+    image: file,
+  });
+
+  console.log(metadata);
+  return `https://infura-ipfs.io/ipfs/${metadata.ipnft}`;
+};
+
 export const uploadFinalDeliverable = async ({
   callForFunding,
 }: {

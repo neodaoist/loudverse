@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Input, Text } from "degen";
+import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
 import { useAccount, useSigner, useTransaction } from "wagmi";
@@ -85,8 +85,13 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     );
   } else if (isOwner && callForFunding?.fundingState === 3) {
     callToAction = (
-      <Box justifySelf="center">
-        <Button onClick={() => uploadWork()}>Upload Work</Button>
+      <Box justifyContent="center" display="flex">
+        <Stack justify="center" direction="vertical">
+          <MediaPicker label="Upload Work" compact />
+          <Box display="flex" justifyContent="center">
+            <Button onClick={() => uploadWork()}>Deliver Work</Button>
+          </Box>
+        </Stack>
       </Box>
     );
   } else if (accountData?.address && !isOwner) {
