@@ -24,7 +24,7 @@ contract CrowdCommission is
     ERC1155Burnable,
     ERC1155Supply
 {
-    string public name = "Crowd-Commision";
+    string public name = "Crowd-Commission";
     string public symbol = "CROWD";
 
     constructor() NonTransferrableERC1155("") {}
@@ -62,8 +62,6 @@ contract CrowdCommission is
     ) public onlyOwner {
         _mintBatch(to, ids, amounts, data);
     }
-
-    // The following functions are overrides required by Solidity.
 
     function _beforeTokenTransfer(
         address operator,
