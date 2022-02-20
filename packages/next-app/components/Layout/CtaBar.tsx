@@ -17,7 +17,7 @@ const CtaBar = ({
   if (isHomePage) {
     button = (
       <Link href="/calls">
-        <Button size="small">Open App</Button>
+        <Button size="medium">Open App</Button>
       </Link>
     );
   } else {
