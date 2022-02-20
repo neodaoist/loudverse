@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 const rinkebyURL = `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`;
 
-const solarpunkAddress = "0x536ba7Da1a7620B4c442877B887aCb325d65Ed86";
+const solarpunkAddress = "0xF876010BB6f4DC8974DfC582361622603e21Ff27";
 
 async function main() {
   // automate first 5 grants being created
