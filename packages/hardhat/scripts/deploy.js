@@ -85,7 +85,7 @@ async function main() {
 
   const solarpunkProxy = await factoryWithSigner.createCallForFunds(
     "B is 4 Bufficorn", // _title
-    "vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+    "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
     "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
     "digital art", // _category
     "generative art", // _genre
@@ -141,7 +141,7 @@ async function main() {
 
   const carlosProxy = await factoryWithSigner.createCallForFunds(
     "Buff Buffigwei", // _title
-    "stonelifter.eth is creating an immersive animation that tells the story of small becoming big", // _description
+    "stonelifter.eth is creating immersive animations to tell stories of small becoming big", // _description
     "https://infura-ipfs.io/ipfs/bafkreidh6cpdo65dyqot2pfx6glzx4h3z2emrkgtvbhdp7xyjfazycgfky", // _image
     "animation", // _category
     "generative animation", // _genre
@@ -305,7 +305,7 @@ async function main() {
       constructorArguments: [
         deployer.address,
         "B is 4 Bufficorn", // _title
-        "vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+        "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
         "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
         "digital art", // _category
         "generative art", // _genre
