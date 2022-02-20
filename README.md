@@ -4,7 +4,7 @@ _Be seen. Be heard. Be experienced._
 ## Project Overview
 LOUDVΞRSΞ is a 2-sided marketplace to help creators sustainably ship creative work.
 
-On one side is Creators and their Collaborators, on the other side is Fans, Funders, and Commissioners ——
+On one side are Creators and their Collaborators, on the other side are Fans, Funders, and Commissioners
 
 ![2-sided marketplace](https://user-images.githubusercontent.com/3170590/154742499-4416a983-bb11-49af-8e81-5179e8de9902.jpeg "2-sided marketplace")
 
