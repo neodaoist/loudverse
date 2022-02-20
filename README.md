@@ -23,7 +23,7 @@ LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods lik
 - Superfluid
 - Slice.so
 
-## �Team
+## Team
 - [neodaoist](https://github.com/neodaoist/)
 - [plaird523](https://github.com/plaird523)
 - [nickadamson](https://github.com/nickadamson)
