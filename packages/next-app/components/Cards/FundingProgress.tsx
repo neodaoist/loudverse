@@ -106,7 +106,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
             }
           }}
         />
-        <Box marginLeft="4">
+        <Box marginLeft="4" alignSelf="flex-end">
           <Button
             onClick={() => {
               sendTransaction();
