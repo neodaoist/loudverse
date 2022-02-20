@@ -94,34 +94,34 @@ const NewProjectForm = () => {
               <option className="select-options" value="">
                 Category
               </option>
-              <option className="select-options" value="Music">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Music">
                 Music
               </option>
-              <option className="select-options" value="Photography">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Photography">
                 Photography
               </option>
-              <option className="select-options" value="Painting">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Painting">
                 Painting
               </option>
-              <option className="select-options" value="Digital Art">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Digital Art">
                 Digital Art
               </option>
-              <option className="select-options" value="Animation">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Animation">
                 Animation
               </option>
-              <option className="select-options" value="Film">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Film">
                 Film
               </option>
-              <option className="select-options" value="Sculpture">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Sculpture">
                 Sculpture
               </option>
-              <option className="select-options" value="Poetry">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Poetry">
                 Poetry
               </option>
-              <option className="select-options" value="Play">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Play">
                 Play
               </option>
-              <option className="select-options" value="Dance">
+              <option name="category" onChange={e => handleChange(e)} className="select-options" value="Dance">
                 Dance
               </option>
             </select>
@@ -131,34 +131,34 @@ const NewProjectForm = () => {
               <option className="select-options" value="">
                 Genre
               </option>
-              <option className="select-options" value="Ambient">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Ambient">
                 Ambient
               </option>
-              <option className="select-options" value="Blues">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Blues">
                 Blues
               </option>
-              <option className="select-options" value="Country">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Country">
                 Country
               </option>
-              <option className="select-options" value="Classical">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Classical">
                 Classical
               </option>
-              <option className="select-options" value="EDM">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="EDM">
                 EDM
               </option>
-              <option className="select-options" value="Latin">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Latin">
                 Latin
               </option>
-              <option className="select-options" value="Hip Hop">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Hip Hop">
                 Hip Hop
               </option>
-              <option className="select-options" value="Jazz">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Jazz">
                 Jazz
               </option>
-              <option className="select-options" value="Rock">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="Rock">
                 Rock
               </option>
-              <option className="select-options" value="World">
+              <option name="genre" onChange={e => handleChange(e)} className="select-options" value="World">
                 World
               </option>
             </select>

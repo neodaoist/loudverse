@@ -22,11 +22,19 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
           <Heading level="2">Open Calls for Funds</Heading>
         </Box>
         <Stack flex={1} direction="horizontal" space="0" wrap>
-          {calls.map((call, i) => (
-            <Box display="flex" key={call.title} width="1/3" padding="4">
-              <FundingCall callForFunding={call} index={i} />
-            </Box>
-          ))}
+          {calls.map((call, i) => {
+            if (
+              call.id !== "0x4d6ad8dd38dcbb482bd0e4da293dbb77f195ce8d" &&
+              call.id !== "0x536ba7da1a7620b4c442877b887acb325d65ed86"
+            ) {
+              console.log(call.id, call.title);
+              return (
+                <Box display="flex" key={call.title} width="1/3" padding="4">
+                  <FundingCall callForFunding={call} index={i} />
+                </Box>
+              );
+            }
+          })}
         </Stack>
       </PageWrapper>
     </>
