@@ -255,9 +255,10 @@ class Quadratic {
         ethers.utils.formatBytes32String(""), {gasLimit: 2000000}
       );
       console.log(tx.wait());
-
       lcv++;
     }
+    console.log("----------");
+    console.log("Calling Bonus Funder (Chainlink VRFv2) to award bonus grant at random...");  // TODO: Invoke contract here instead of manual
   }
 
   // Shameless copy-pasta from https://golb.hplar.ch/2018/09/javascript-bigint.html
