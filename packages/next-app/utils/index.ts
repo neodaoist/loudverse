@@ -16,7 +16,7 @@ const apiKey = process.env.NFT_STORAGE_KEY;
  */
 async function fileFromPath(filePath) {
   const content = await fs?.promises?.readFile(filePath);
-  const type = "image/jpg";
+  const type = "audio/mpeg";
   return new File([content], path.basename(filePath), { type });
 }
 
@@ -30,18 +30,18 @@ export const uploadFinalDeliverable = async ({
   });
   const metadata = await client.store({
     name: `${callForFunding.title}`,
-    description: `@wellwisher.eth created a musical solarpunk experience with a Western classical twist, with the help of ${callForFunding.contributions.length}`,
+    description: `wellwisher.eth created a musical solarpunk experience with a Western classical twist, with the help of ${callForFunding.contributions.length}`,
     image: await fileFromPath(`/home/nick/Git/ethdenver/loudverse/packages/next-app/public/call6.jpeg`),
     properties: [
-      { image: "https://arweave.net/dOnrsxVEw-cjuGbADVdpybvH91ERi05EXWpdrhqm190" },
-      { image_url: "https://arweave.net/dOnrsxVEw-cjuGbADVdpybvH91ERi05EXWpdrhqm190" },
+      { image: "ipfs://bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm" },
+      { image_url: "https://infura-ipfs.io/ipfs/bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm" },
       {
         animation_details: {
           format: "MP3",
         },
       },
-      { animation: "https://arweave.net/ifM6fYBqnNsh2r2_D8yk4qg63hSV3vsJN6MIj77U7iE" },
-      { animation_url: "https://arweave.net/ifM6fYBqnNsh2r2_D8yk4qg63hSV3vsJN6MIj77U7iE" },
+      { animation: "ipfs://bafybeifvp5bsnibcjjolpfa3iouzb3y24mbcennwj56tep56obmpnr3dlq" },
+      { animation_url: "https://infura-ipfs.io/ipfs/bafybeifvp5bsnibcjjolpfa3iouzb3y24mbcennwj56tep56obmpnr3dlq" },
       ,
     ],
   });
@@ -50,7 +50,7 @@ export const uploadFinalDeliverable = async ({
   return metadata.url;
 };
 
-export const cffFactoryAddress = "0xa5639DE1299EFdd061cB9a68F2440e19161455f2";
+export const cffFactoryAddress = "0x22b3BB8256172D9296366AE916FdD923F1314AC7";
 
 export function toTrimmedAddress(value: string): string {
   if (!value) return "";
