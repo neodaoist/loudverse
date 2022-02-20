@@ -190,11 +190,7 @@ async function main() {
   for (let i = 0; i < 20; i++) {
     // solarpunk
     if (SolarpunkAmounts[i] !== 0) {
-      const testValue = SolarpunkAmounts[i] / 100;
-      console.log(testValue);
-      const value = ethers.utils.parseEther(
-        (SolarpunkAmounts[i] / 100).toFixed(10)
-      );
+      const value = ethers.utils.parseEther(SolarpunkAmounts[i]);
       const tx = await contributors[i].sendTransaction({
         to: solarpunkProxyReceipt.events[0].args[0],
         value: value,
@@ -204,9 +200,7 @@ async function main() {
 
     // buffigwei
     if (BuffigweiAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(
-        (BuffigweiAmounts[i] / 100).toFixed(10)
-      );
+      const value = ethers.utils.parseEther(BuffigweiAmounts[i]);
       const tx = await contributors[i].sendTransaction({
         to: buffigweiProxyReceipt.events[0].args[0],
         value: value,
@@ -216,9 +210,7 @@ async function main() {
 
     // tempted
     if (TemptedAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(
-        (TemptedAmounts[i] / 100).toFixed(10)
-      );
+      const value = ethers.utils.parseEther(TemptedAmounts[i]);
       const tx = await contributors[i].sendTransaction({
         to: temptedProxyReceipt.events[0].args[0],
         value: value,
@@ -228,9 +220,7 @@ async function main() {
 
     // poetry
     if (PoetryAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(
-        (PoetryAmounts[i] / 100).toFixed(10)
-      );
+      const value = ethers.utils.parseEther(PoetryAmounts[i]);
       const tx = await contributors[i].sendTransaction({
         to: poetryProxyReceipt.events[0].args[0],
         value: value,
@@ -240,9 +230,7 @@ async function main() {
 
     // carlos
     if (CarlosAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(
-        (CarlosAmounts[i] / 100).toFixed(10)
-      );
+      const value = ethers.utils.parseEther(CarlosAmounts[i]);
       const tx = await contributors[i].sendTransaction({
         to: carlosProxyReceipt.events[0].args[0],
         value: value,
