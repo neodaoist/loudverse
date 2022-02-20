@@ -3,7 +3,7 @@ _Be seen. Be heard. Be experienced._
 
 LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods like music, poetry, and theater.
 
-[![Everything Is AWESOME](http://i.imgur.com/Ot5DWAW.png)](https://youtu.be/StTqXEQ2l-Y?t=35s "Everything Is AWESOME")
+[Watch the demo video](https://www.youtube.com/watch?v=qY0-s_UsqKM)
 
 ## Some behind-the-scenes
 ✍️ _**Crowd-Commissions**_ are ERC1155 non-transferrable tokens representing "proof of patronage”
