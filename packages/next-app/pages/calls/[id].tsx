@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps } from "next";
+import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 
 import { getAllCallsForFunds, getCallForFundsByID } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
@@ -13,18 +13,18 @@ const Call = ({ call }: { call: CallForFunding }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const allCalls = await getAllCallsForFunds();
-  const paths = [];
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const allCalls = await getAllCallsForFunds();
+//   const paths = [];
 
-  allCalls.forEach((call, i) => {
-    paths.push({ params: { id: `${i}` } });
-  });
+//   allCalls.forEach((call, i) => {
+//     paths.push({ params: { id: `${i}` } });
+//   });
 
-  return { paths, fallback: true };
-};
+//   return { paths, fallback: true };
+// };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
   const allCalls = await getAllCallsForFunds();
 
@@ -41,7 +41,6 @@ export const getStaticProps: GetStaticProps = async context => {
     props: {
       call: call,
     },
-    revalidate: 5,
   };
 };
 

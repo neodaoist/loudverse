@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Box, Stack, Text, Heading } from "degen";
 
@@ -33,7 +33,7 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const allCalls = await getAllCallsForFunds();
 
   return {

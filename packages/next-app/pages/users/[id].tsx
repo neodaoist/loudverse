@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import FullPageUser from "../../components/FullPageUser";
 import PageWrapper from "../../components/Layout/PageWrapper";
@@ -15,18 +15,18 @@ const User = ({ user }: { user: User }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const allUsers = await getAllUsers();
-  const paths = [];
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const allUsers = await getAllUsers();
+//   const paths = [];
 
-  allUsers.forEach(user => {
-    paths.push({ params: { id: `${user.id}` } });
-  });
+//   allUsers.forEach(user => {
+//     paths.push({ params: { id: `${user.id}` } });
+//   });
 
-  return { paths, fallback: true };
-};
+//   return { paths, fallback: true };
+// };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
   const user = await getUserByID(id as string);
 
