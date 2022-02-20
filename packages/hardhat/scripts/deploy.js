@@ -76,7 +76,7 @@ async function main() {
 
   const solarpunkProxy = await factoryWithSigner.createCallForFunds(
     "B is 4 Bufficorn", // _title
-    "@vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+    "vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
     "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
     "digital art", // _category
     "generative art", // _genre
@@ -89,7 +89,7 @@ async function main() {
 
   const buffigweiProxy = await factoryWithSigner.createCallForFunds(
     "¿Quien Llamo Carlo?", // _title
-    "@carlo-davidoff.eth is producing multilingual synthwave about identity lost and recovered", // _description
+    "carlo-davidoff.eth is producing multilingual synthwave about identity lost and recovered", // _description
     "https://infura-ipfs.io/ipfs/bafybeiaxrxtb3p5wyw3kba5domyec77suy5q52hqfy7vpfqzyuajbvytli", // _image
     "music", // _category
     "electronic", // _genre
@@ -104,7 +104,7 @@ async function main() {
 
   const temptedProxy = await factoryWithSigner.createCallForFunds(
     "those WERE the buffigwei we were looking for", // _title
-    "@DroidDetecta42.eth is writing an epic poem that revisits a post-crypto Tatooine", // _description
+    "DroidDetecta42.eth is writing an epic poem that revisits a post-crypto Tatooine", // _description
     "https://infura-ipfs.io/ipfs/bafybeiem42ao4uyh3ul47oamchykik4tvjapl4gtoyspyskdjzik7grq4y", // _image
     "poetry", // _category
     "fan fiction poetry", // _genre
@@ -118,7 +118,7 @@ async function main() {
 
   const poetryProxy = await factoryWithSigner.createCallForFunds(
     "Tempted from Afar", // _title
-    "@SilverSaraah.eth is reimagining desire in the digital age", // _description
+    "SilverSaraah.eth is reimagining desire in the digital age", // _description
     "https://infura-ipfs.io/ipfs/bafkreigaaje35y5fswkz5rssoezq3ribu6mjayf7fxbgfyfue36veimxpq", // _image
     "dance", // _category
     "modern dance", // _genre
@@ -132,7 +132,7 @@ async function main() {
 
   const carlosProxy = await factoryWithSigner.createCallForFunds(
     "Buff Buffigwei", // _title
-    "@stonelifter.eth is creating an immersive animation that tells the story of small becoming big", // _description
+    "stonelifter.eth is creating an immersive animation that tells the story of small becoming big", // _description
     "https://infura-ipfs.io/ipfs/bafkreidh6cpdo65dyqot2pfx6glzx4h3z2emrkgtvbhdp7xyjfazycgfky", // _image
     "animation", // _category
     "generative animation", // _genre
@@ -287,7 +287,7 @@ async function main() {
       constructorArguments: [
         deployer.address,
         "B is 4 Bufficorn", // _title
-        "@vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
+        "vitalik.eth is commissioning digital art to accompany their reading of a children’s storybook", // _description
         "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
         "digital art", // _category
         "generative art", // _genre
