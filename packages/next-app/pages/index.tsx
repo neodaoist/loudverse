@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,8 +19,10 @@ import CtaBar from "../components/Layout/CtaBar";
 import PageWrapper from "../components/Layout/PageWrapper";
 import logoDark from "../public/loudverse_logo_dark.png";
 import logoLight from "../public/loudverse_logo_light.png";
+import { getAllCallsForFunds } from "../graph/functions";
+import { CallForFunding } from "../graph/loudverse-graph-types";
 
-const Home: NextPage = () => {
+const Home = ({ calls }: { calls: CallForFunding[] }) => {
   const { mode } = useTheme();
   const divider = <Box borderTopWidth="0.5" borderColor="foregroundTertiary" marginX="40" marginBottom="16"></Box>;
 
@@ -32,7 +34,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
-        <CtaBar distAmt="2.7" numOfCreators="5" isHomePage={true} />
+        <CtaBar distAmt="2.7" numOfCreators={calls.length.toString()} isHomePage={true} />
         <Box textAlign="center">
           {/* Banner */}
           <Box marginTop="8">
@@ -44,19 +46,19 @@ const Home: NextPage = () => {
 
           {/* Three image row */}
           <Box display="flex" justifyContent="space-between" marginBottom="16" backgroundColor="backgroundSecondary">
-            <Box textAlign="center">
+            <Box textAlign="center" display="flex" flexDirection="column" alignItems="center">
               <IconEth size="48" color="blue" />
               <Heading level="2" color="blue">
                 Crowdfunding
               </Heading>
             </Box>
-            <Box textAlign="center">
+            <Box textAlign="center" display="flex" flexDirection="column" alignItems="center">
               <IconBookOpen size="48" color="green" />
               <Heading level="2" color="green">
                 Commissioning
               </Heading>
             </Box>
-            <Box textAlign="center">
+            <Box textAlign="center" display="flex" flexDirection="column" alignItems="center">
               <IconUsersSolid size="48" color="purple" />
               <Heading level="2" color="purple">
                 Community
@@ -69,14 +71,14 @@ const Home: NextPage = () => {
               <p>
                 <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding
                 <br />
-                hard-to-quantify public goods like music, poetry, and theater
+                hard-to-quantify public goods like music, poetry, and theater.
               </p>
             </Text>
             <Text size="extraLarge">
               <p>
                 Key building blocks include crowd-commissions, smart-art,
                 <br />
-                and a <strong>double-constrained quadratic funding</strong> mechanism
+                and a <strong>double-constrained quadratic funding</strong> mechanism.
               </p>
             </Text>
             <Text size="extraLarge">
@@ -85,7 +87,7 @@ const Home: NextPage = () => {
                 <br />
                 empowering artists to co-create and <strong>ship creative work</strong> with the
                 <br />
-                Ethereum blockchain in ways never before possible
+                Ethereum blockchain in ways never before possible.
               </p>
             </Text>
           </Box>
@@ -134,6 +136,16 @@ const Home: NextPage = () => {
       </PageWrapper>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allCalls = await getAllCallsForFunds();
+
+  return {
+    props: {
+      calls: allCalls,
+    },
+  };
 };
 
 export default Home;
