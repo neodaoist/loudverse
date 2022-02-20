@@ -14,7 +14,7 @@ LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods lik
 
 ### [Read the whitepaper](https://github.com/neodaoist/loudverse/blob/main/dcqf_whitepaper.pdf)
 
-### Technologies Used
+### Technologies used
 - Ethereum =)
 - Next.js
 - The Graph
