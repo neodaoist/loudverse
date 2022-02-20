@@ -66,7 +66,7 @@ const Home: NextPage = () => {
           <Box marginBottom="8" backgroundColor="backgroundSecondary">
             <Text size="extraLarge">
               <p>
-                <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding
+                <strong>LOUDVΞRSΞ</strong> is a 2-sided marketplace for funding
                 <br />
                 hard-to-quantify public goods like art, music, and culture
               </p>
@@ -133,7 +133,7 @@ const Home: NextPage = () => {
           {divider}
           <Box marginBottom="8">
             <Box marginBottom="2">
-              <Text size="large">© 2022 LOUDVERSE. All rights reserved.</Text>
+              <Text size="large">© 2022 LOUDVΞRSΞ. All rights reserved.</Text>
             </Box>
             <Text>
               💚 <em>Helping artists ship creative work</em> 💚
