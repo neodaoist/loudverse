@@ -102,7 +102,7 @@ const Home: NextPage = () => {
               <IconEth size="24" />
               <Text size="extraLarge" align="left">
                 Web3 is providing creators with more opportunities to fund and monetize their work. But there is still
-                an open design space for funding hard-to-quantify public goods like art and culture.
+                an open design space for funding hard-to-quantify public goods like music, poetry, and theater.
               </Text>
             </Box>
             <Box display="flex" marginY="2" justifyContent="center" alignItems="center">
@@ -125,8 +125,8 @@ const Home: NextPage = () => {
               /> */}
               <IconPlug size="24" />
               <Text size="extraLarge" align="left">
-                A crowd-commission is an ERC721 NFT that represents “proof of patronage.” In support is an on-chain
-                reputation “proof of proficiency” ledger using ERC1238 NTTs as crypto-credentials.
+                A Crowd-Commission is a non-transferrable NFT that represents “proof of patronage.” Smart-Art is an
+                NFT collectible that allows artists and contributors to co-create and share in the financial upside.
               </Text>
             </Box>
           </Box>
