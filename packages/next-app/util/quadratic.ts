@@ -253,7 +253,7 @@ class Quadratic {
       const tx = await initializeProxyWDeployer({ proxyAddress: contract.id }).matchCallForFunds(
         funders,
         lcv,
-        ethers.utils.formatBytes32String(""), {gasLimit: 2000000}
+        ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
       );
       console.log(tx.wait());
       lcv++;
