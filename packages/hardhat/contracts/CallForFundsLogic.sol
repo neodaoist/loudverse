@@ -127,11 +127,7 @@ contract CallForFundsLogic is CallForFundsStorage {
         require(success);
 
         address proxyAddress = address(this);
-        uint256 ethxBalNoInter = _ethx.balanceOf(proxyAddress);
         uint256 ethxBalance = ISETH(_ethx).balanceOf(proxyAddress);
-        (int256 ethxBalanceINT, , , ) = _ethx.realtimeBalanceOfNow(
-            proxyAddress
-        );
 
         int256 _ethxBalance = int256(uint256(ethxBalance));
         int96 timelineInSeconds = int96(timelineInDays) * 86400;

@@ -1,7 +1,10 @@
 import { Box, Button, Text, IconSun, useTheme, IconMoon } from "degen";
 import Link from "next/link";
+import Image from "next/image";
 import Wallet from "./Wallet";
 import styles from "./Navbar.module.css";
+import logoDark from "../../public/dark_tight.png";
+import logoLight from "../../public/light_tight.png";
 
 const Navbar = () => {
   const { mode, setMode } = useTheme();
@@ -26,11 +29,11 @@ const Navbar = () => {
     >
       <Link href="/" passHref={true}>
         <Box as="a">
-          <Text weight="semiBold" letterSpacing="-0.02" size="large" font="mono">
+          {/* <Text weight="semiBold" letterSpacing="-0.02" size="large" font="mono">
             L O U D V E R S E
-          </Text>
+          </Text> */}
           {/* TODO trim logo // too wide */}
-          {/* <Image src="/../public/loudverse_logo_dark.png" width="300" height="20" /> */}
+          <Image alt="logo" src={mode == "light" ? logoDark : logoLight} width="220" height="24" />
         </Box>
       </Link>
       <Box display="flex">

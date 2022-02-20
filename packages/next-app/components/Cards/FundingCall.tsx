@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import Link from "next/link";
 import { toTrimmedAddress } from "../../utils";
+import call6 from "../../public/call6.jpeg";
 
 const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding; index: number }) => {
   const categoryColor = () => {
@@ -67,7 +68,12 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           height="full"
           alignItems="center"
         >
-          <Image src={callForFunding?.image} alt="Call For Funding's cover image" layout="fill" objectFit="cover" />
+          <Image
+            src={callForFunding?.image ?? call6}
+            alt="Call For Funding's cover image"
+            layout="fill"
+            objectFit="cover"
+          />
         </Box>
         <Text>
           {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} ETH funded by ${
