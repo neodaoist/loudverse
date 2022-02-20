@@ -73,7 +73,7 @@ export const uploadFinalDeliverable = async ({
   return metadata.url;
 };
 
-export const cffFactoryAddress = "0x22b3BB8256172D9296366AE916FdD923F1314AC7";
+export const cffFactoryAddress = "0x185D72d002B44D74f22cCb5e16FffF66A817C519";
 
 export function toTrimmedAddress(value: string): string {
   if (!value) return "";

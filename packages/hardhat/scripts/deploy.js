@@ -40,13 +40,9 @@ async function main() {
   const factory = await CallForFundsFactory.deploy(logic.address);
   await factory.deployed();
 
-  console.log("ding");
-
   const bonusFunderFactory = await ethers.getContractFactory("BonusFunder");
   const bonusFunder = await bonusFunderFactory.deploy(factory.address);
   await bonusFunder.deployed();
-
-  console.log("dong");
 
   const info = {
     Contracts: {
@@ -109,7 +105,6 @@ async function main() {
   );
 
   const buffigweiProxyReceipt = await buffigweiProxy.wait();
-  console.log(buffigweiProxyReceipt);
 
   const temptedProxy = await factoryWithSigner.createCallForFunds(
     "those WERE the buffigwei we were looking for", // _title
@@ -123,7 +118,6 @@ async function main() {
     "text/pdf" // _deliverableMedium
   );
   const temptedProxyReceipt = await temptedProxy.wait();
-  console.log(temptedProxyReceipt);
 
   const poetryProxy = await factoryWithSigner.createCallForFunds(
     "Tempted from Afar", // _title
@@ -137,7 +131,6 @@ async function main() {
     "video/mp4" // _deliverableMedium
   );
   const poetryProxyReceipt = await poetryProxy.wait();
-  console.log(poetryProxyReceipt);
 
   const carlosProxy = await factoryWithSigner.createCallForFunds(
     "Buff Buffigwei", // _title
@@ -151,7 +144,6 @@ async function main() {
     "video/mp4" // _deliverableMedium
   );
   const carlosProxyReceipt = await carlosProxy.wait();
-  console.log(carlosProxyReceipt);
 
   const contributors = [];
   for (let i = 1; i < 21; i++) {
@@ -161,15 +153,20 @@ async function main() {
     );
 
     contributors.push(contributor);
+
+    await deployer.sendTransaction({
+      to: contributor.address,
+      value: ethers.utils.parseEther(".1"),
+    });
   }
 
   const SolarpunkAmounts = [
-    0.085, 0.02, 0.01, 0.015, 0.012, 0, 0.002, 0.25, 0.01, 0.005, 0.005, 0.005,
+    0.085, 0.02, 0.01, 0.015, 0.012, 0, 0.002, 0.1, 0.01, 0.005, 0.005, 0.005,
     0.003, 0.018, 0.03, 0.04, 0.055, 0.009, 0, 0.005,
   ];
 
   const BuffigweiAmounts = [
-    0.01, 0, 0.119, 0, 0.042, 0.005, 0.005, 0.005, 0.01, 0, 0.005, 0.1, 0.023,
+    0.01, 0, 0.0919, 0, 0.042, 0.005, 0.005, 0.005, 0.01, 0, 0.005, 0.1, 0.023,
     0.025, 0.005, 0, 0, 0, 0, 0,
   ];
 
@@ -190,7 +187,9 @@ async function main() {
   for (let i = 0; i < 20; i++) {
     // solarpunk
     if (SolarpunkAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(SolarpunkAmounts[i]);
+      const value = ethers.utils.parseEther(
+        (SolarpunkAmounts[i] / 10).toFixed(10)
+      );
       const tx = await contributors[i].sendTransaction({
         to: solarpunkProxyReceipt.events[0].args[0],
         value: value,
@@ -200,7 +199,9 @@ async function main() {
 
     // buffigwei
     if (BuffigweiAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(BuffigweiAmounts[i]);
+      const value = ethers.utils.parseEther(
+        (BuffigweiAmounts[i] / 10).toFixed(10)
+      );
       const tx = await contributors[i].sendTransaction({
         to: buffigweiProxyReceipt.events[0].args[0],
         value: value,
@@ -210,7 +211,9 @@ async function main() {
 
     // tempted
     if (TemptedAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(TemptedAmounts[i]);
+      const value = ethers.utils.parseEther(
+        (TemptedAmounts[i] / 10).toFixed(10)
+      );
       const tx = await contributors[i].sendTransaction({
         to: temptedProxyReceipt.events[0].args[0],
         value: value,
@@ -220,7 +223,9 @@ async function main() {
 
     // poetry
     if (PoetryAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(PoetryAmounts[i]);
+      const value = ethers.utils.parseEther(
+        (PoetryAmounts[i] / 10).toFixed(10)
+      );
       const tx = await contributors[i].sendTransaction({
         to: poetryProxyReceipt.events[0].args[0],
         value: value,
@@ -230,7 +235,9 @@ async function main() {
 
     // carlos
     if (CarlosAmounts[i] !== 0) {
-      const value = ethers.utils.parseEther(CarlosAmounts[i]);
+      const value = ethers.utils.parseEther(
+        (CarlosAmounts[i] / 10).toFixed(10)
+      );
       const tx = await contributors[i].sendTransaction({
         to: carlosProxyReceipt.events[0].args[0],
         value: value,
