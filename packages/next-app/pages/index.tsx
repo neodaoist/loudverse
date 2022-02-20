@@ -21,8 +21,9 @@ import logoDark from "../public/loudverse_logo_dark.png";
 import logoLight from "../public/loudverse_logo_light.png";
 
 const Home: NextPage = () => {
-  const divider = <Box borderTopWidth="0.5" borderColor="foregroundTertiary" marginX="40" marginBottom="16"></Box>;
   const { mode } = useTheme();
+  const divider = <Box borderTopWidth="0.5" borderColor="foregroundTertiary" marginX="40" marginBottom="16"></Box>;
+
   return (
     <>
       <Head>
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
           {/* Banner */}
           <Box marginTop="8">
             <Image src={mode == "light" ? logoDark : logoLight} width="1198" height="82" alt="logo" />
-            <Box marginY="8">
+            <Box marginTop="8" marginBottom="16">
               <Heading level="1">Be seen. Be heard. Be experienced.</Heading>
             </Box>
           </Box>
@@ -44,21 +45,21 @@ const Home: NextPage = () => {
           {/* Three image row */}
           <Box display="flex" justifyContent="space-between" marginBottom="16" backgroundColor="backgroundSecondary">
             <Box textAlign="center">
-              <IconUsersSolid size="56" color="blue" />
+              <IconEth size="48" color="blue" />
               <Heading level="2" color="blue">
                 Crowdfunding
               </Heading>
             </Box>
             <Box textAlign="center">
-              <IconBookOpen size="56" color="green" />
+              <IconBookOpen size="48" color="green" />
               <Heading level="2" color="green">
                 Commissioning
               </Heading>
             </Box>
             <Box textAlign="center">
-              <IconCollection size="56" color="purple" />
+              <IconUsersSolid size="48" color="purple" />
               <Heading level="2" color="purple">
-                Credentialing
+                Community
               </Heading>
             </Box>
           </Box>
@@ -66,23 +67,23 @@ const Home: NextPage = () => {
           <Box marginBottom="8" backgroundColor="backgroundSecondary">
             <Text size="extraLarge">
               <p>
-                <strong>LOUDVΞRSΞ</strong> is a 2-sided marketplace for funding
+                <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding
                 <br />
-                hard-to-quantify public goods like art, music, and culture
+                hard-to-quantify public goods like music, poetry, and theater
               </p>
             </Text>
             <Text size="extraLarge">
               <p>
-                Key building blocks include streaming money, quadratic funding,
+                Key building blocks include crowd-commissions, smart-art,
                 <br />
-                and a new web3 primtive — the <strong>crowd-commission</strong>
+                and a <strong>double-constrained quadratic funding</strong> mechanism
               </p>
             </Text>
             <Text size="extraLarge">
               <p>
                 Crowd-commissions blur lines between fan/creator, analog/digital,
                 <br />
-                empowering artists to co-create and ship <strong>creative work</strong> with the
+                empowering artists to co-create and <strong>ship creative work</strong> with the
                 <br />
                 Ethereum blockchain in ways never before possible
               </p>
@@ -94,40 +95,30 @@ const Home: NextPage = () => {
           {/* ETH -> HAND -> PLUG */}
           <Box marginX="auto" marginBottom="16" backgroundColor="backgroundSecondary" maxWidth="screenLg">
             <Box display="flex" marginY="2" justifyContent="center" alignItems="center">
-              {/* <Image
-                src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-                width="240"
-                height="240"
-              /> */}
-              <IconEth size="24" />
-              <Text size="extraLarge" align="left">
-                Web3 is providing creators with more opportunities to fund and monetize their work. But there is still
-                an open design space for funding hard-to-quantify public goods like music, poetry, and theater.
-              </Text>
+              <IconEth size="24" color="textPrimary" />
+              <Box marginLeft="2">
+                <Text size="extraLarge" align="left">
+                  Web3 is providing creators with more opportunities to fund and monetize their work. But there is still
+                  an open design space for funding hard-to-quantify public goods like music, poetry, and theater.
+                </Text>
+              </Box>
             </Box>
             <Box display="flex" marginY="2" justifyContent="center" alignItems="center">
               <Text size="extraLarge" align="left">
                 Crowd-commissioning empowers artists, musicians, and other creators to fund their work in a sustainable
                 way while building a deeper relationship with their fans and supporters.
               </Text>
-              {/* <Image
-                src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-                width="240"
-                height="240"
-              /> */}
-              <IconHand size="24" />
+
+              <IconHand size="24" color="textPrimary" />
             </Box>
             <Box display="flex" marginY="2" justifyContent="center" alignItems="center">
-              {/* <Image
-                src="https://h7.alamy.com/comp/3/b100b89cf9674374a720da41d50937e3/ejxrme.jpg"
-                width="240"
-                height="240"
-              /> */}
-              <IconPlug size="24" />
-              <Text size="extraLarge" align="left">
-                A Crowd-Commission is a non-transferrable NFT that represents “proof of patronage.” Smart-Art is an
-                NFT collectible that allows artists and contributors to co-create and share in the financial upside.
-              </Text>
+              <IconPlug size="24" color="textPrimary" />
+              <Box marginLeft="2">
+                <Text size="extraLarge" align="left">
+                  A Crowd-Commission is a non-transferrable NFT that represents “proof of patronage.” Smart-Art is an
+                  NFT collectible that allows artists and contributors to co-create and share in the financial upside.
+                </Text>
+              </Box>
             </Box>
           </Box>
           {divider}
@@ -139,22 +130,6 @@ const Home: NextPage = () => {
               💚 <em>Helping artists ship creative work</em> 💚
             </Text>
           </Box>
-          {/* <h2>Keeping links for convenience for the moment</h2>
-          <Link href="/calls">
-            <a>calls</a>
-          </Link>
-          <Link href="/calls/create">
-            <a>create call</a>
-          </Link>
-          <Link href="/calls/0">
-            <a>call 0</a>
-          </Link>
-          <Link href="/users">
-            <a>users</a>
-          </Link>
-          <Link href="/users/1377">
-            <a>user 1377</a>
-          </Link> */}
         </Box>
       </PageWrapper>
     </>
