@@ -30,6 +30,36 @@ export class CallForFundsProxy extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  _dai(): Address {
+    let result = super.call("_dai", "_dai():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__dai(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_dai", "_dai():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  _daix(): Address {
+    let result = super.call("_daix", "_daix():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try__daix(): ethereum.CallResult<Address> {
+    let result = super.tryCall("_daix", "_daix():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   _ethx(): Address {
     let result = super.call("_ethx", "_ethx():(address)", []);
 
