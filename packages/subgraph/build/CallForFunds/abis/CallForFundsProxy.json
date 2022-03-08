@@ -74,6 +74,32 @@
   },
   {
     "inputs": [],
+    "name": "_dai",
+    "outputs": [
+      {
+        "internalType": "contract ERC20WithTokenInfo",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_daix",
+    "outputs": [
+      {
+        "internalType": "contract ISuperToken",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "_ethx",
     "outputs": [
       {
