@@ -11,9 +11,17 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Matchpool amount'
         # Default value if no value is explicitly provided
-        default: ''
+        default: '0.02'
         # Input has to be provided for the workflow to run
         required: true
+      max_per_call:
+        description: 'Maximum match per Call'
+        default: '0'
+        required: false
+      network:
+        description: 'Network to send match to -- dryrun for test'
+        default: 'dryrun'
+        required: false
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -32,6 +40,6 @@ jobs:
     - name: Add ts-node types
       run: cd packages/next-app/util && yarn add -D @types/node
     - name: Computed Double-Constrained Quadratic Funding
-      run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_amount }} ${{ secrets.MATCH_POOL_KEY }}
+      run: cd packages/next-app/util && node --loader ts-node/esm endroundhook.ts ${{ github.event.inputs.matchpool_amount }} ${{ secrets.MATCH_POOL_KEY }} ${{ github.event.inputs.max_per_call }} ${{ github.event.inputs.network }}
 
 

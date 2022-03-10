@@ -16,18 +16,22 @@ interface FundingState {
 
 class Quadratic {
   fundingStates: Map<String, FundingState>; // contract address, amount
-  poolAddress: String;
+  private readonly poolAddress: String;
   failedContracts: Array<CallForFunding>;
   eligibleContracts: Set<CallForFunding>;
-  poolKey: String;
-  fundingAmount: bigint
+  private readonly poolKey: String;
+  private readonly fundingAmount: bigint
+  private readonly maxPerCall: bigint;
+  private readonly network: String;
 
-  constructor(fundingAmount: String, poolKey: String) {
+  constructor(fundingAmount: String, poolKey: String, maxPerCall: String, network: String) {
     this.fundingStates = new Map<String, FundingState>();
     this.failedContracts = [];
     this.eligibleContracts = new Set<CallForFunding>();
     this.poolKey = poolKey;
-    //this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
+    this.maxPerCall = BigInt(maxPerCall.toString()) * BigInt(10**18);
+    this.network = network;
+    this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
   }
 
   /** Entry point for ending a funding round -- typically called from Github action
@@ -59,6 +63,11 @@ class Quadratic {
    */
   private computeMatchForContract(contract: CallForFunding): FundingState {
     const fundingResult = Quadratic.computeMatch(this.getCommunityFundForContract(contract));
+    // limit to max match, if a max is set
+    if(this.maxPerCall > 0 && fundingResult.idealTotal > this.maxPerCall) {
+      fundingResult.idealTotal = this.maxPerCall
+    }
+
     // did we meet the minimum?
     console.log("  Minimum: " + contract.minFundingAmount + ", Ideal total: " + fundingResult.idealTotal);
     if (fundingResult.idealTotal < contract.minFundingAmount) {
@@ -134,6 +143,7 @@ class Quadratic {
           ", match: " +
           (idealTotal - contributedAmount),
       );
+
       return {
         contributions: contributedAmount,
         proposedMatch: idealTotal - contributedAmount,
@@ -164,7 +174,6 @@ class Quadratic {
    * @private
    */
   private normalizeFunding() {
-    const matchFundsAvailable = this.getAvailableFundsForRound(this.poolAddress);
     console.log("Runoff: considering " + this.eligibleContracts.size + " calls for funds");
     if (this.eligibleContracts.size === 0) {
       return;
@@ -173,9 +182,9 @@ class Quadratic {
     for (let contract of this.fundingStates.values()) {
       matchAccumulate += contract.proposedMatch;
     }
-    const adjustmentCoefficient: number = Number(matchFundsAvailable) / Number(matchAccumulate);
-    console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + matchFundsAvailable);
-    if (matchFundsAvailable > matchAccumulate) {
+    const adjustmentCoefficient: number = Number(this.fundingAmount) / Number(matchAccumulate);
+    console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + this.fundingAmount);
+    if (this.fundingAmount > matchAccumulate) {
       console.log("Funding pool has sufficient funds.  No normalization needed");
       return;
     } else {
@@ -183,7 +192,7 @@ class Quadratic {
         "Ideal match: " +
           matchAccumulate +
           ", match available: " +
-          matchFundsAvailable +
+          this.fundingAmount +
           ", adjustment: " +
           adjustmentCoefficient,
       );
@@ -200,24 +209,6 @@ class Quadratic {
       // recurse
       this.normalizeFunding();
     }
-  }
-
-  /**
-   *
-   * @private
-   */
-  private getAvailableFundsForRound(matchPoolAddress: String): bigint {
-    //if(matchPoolAddress === "test") {
-    return BigInt(2 * 10 ** 17);
-    /*
-    }
-        else
-        {
-            const provider = new ethers.providers.JsonRpcProvider();
-            const balance = await provider.getBalance(matchPoolAddress.toString());
-            return balance.toBigInt();
-        }
-     */
   }
 
   private async applyFunding() {
