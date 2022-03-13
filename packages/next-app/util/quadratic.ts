@@ -4,6 +4,7 @@ import { Contract, ethers } from "ethers";
 import CFFLogicJSON from "../abis/CallForFundsLogic.json";
 import {SigningKey} from "@ethersproject/signing-key";
 import {HexString} from "walletlink/dist/types";
+import * as net from "net";
 
 /**
  * Holds the state of proposed mathcing and funding for a single CallForFunding during computation and normalization
@@ -23,6 +24,11 @@ class Quadratic {
   private readonly fundingAmount: bigint
   private readonly maxPerCall: bigint;
   private readonly network: String;
+  private readonly networkUrls: Map<String, String> = new Map<String, String>()
+      .set("rinkeby", "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02")
+      .set("polygon", "tbd")
+      .set("mumbai", "tdb")
+      .set("dryrun", "test")
 
   constructor(fundingAmount: String, poolKey: String, maxPerCall: String, network: String) {
     this.fundingStates = new Map<String, FundingState>();
@@ -219,11 +225,17 @@ class Quadratic {
 
     const logicABI = CFFLogicJSON.abi;
 
-    const rinkebyURL = "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02";
-    const deployer = new ethers.Wallet(
-        HexString(this.poolKey.toString()),
-        new ethers.providers.JsonRpcProvider(rinkebyURL)
-  );
+    const networkUrl = this.networkUrls.get(this.network);
+
+    let deployer;
+    if(networkUrl === "test") {
+      console.log("** DRYRUN -- Will not output to blockchain **")
+    } else {
+      deployer = new ethers.Wallet(
+          HexString(this.poolKey.toString()),
+          new ethers.providers.JsonRpcProvider(networkUrl.toString())
+      );
+    }
 
     const initializeProxyWDeployer = ({ proxyAddress }: { proxyAddress: string }) => {
       return new ethers.Contract(proxyAddress, logicABI, deployer);
@@ -241,13 +253,15 @@ class Quadratic {
       const funders: string[] = contract.contributions.map(contribution => {
         return contribution.user.id;
       });
-      const tx = await initializeProxyWDeployer({ proxyAddress: contract.id }).matchCallForFunds(
-        funders,
-        lcv,
-        ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
-      );
-      console.log(tx.wait());
-      lcv++;
+      if(networkUrl != "test") {
+        const tx = await initializeProxyWDeployer({proxyAddress: contract.id}).matchCallForFunds(
+            funders,
+            lcv,
+            ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
+        );
+        console.log(tx.wait());
+        lcv++;
+      }
     }
     console.log("----------");
     console.log("Calling Bonus Funder (Chainlink VRFv2) to award bonus grant at random...");  // TODO: Invoke contract here instead of manual

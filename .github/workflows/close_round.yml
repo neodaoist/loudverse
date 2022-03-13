@@ -19,9 +19,14 @@ on:
         default: '0'
         required: false
       network:
+        type: choice
         description: 'Network to send match to -- dryrun for test'
-        default: 'dryrun'
-        required: false
+        options:
+          - rinkeby
+          - mumbai
+          - polygon
+          - dryrun
+        required: true
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
