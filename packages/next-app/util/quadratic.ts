@@ -35,9 +35,9 @@ class Quadratic {
     this.failedContracts = [];
     this.eligibleContracts = new Set<CallForFunding>();
     this.poolKey = poolKey;
-    this.maxPerCall = BigInt(maxPerCall.toString()) * BigInt(10**18);
+    this.maxPerCall = BigInt(Number(maxPerCall.toString()) * (10**18));
     this.network = network;
-    this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
+    this.fundingAmount = BigInt(Number(fundingAmount.toString()) * (10**18));
   }
 
   /** Entry point for ending a funding round -- typically called from Github action
