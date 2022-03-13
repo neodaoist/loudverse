@@ -4,6 +4,7 @@ import { Contract, ethers } from "ethers";
 import CFFLogicJSON from "../abis/CallForFundsLogic.json";
 import {SigningKey} from "@ethersproject/signing-key";
 import {HexString} from "walletlink/dist/types";
+import * as net from "net";
 
 /**
  * Holds the state of proposed mathcing and funding for a single CallForFunding during computation and normalization
@@ -16,18 +17,27 @@ interface FundingState {
 
 class Quadratic {
   fundingStates: Map<String, FundingState>; // contract address, amount
-  poolAddress: String;
+  private readonly poolAddress: String;
   failedContracts: Array<CallForFunding>;
   eligibleContracts: Set<CallForFunding>;
-  poolKey: String;
-  fundingAmount: bigint
+  private readonly poolKey: String;
+  private readonly fundingAmount: bigint
+  private readonly maxPerCall: bigint;
+  private readonly network: String;
+  private readonly networkUrls: Map<String, String> = new Map<String, String>()
+      .set("rinkeby", "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02")
+      .set("polygon", "tbd")
+      .set("mumbai", "tdb")
+      .set("dryrun", "test")
 
-  constructor(fundingAmount: String, poolKey: String) {
+  constructor(fundingAmount: String, poolKey: String, maxPerCall: String, network: String) {
     this.fundingStates = new Map<String, FundingState>();
     this.failedContracts = [];
     this.eligibleContracts = new Set<CallForFunding>();
     this.poolKey = poolKey;
-    //this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
+    this.maxPerCall = BigInt(maxPerCall.toString()) * BigInt(10**18);
+    this.network = network;
+    this.fundingAmount = BigInt(fundingAmount.toString()) * BigInt(10**18);
   }
 
   /** Entry point for ending a funding round -- typically called from Github action
@@ -59,6 +69,11 @@ class Quadratic {
    */
   private computeMatchForContract(contract: CallForFunding): FundingState {
     const fundingResult = Quadratic.computeMatch(this.getCommunityFundForContract(contract));
+    // limit to max match, if a max is set
+    if(this.maxPerCall > 0 && fundingResult.idealTotal > this.maxPerCall) {
+      fundingResult.idealTotal = this.maxPerCall
+    }
+
     // did we meet the minimum?
     console.log("  Minimum: " + contract.minFundingAmount + ", Ideal total: " + fundingResult.idealTotal);
     if (fundingResult.idealTotal < contract.minFundingAmount) {
@@ -134,6 +149,7 @@ class Quadratic {
           ", match: " +
           (idealTotal - contributedAmount),
       );
+
       return {
         contributions: contributedAmount,
         proposedMatch: idealTotal - contributedAmount,
@@ -164,7 +180,6 @@ class Quadratic {
    * @private
    */
   private normalizeFunding() {
-    const matchFundsAvailable = this.getAvailableFundsForRound(this.poolAddress);
     console.log("Runoff: considering " + this.eligibleContracts.size + " calls for funds");
     if (this.eligibleContracts.size === 0) {
       return;
@@ -173,9 +188,9 @@ class Quadratic {
     for (let contract of this.fundingStates.values()) {
       matchAccumulate += contract.proposedMatch;
     }
-    const adjustmentCoefficient: number = Number(matchFundsAvailable) / Number(matchAccumulate);
-    console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + matchFundsAvailable);
-    if (matchFundsAvailable > matchAccumulate) {
+    const adjustmentCoefficient: number = Number(this.fundingAmount) / Number(matchAccumulate);
+    console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + this.fundingAmount);
+    if (this.fundingAmount > matchAccumulate) {
       console.log("Funding pool has sufficient funds.  No normalization needed");
       return;
     } else {
@@ -183,7 +198,7 @@ class Quadratic {
         "Ideal match: " +
           matchAccumulate +
           ", match available: " +
-          matchFundsAvailable +
+          this.fundingAmount +
           ", adjustment: " +
           adjustmentCoefficient,
       );
@@ -202,24 +217,6 @@ class Quadratic {
     }
   }
 
-  /**
-   *
-   * @private
-   */
-  private getAvailableFundsForRound(matchPoolAddress: String): bigint {
-    //if(matchPoolAddress === "test") {
-    return BigInt(2 * 10 ** 17);
-    /*
-    }
-        else
-        {
-            const provider = new ethers.providers.JsonRpcProvider();
-            const balance = await provider.getBalance(matchPoolAddress.toString());
-            return balance.toBigInt();
-        }
-     */
-  }
-
   private async applyFunding() {
     console.log("--------");
     console.log("Round results:");
@@ -228,11 +225,17 @@ class Quadratic {
 
     const logicABI = CFFLogicJSON.abi;
 
-    const rinkebyURL = "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02";
-    const deployer = new ethers.Wallet(
-        HexString(this.poolKey.toString()),
-        new ethers.providers.JsonRpcProvider(rinkebyURL)
-  );
+    const networkUrl = this.networkUrls.get(this.network);
+
+    let deployer;
+    if(networkUrl === "test") {
+      console.log("** DRYRUN -- Will not output to blockchain **")
+    } else {
+      deployer = new ethers.Wallet(
+          HexString(this.poolKey.toString()),
+          new ethers.providers.JsonRpcProvider(networkUrl.toString())
+      );
+    }
 
     const initializeProxyWDeployer = ({ proxyAddress }: { proxyAddress: string }) => {
       return new ethers.Contract(proxyAddress, logicABI, deployer);
@@ -250,13 +253,15 @@ class Quadratic {
       const funders: string[] = contract.contributions.map(contribution => {
         return contribution.user.id;
       });
-      const tx = await initializeProxyWDeployer({ proxyAddress: contract.id }).matchCallForFunds(
-        funders,
-        lcv,
-        ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
-      );
-      console.log(tx.wait());
-      lcv++;
+      if(networkUrl != "test") {
+        const tx = await initializeProxyWDeployer({proxyAddress: contract.id}).matchCallForFunds(
+            funders,
+            lcv,
+            ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
+        );
+        console.log(tx.wait());
+        lcv++;
+      }
     }
     console.log("----------");
     console.log("Calling Bonus Funder (Chainlink VRFv2) to award bonus grant at random...");  // TODO: Invoke contract here instead of manual

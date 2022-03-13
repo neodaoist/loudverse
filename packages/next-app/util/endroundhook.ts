@@ -5,7 +5,7 @@ import Quadratic from "./quadratic";
   const fundingRound = process.argv[2];
   const fundingPK = process.argv[3];
   console.log("End round triggered from GitHub Action for round " + fundingRound);
-  new Quadratic(process.argv[2], process.argv[3]).doRoundEnd();
+  new Quadratic(process.argv[2], process.argv[3], process.argv[4], process.argv[5]).doRoundEnd();
   //console.log("Funding complete.")
 //}
 
