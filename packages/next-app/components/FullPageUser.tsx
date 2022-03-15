@@ -3,6 +3,7 @@ import UserProfile from "./Cards/UserProfile";
 import UserStats from "./Cards/UserStats";
 import ProjectHistory from "./Cards/ProjectHistory";
 import { User } from "../graph/loudverse-graph-types";
+import userImage from "../public/wellwisher.png";
 
 const FullPageUser = () =>
   // { user }: { user: User }
@@ -10,7 +11,7 @@ const FullPageUser = () =>
   {
     // Dummy data
     const user = {
-      image: "/../public/wellwisher.png",
+      image: userImage,
       name: "@wellwisher.eth",
       tagline: "A composer with a flair for the pragmatic",
       website: "https://wellwisher.xyz",
