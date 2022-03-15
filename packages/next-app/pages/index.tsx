@@ -1,21 +1,9 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
+import { Box, Heading, IconBookOpen, IconEth, IconHand, IconPlug, IconUsersSolid, Text, useTheme } from "degen";
 import cookieCutter from "cookie-cutter";
-import {
-  Box,
-  Button,
-  Heading,
-  IconBookOpen,
-  IconCollection,
-  IconEth,
-  IconHand,
-  IconPlug,
-  IconUsersSolid,
-  Text,
-  useTheme,
-} from "degen";
+
 import CtaBar from "../components/Layout/CtaBar";
 import PageWrapper from "../components/Layout/PageWrapper";
 import logoDark from "../public/loudverse_logo_dark.png";
