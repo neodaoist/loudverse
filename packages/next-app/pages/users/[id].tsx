@@ -1,5 +1,5 @@
-import type { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from "next";
-import Head from "next/head";
+import type { GetServerSideProps } from "next";
+import cookieCutter from "cookie-cutter";
 import FullPageUser from "../../components/FullPageUser";
 import PageWrapper from "../../components/Layout/PageWrapper";
 import { User } from "../../graph/loudverse-graph-types";
@@ -15,29 +15,20 @@ const User = ({ user }: { user: User }) => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const allUsers = await getAllUsers();
-//   const paths = [];
-
-//   allUsers.forEach(user => {
-//     paths.push({ params: { id: `${user.id}` } });
-//   });
-
-//   return { paths, fallback: true };
-// };
-
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
   const user = await getUserByID(id as string);
+  const cookie = cookieCutter(context.req.headers);
 
   if (user) {
     return {
       props: {
         user: user,
+        mode: cookie.get("mode"),
       },
     };
   }
-  return { props: { notFound: true } };
+  return { props: { notFound: true, mode: cookie.get("mode") } };
 };
 
 export default User;
