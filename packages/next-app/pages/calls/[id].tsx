@@ -1,4 +1,5 @@
-import type { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import type { GetServerSideProps } from "next";
+import cookieCutter from "cookie-cutter";
 
 import { getAllCallsForFunds, getCallForFundsByID } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
@@ -13,20 +14,10 @@ const Call = ({ call }: { call: CallForFunding }) => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const allCalls = await getAllCallsForFunds();
-//   const paths = [];
-
-//   allCalls.forEach((call, i) => {
-//     paths.push({ params: { id: `${i}` } });
-//   });
-
-//   return { paths, fallback: true };
-// };
-
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
   const allCalls = await getAllCallsForFunds();
+  const cookie = cookieCutter(context.req.headers);
 
   let call = allCalls[Number(id)];
   if (call === undefined) {
@@ -40,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   return {
     props: {
       call: call,
+      mode: cookie.get("mode"),
     },
   };
 };
