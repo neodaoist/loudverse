@@ -1,7 +1,8 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import cookieCutter from "cookie-cutter";
 import {
   Box,
   Button,
@@ -138,12 +139,14 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const allCalls = await getAllCallsForFunds();
+  const cookie = cookieCutter(context.req.headers);
 
   return {
     props: {
       calls: allCalls,
+      mode: cookie.get("mode"),
     },
   };
 };
