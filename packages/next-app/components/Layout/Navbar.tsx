@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Box, Button, Text, IconSun, useTheme, IconMoon } from "degen";
+import { Mode } from "degen/dist/types/tokens";
 import Link from "next/link";
 import Image from "next/image";
 import Wallet from "./Wallet";
@@ -8,9 +10,23 @@ import logoLight from "../../public/light_tight.png";
 
 const Navbar = () => {
   const { mode, setMode } = useTheme();
+  useEffect(() => {
+    const savedMode = window.localStorage.getItem("theme") as Mode;
+    if (savedMode) {
+      setTimeout(() => {
+        console.log("setting to", savedMode);
+        setMode(savedMode);
+      }, 1);
+    }
+  }, []);
+  // const initial = window?.localStorage.getItem("theme");
+  // console.log("initial", initial);
 
   const handleMode = () => {
-    setMode(mode == "light" ? "dark" : "light");
+    const newMode = mode === "light" ? "dark" : "light";
+    window.localStorage.setItem("theme", newMode);
+    setMode(newMode);
+    console.log("set theme to", newMode);
   };
 
   return (
