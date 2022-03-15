@@ -5,7 +5,6 @@ import { ThemeProvider } from "degen";
 import "degen/styles";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  console.log("pageProps", pageProps);
   return (
     <ThemeProvider defaultMode={pageProps.mode}>
       <WagmiProvider>
