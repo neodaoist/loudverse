@@ -44,6 +44,7 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
         </Box>
       )}
       <Box>
+        {/* isCallsCta is not currently in use */}
         {isCallsCta ? (
           !accountData ? (
             <Button size="small" onClick={() => setShowModal(true)}>
@@ -51,9 +52,7 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
             </Button>
           ) : (
             <Link href="/calls/create">
-              <Button size="small" onClick={disconnect}>
-                Post call for funds
-              </Button>
+              <Button size="small">Post call for funds</Button>
             </Link>
           )
         ) : !accountData ? (
