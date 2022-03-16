@@ -134,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   return {
     props: {
       calls: allCalls,
-      mode: cookie.get("mode"),
+      mode: cookie.get("mode") || null,
     },
   };
 };

@@ -24,11 +24,11 @@ export const getServerSideProps: GetServerSideProps = async context => {
     return {
       props: {
         user: user,
-        mode: cookie.get("mode"),
+        mode: cookie.get("mode") || null,
       },
     };
   }
-  return { props: { notFound: true, mode: cookie.get("mode") } };
+  return { props: { notFound: true, mode: cookie.get("mode") || null } };
 };
 
 export default User;

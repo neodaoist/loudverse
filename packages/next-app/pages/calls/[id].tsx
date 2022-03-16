@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   return {
     props: {
       call: call,
-      mode: cookie.get("mode"),
+      mode: cookie.get("mode") || null,
     },
   };
 };
