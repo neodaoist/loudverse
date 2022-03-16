@@ -11,7 +11,7 @@ const Navbar = () => {
   const { mode, setMode } = useTheme();
   const handleMode = () => {
     const newMode = mode === "light" ? "dark" : "light";
-    cookieCutter.set("mode", newMode);
+    cookieCutter.set("mode", newMode, { path: "/" });
     setMode(newMode);
   };
 
