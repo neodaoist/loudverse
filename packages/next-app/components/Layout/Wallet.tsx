@@ -1,15 +1,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useConnect, useAccount } from "wagmi";
-import { Box, Button } from "degen";
+import { Box, Button, Text } from "degen";
 
 const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
   const [{ data, error }, connect] = useConnect();
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true,
   });
-
   const [showModal, setShowModal] = useState(false);
+  const shortAddr = accountData?.address.substring(0, 6);
 
   return (
     <>
@@ -61,9 +61,16 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
             Connect Wallet
           </Button>
         ) : (
-          <Button size="small" onClick={disconnect}>
-            Disconnect Wallet
-          </Button>
+          <Box display="flex" alignItems="center">
+            <Box paddingRight="4">
+              <Text weight="semiBold" color="textTertiary">
+                {shortAddr}
+              </Text>
+            </Box>
+            <Button size="small" onClick={disconnect}>
+              Disconnect Wallet
+            </Button>
+          </Box>
         )}
       </Box>
     </>
