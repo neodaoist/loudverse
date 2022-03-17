@@ -69,7 +69,7 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           alignItems="center"
         >
           <Image
-            src={callForFunding?.image ?? call6}
+            src={callForFunding?.image === " " ? call6 : callForFunding?.image}
             alt="Call For Funding's cover image"
             layout="fill"
             objectFit="cover"

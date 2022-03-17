@@ -19,6 +19,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     },
   });
 
+  const [formData, setFormData] = useState({
+    file: null,
+  });
+
   let callToAction;
 
   useEffect(() => {
@@ -68,9 +72,16 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     }
   };
 
+  const handleFile = async (file: File) => {
+    setFormData(prevState => ({
+      ...prevState,
+      file: file,
+    }));
+  };
+
   const uploadWork = async () => {
     const proxyWrite = initializeProxyWSigner(await getSigner());
-    const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding });
+    const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding, file: formData.file });
     const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
 
     const receipt = await tx.wait();
@@ -89,7 +100,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     callToAction = (
       <Box justifyContent="center" display="flex">
         <Stack justify="center" direction="vertical">
-          <MediaPicker label="Upload Work" compact />
+          <MediaPicker label="Upload Work" compact onChange={file => handleFile(file)} />
           <Box display="flex" justifyContent="center">
             <Button onClick={() => uploadWork()}>Deliver Work</Button>
           </Box>

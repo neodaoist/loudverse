@@ -39,38 +39,26 @@ export const uploadFile = async ({
     image: file,
   });
 
-  console.log(metadata);
-  return `https://infura-ipfs.io/ipfs/${metadata.ipnft}`;
+  return `https://infura-ipfs.io/ipfs/${metadata.data.image.href.slice(7)}`;
 };
 
 export const uploadFinalDeliverable = async ({
   callForFunding,
+  file,
 }: {
   callForFunding: CallForFunding;
+  file: File;
 }): Promise<string> => {
   const client = new NFTStorage({
     token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEQ4ZGYyNTcwMUIzMWI2MjlEODVkNmFiYTI2MDE0ODExQUZBRDI5YTkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NTMwOTcwNjc1OSwibmFtZSI6ImxvdWR2ZXJzZSJ9.61BQoBZL2OVGgHNE-emC8MNyenCkJbe1NXORn3LPkcM`,
   });
   const metadata = await client.store({
     name: `${callForFunding.title}`,
-    description: `wellwisher.eth created a musical solarpunk experience with a Western classical twist, with the help of ${callForFunding.contributions.length}`,
-    image: await fileFromPath(`/home/nick/Git/ethdenver/loudverse/packages/next-app/public/call6.jpeg`),
-    properties: [
-      { image: "ipfs://bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm" },
-      { image_url: "https://infura-ipfs.io/ipfs/bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm" },
-      {
-        animation_details: {
-          format: "MP3",
-        },
-      },
-      { animation: "ipfs://bafybeifvp5bsnibcjjolpfa3iouzb3y24mbcennwj56tep56obmpnr3dlq" },
-      { animation_url: "https://infura-ipfs.io/ipfs/bafybeifvp5bsnibcjjolpfa3iouzb3y24mbcennwj56tep56obmpnr3dlq" },
-      ,
-    ],
+    description: `${callForFunding.description}, with the help of ${callForFunding.contributions.length}`,
+    image: file,
   });
-  console.log(metadata);
 
-  return metadata.url;
+  return `https://infura-ipfs.io/ipfs/${metadata.data.image.href.slice(7)}`;
 };
 
 export const cffFactoryAddress = "0x4D5A1DD170E1BeCA2DB61FabBF01fcb371D8cf38";

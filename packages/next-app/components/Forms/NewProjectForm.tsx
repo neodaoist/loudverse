@@ -15,8 +15,6 @@ const NewProjectForm = () => {
   const [formData, setFormData] = useState({
     title: " ",
     description: " ",
-    // image: " ",
-    image: "https://infura-ipfs.io/ipfs/bafkreibjucapj6v6z5droqxq5vujxi472g5mhiyge2i265nd42u62r7mpm",
     category: " ",
     genre: " ",
     subgenre: " ",
@@ -29,11 +27,13 @@ const NewProjectForm = () => {
   const [{ data }, getSigner] = useSigner();
 
   const onClick = async () => {
+    const url = await uploadFile({ file: formData?.file, title: formData?.title, desc: formData?.description });
+
     const factoryWrite = initializeFactoryWSigner(await getSigner());
     const tx = await factoryWrite.createCallForFunds(
       formData.title,
       formData.description,
-      formData.image,
+      url,
       formData.category,
       formData.genre,
       formData.subgenre,
@@ -44,7 +44,6 @@ const NewProjectForm = () => {
 
     const receipt = await tx.wait();
     if (receipt) {
-      console.log(receipt);
       router.push(`/calls/${receipt.events[0].args[0]}`);
     }
   };
@@ -60,14 +59,12 @@ const NewProjectForm = () => {
       [event.target.name]: event.target.value,
     }));
   };
+
   const handleFile = async (file: File) => {
-    // const url = await uploadFile({ file: file, title: formData?.title, desc: formData.description });
-    // console.log(url);
-    // setFormData(prevState => ({
-    //   ...prevState,
-    //   image: url,
-    // }));
-    // console.log(url);
+    setFormData(prevState => ({
+      ...prevState,
+      file: file,
+    }));
   };
 
   return (
@@ -190,7 +187,7 @@ const NewProjectForm = () => {
           onChange={e => handleChange(e)}
           name="minFundingAmount"
           label="Minimum funding goal"
-          placeholder="What is the minimum amount of ETH you need"
+          placeholder="What is the minimum amount of DAI you need"
         />
         <Input
           onChange={e => handleChange(e)}
