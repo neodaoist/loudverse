@@ -29,8 +29,6 @@ contract CrowdCommission is
 
     constructor() NonTransferrableERC1155("") {}
 
-    // TODO Add Calls for Collaborators
-
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
     }
