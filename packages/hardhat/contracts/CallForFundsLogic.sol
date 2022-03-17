@@ -6,6 +6,8 @@ import {CallForFundsStorage} from "./CallForFundsStorage.sol";
 import {ISuperfluid} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import {IConstantFlowAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol";
 import {ISETH} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
+import {ERC20WithTokenInfo} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol";
+import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 
 interface ICallForFundsFactory {
     function proxies(address) external returns (bool);
@@ -119,27 +121,26 @@ contract CallForFundsLogic is CallForFundsStorage {
         onlyCreator
         requireState(FundingState.MATCHED)
     {
-        uint256 proxyBalance = address(this).balance;
-        (bool success, ) = address(_ethx).call{
-            value: proxyBalance,
-            gas: gasleft()
-        }(abi.encodeWithSignature("upgradeByETH()"));
+        address proxyAddress = address(this);
+        uint256 proxyBalance = ERC20WithTokenInfo(_dai).balanceOf(proxyAddress);
+        (bool success, ) = address(_daix).call{gas: gasleft()}(
+            abi.encodeWithSignature("upgrade(uint256)", proxyBalance)
+        );
         require(success);
 
-        address proxyAddress = address(this);
-        uint256 ethxBalance = ISETH(_ethx).balanceOf(proxyAddress);
+        uint256 daixBalance = ISuperToken(_daix).balanceOf(proxyAddress);
 
-        int256 _ethxBalance = int256(uint256(ethxBalance));
+        int256 _daixBalance = int256(uint256(daixBalance));
         int96 timelineInSeconds = int96(timelineInDays) * 86400;
-        int96 ethxBalanceInt96 = int96(_ethxBalance);
-        int96 flowRate = ethxBalanceInt96 / timelineInSeconds; // Safe in 0.8.0
+        int96 daixBalanceInt96 = int96(_daixBalance);
+        int96 flowRate = daixBalanceInt96 / timelineInSeconds; // Safe in 0.8.0
 
         // Start stream
         ISuperfluid(_host).callAgreement(
             _cfa,
             abi.encodeWithSelector(
                 IConstantFlowAgreementV1(_cfa).createFlow.selector,
-                _ethx, // ETHx or whatever token being streamed, if this doesn't work use ISuperToken type
+                _daix, // daix or whatever token being streamed, if this doesn't work use ISuperToken type
                 msg.sender, // plain address
                 flowRate, // wei/sec int96
                 new bytes(0) // placeholder - always pass in bytes(0)
