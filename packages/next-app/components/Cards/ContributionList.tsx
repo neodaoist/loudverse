@@ -13,7 +13,7 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
           Contribution History
         </Text>
       </Box>
-      <Box overflow="scroll" maxHeight="48">
+      <Box overflow="scroll" height="24">
         {contributionList?.length &&
           contributionList.map((contribution, i) => {
             const date = new Date(contribution?.timestamp * 1000).toDateString().toString();
