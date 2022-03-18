@@ -19,7 +19,8 @@ contract CallForFundsFactory {
         string subgenre,
         uint96 timelineInDays,
         uint256 minFundingAmount,
-        string deliverableMedium
+        string deliverableMedium,
+        string videoUri
     );
 
     constructor(address logicAddress_) {
@@ -35,7 +36,8 @@ contract CallForFundsFactory {
         string memory subgenre_,
         uint96 timelineInDays_,
         uint256 minFundingAmount_,
-        string memory deliverableMedium_
+        string memory deliverableMedium_,
+        string memory videoUri
     ) external returns (address proxy) {
         proxy = address(
             new CallForFundsProxy{
@@ -50,7 +52,8 @@ contract CallForFundsFactory {
                 subgenre_,
                 deliverableMedium_,
                 timelineInDays_,
-                minFundingAmount_
+                minFundingAmount_,
+                    videoUri_
             )
         );
 
@@ -65,7 +68,8 @@ contract CallForFundsFactory {
             subgenre_,
             timelineInDays_,
             minFundingAmount_,
-            deliverableMedium_
+            deliverableMedium_,
+                videoUri_
         );
 
         proxies[proxy] = true;
