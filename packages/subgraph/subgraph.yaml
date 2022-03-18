@@ -46,7 +46,7 @@ dataSources:
         - name: CallForFundsFactory
           file: ./abis/CallForFundsFactory.json
       eventHandlers:
-        - event: CallForFundsCreated(indexed address,indexed address,string,string,string,string,string,string,uint96,uint256,string)
+        - event: CallForFundsCreated(indexed address,indexed address,string,string,string,string,string,string,uint96,uint256,string,string)
           handler: handleNewCallForFunds
 templates:
   - kind: ethereum/contract

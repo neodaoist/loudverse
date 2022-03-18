@@ -37,7 +37,7 @@ contract CallForFundsFactory {
         uint96 timelineInDays_,
         uint256 minFundingAmount_,
         string memory deliverableMedium_,
-        string memory videoUri
+        string memory videoUri_
     ) external returns (address proxy) {
         proxy = address(
             new CallForFundsProxy{
@@ -53,7 +53,7 @@ contract CallForFundsFactory {
                 deliverableMedium_,
                 timelineInDays_,
                 minFundingAmount_,
-                    videoUri_
+                videoUri_
             )
         );
 
@@ -69,7 +69,7 @@ contract CallForFundsFactory {
             timelineInDays_,
             minFundingAmount_,
             deliverableMedium_,
-                videoUri_
+            videoUri_
         );
 
         proxies[proxy] = true;
