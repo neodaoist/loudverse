@@ -40,6 +40,7 @@ export type CallForFunding = {
   subgenre: Scalars['String'];
   timelineInDays: Scalars['Int'];
   title: Scalars['String'];
+  videoUri: Scalars['String'];
 };
 
 
