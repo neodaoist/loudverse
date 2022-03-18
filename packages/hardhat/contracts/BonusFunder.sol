@@ -13,6 +13,7 @@ contract BonusFunder is VRFConsumerBaseV2 {
     uint64 public s_subscriptionId = 408;
 
     // Rinkeby coordinator
+    // TODO add matic when chainlink releases
     address public vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab;
     VRFCoordinatorV2Interface public COORDINATOR =
         VRFCoordinatorV2Interface(vrfCoordinator);
