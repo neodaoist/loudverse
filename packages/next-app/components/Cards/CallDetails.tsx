@@ -16,80 +16,54 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
       backgroundColor="foregroundSecondary"
       borderRadius="medium"
     >
-      <Box margin="auto">
-        <Box marginBottom="2">
+      <Box width="full">
+        <Box marginTop="2" marginBottom="2">
           <Text size="extraLarge" weight="semiBold">
             {callForFunding?.title}
           </Text>
         </Box>
         <Text>{callForFunding?.description}</Text>
       </Box>
-      {/* <Image src={callForFunding?.image} width="80" height="80" /> */}
+
       <Box
         display="flex"
         position="relative"
         width="full"
         margin="4"
+        marginY="8"
         height="full"
         justifyContent="center"
         alignItems="center"
       >
         <Image src={callForFunding?.image} layout="fill" objectFit="cover" />
       </Box>
-      <Stack direction="vertical" align="center" space="max">
-        <Stack direction="horizontal" align="center">
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Category
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.category}
-            </Text>
-          </Box>
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Genre
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.genre}
-            </Text>
-          </Box>
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Subgenre
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.subgenre}
-            </Text>
-          </Box>
-        </Stack>
-        <Stack direction="horizontal" align="center">
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Deliverable
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.deliverableMedium}
-            </Text>
-          </Box>
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Minimum funding goal
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.minFundingAmount / 1000000000000000000} ETH
-            </Text>
-          </Box>
-          <Box margin="auto">
-            <Text align="center" variant="label">
-              Timeline
-            </Text>
-            <Text align="center" variant="large">
-              {callForFunding?.timelineInDays} days
-            </Text>
-          </Box>
-        </Stack>
-      </Stack>
+
+      <Box width="full" textAlign="left">
+        <Box marginBottom="4">
+          <Text variant="label">Category</Text>
+          <Text variant="large">{callForFunding?.category}</Text>
+        </Box>
+        <Box marginBottom="4">
+          <Text variant="label">Genre</Text>
+          <Text variant="large">{callForFunding?.genre}</Text>
+        </Box>
+        <Box marginBottom="4">
+          <Text variant="label">Subgenre</Text>
+          <Text variant="large">{callForFunding?.subgenre}</Text>
+        </Box>
+        <Box marginBottom="4">
+          <Text variant="label">Deliverable</Text>
+          <Text variant="large">{callForFunding?.deliverableMedium}</Text>
+        </Box>
+        <Box marginBottom="4">
+          <Text variant="label">Minimum funding goal</Text>
+          <Text variant="large">{callForFunding?.minFundingAmount / 1000000000000000000} ETH</Text>
+        </Box>
+        <Box>
+          <Text variant="label">Timeline</Text>
+          <Text variant="large">{callForFunding?.timelineInDays} days</Text>
+        </Box>
+      </Box>
     </Box>
   );
 };
