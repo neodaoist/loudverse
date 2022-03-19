@@ -1,6 +1,6 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
-import Head from "next/head";
+import type { GetServerSideProps } from "next";
 import { Box, Stack, Text, Heading } from "degen";
+import cookieCutter from "cookie-cutter";
 
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
@@ -41,12 +41,14 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const allCalls = await getAllCallsForFunds();
+  const cookie = cookieCutter(context.req.headers);
 
   return {
     props: {
       calls: allCalls,
+      mode: cookie.get("mode") || null,
     },
   };
 };

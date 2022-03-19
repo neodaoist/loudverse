@@ -1,20 +1,9 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
-import {
-  Box,
-  Button,
-  Heading,
-  IconBookOpen,
-  IconCollection,
-  IconEth,
-  IconHand,
-  IconPlug,
-  IconUsersSolid,
-  Text,
-  useTheme,
-} from "degen";
+import { Box, Heading, IconBookOpen, IconEth, IconHand, IconPlug, IconUsersSolid, Text, useTheme } from "degen";
+import cookieCutter from "cookie-cutter";
+
 import CtaBar from "../components/Layout/CtaBar";
 import PageWrapper from "../components/Layout/PageWrapper";
 import logoDark from "../public/loudverse_logo_dark.png";
@@ -138,12 +127,14 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const allCalls = await getAllCallsForFunds();
+  const cookie = cookieCutter(context.req.headers);
 
   return {
     props: {
       calls: allCalls,
+      mode: cookie.get("mode") || null,
     },
   };
 };
