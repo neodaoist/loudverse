@@ -1,9 +1,9 @@
 {
   "Contracts": {
-    "logic": "0x10b5866Ee330F9faB6F658Cf94f088741E85FE50",
-    "factory": "0x7D4AC17fAb6c8BE328D33433Af4539F0f1d94c9c",
-    "crowdCommission": "0x1340C3fc9dBc7ccbe4CCB323C945382d008bfcbe",
-    "smartArt": "0x11B5fF28FD951F17f638d60c1e2d532a7C3D0F48",
-    "bonusFunder": "0xDE936Aa779460817C594e8e2632E2E3492bc8b1a"
+    "logic": "0x4477a87a4af2e302ed1E63B47e83144875310b16",
+    "factory": "0x9ed9e887c4717DA87a9185e456faFB871b1AD342",
+    "crowdCommission": "0x7D9A9078BADa03ee1441F928AC152db5Bbb81F9F",
+    "smartArt": "0x262E4a2a04E001bbB4c1dD9Cb3996Bb642a0bd5c",
+    "bonusFunder": "0xCD2756A136A6DFCEA7127C6C750AE67107F26d9e"
   }
 }

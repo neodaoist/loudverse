@@ -93,7 +93,7 @@ async function main() {
     90, // _timelineInDays
     1, // _minFundingAmount
     "image/jpeg", // _deliverableMedium
-    "videoURI" // videoURI
+    "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4" // videoURI
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
 
@@ -313,7 +313,7 @@ async function main() {
         "image/jpeg", // _deliverableMedium
         90, // _timelineInDays
         1, // _minFundingAmount
-        "videoURI",
+        "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4",
       ],
     });
   } catch (error) {
