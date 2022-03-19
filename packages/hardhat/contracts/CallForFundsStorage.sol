@@ -32,6 +32,7 @@ contract CallForFundsStorage {
     string public deliverableMedium;
     uint96 public timelineInDays;
     uint256 public minFundingAmount;
+    string public videoUri;
 
     string public deliverableURI;
 

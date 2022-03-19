@@ -27,6 +27,7 @@ export const ALL_CALLS = (): DocumentNode => gql`
       minFundingAmount
       currentRoundFundsReceived
       lifetimeFundsReceived
+      videoUri
     }
   }
 `;

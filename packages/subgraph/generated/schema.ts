@@ -19,7 +19,6 @@ export class CallForFunding extends Entity {
     this.set("creator", Value.fromString(""));
     this.set("title", Value.fromString(""));
     this.set("description", Value.fromString(""));
-    this.set("image", Value.fromString(""));
     this.set("category", Value.fromString(""));
     this.set("genre", Value.fromString(""));
     this.set("subgenre", Value.fromString(""));
@@ -84,13 +83,21 @@ export class CallForFunding extends Entity {
     this.set("description", Value.fromString(value));
   }
 
-  get image(): string {
+  get image(): string | null {
     let value = this.get("image");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set image(value: string) {
-    this.set("image", Value.fromString(value));
+  set image(value: string | null) {
+    if (!value) {
+      this.unset("image");
+    } else {
+      this.set("image", Value.fromString(<string>value));
+    }
   }
 
   get category(): string {
@@ -215,6 +222,23 @@ export class CallForFunding extends Entity {
 
   set lifetimeFundsReceived(value: BigInt) {
     this.set("lifetimeFundsReceived", Value.fromBigInt(value));
+  }
+
+  get videoUri(): string | null {
+    let value = this.get("videoUri");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set videoUri(value: string | null) {
+    if (!value) {
+      this.unset("videoUri");
+    } else {
+      this.set("videoUri", Value.fromString(<string>value));
+    }
   }
 }
 

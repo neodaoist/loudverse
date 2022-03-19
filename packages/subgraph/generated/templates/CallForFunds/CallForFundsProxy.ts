@@ -312,6 +312,21 @@ export class CallForFundsProxy extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
+
+  videoUri(): string {
+    let result = super.call("videoUri", "videoUri():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_videoUri(): ethereum.CallResult<string> {
+    let result = super.tryCall("videoUri", "videoUri():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -369,6 +384,10 @@ export class ConstructorCall__Inputs {
 
   get minFundingAmount_(): BigInt {
     return this._call.inputValues[9].value.toBigInt();
+  }
+
+  get videoUri_(): string {
+    return this._call.inputValues[10].value.toString();
   }
 }
 

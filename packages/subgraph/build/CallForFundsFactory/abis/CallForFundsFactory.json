@@ -78,6 +78,12 @@
         "internalType": "string",
         "name": "deliverableMedium",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "videoUri",
+        "type": "string"
       }
     ],
     "name": "CallForFundsCreated",
@@ -128,6 +134,11 @@
       {
         "internalType": "string",
         "name": "deliverableMedium_",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "videoUri_",
         "type": "string"
       }
     ],

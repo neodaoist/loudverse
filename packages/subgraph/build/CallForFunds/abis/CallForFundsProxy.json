@@ -50,6 +50,11 @@
         "internalType": "uint256",
         "name": "minFundingAmount_",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "videoUri_",
+        "type": "string"
       }
     ],
     "stateMutability": "nonpayable",
@@ -283,6 +288,19 @@
   {
     "inputs": [],
     "name": "title",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "videoUri",
     "outputs": [
       {
         "internalType": "string",

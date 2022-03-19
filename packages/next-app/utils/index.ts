@@ -61,7 +61,7 @@ export const uploadFinalDeliverable = async ({
   return `https://infura-ipfs.io/ipfs/${metadata.data.image.href.slice(7)}`;
 };
 
-export const cffFactoryAddress = "0x4D5A1DD170E1BeCA2DB61FabBF01fcb371D8cf38";
+export const cffFactoryAddress = "0x9ed9e887c4717DA87a9185e456faFB871b1AD342";
 
 export function toTrimmedAddress(value: string): string {
   if (!value) return "";

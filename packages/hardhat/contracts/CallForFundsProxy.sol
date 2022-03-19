@@ -18,7 +18,8 @@ contract CallForFundsProxy is CallForFundsStorage {
         string memory subgenre_,
         string memory deliverableMedium_,
         uint96 timelineInDays_,
-        uint256 minFundingAmount_
+        uint256 minFundingAmount_,
+        string memory videoUri_
     ) {
         logicAddress = ICallForFundsFactory(msg.sender).logicAddress();
 
@@ -32,6 +33,7 @@ contract CallForFundsProxy is CallForFundsStorage {
         deliverableMedium = deliverableMedium_;
         timelineInDays = timelineInDays_;
         minFundingAmount = minFundingAmount_;
+        videoUri = videoUri_;
 
         fundingState = FundingState.OPEN;
     }

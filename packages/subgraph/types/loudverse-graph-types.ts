@@ -15,9 +15,18 @@ export type Scalars = {
   Bytes: any;
 };
 
+/** The block at which the query should be executed. */
 export type Block_Height = {
+  /** Value containing a block hash */
   hash?: InputMaybe<Scalars['Bytes']>;
+  /** Value containing a block number */
   number?: InputMaybe<Scalars['Int']>;
+  /**
+   * Value containing the minimum block number.
+   * In the case of `number_gte`, the query will be executed on the latest block only if
+   * the subgraph has progressed to or past the minimum block number.
+   * Defaults to the latest block when omitted.
+   */
   number_gte?: InputMaybe<Scalars['Int']>;
 };
 
@@ -34,12 +43,13 @@ export type CallForFunding = {
   fundingState: Scalars['Int'];
   genre: Scalars['String'];
   id: Scalars['ID'];
-  image: Scalars['String'];
+  image?: Maybe<Scalars['String']>;
   lifetimeFundsReceived: Scalars['BigInt'];
   minFundingAmount: Scalars['BigInt'];
   subgenre: Scalars['String'];
-  timelineInDays: Scalars['Int'];
+  timelineInDays: Scalars['BigInt'];
   title: Scalars['String'];
+  videoUri?: Maybe<Scalars['String']>;
 };
 
 
@@ -218,14 +228,14 @@ export type CallForFunding_Filter = {
   subgenre_not_in?: InputMaybe<Array<Scalars['String']>>;
   subgenre_not_starts_with?: InputMaybe<Scalars['String']>;
   subgenre_starts_with?: InputMaybe<Scalars['String']>;
-  timelineInDays?: InputMaybe<Scalars['Int']>;
-  timelineInDays_gt?: InputMaybe<Scalars['Int']>;
-  timelineInDays_gte?: InputMaybe<Scalars['Int']>;
-  timelineInDays_in?: InputMaybe<Array<Scalars['Int']>>;
-  timelineInDays_lt?: InputMaybe<Scalars['Int']>;
-  timelineInDays_lte?: InputMaybe<Scalars['Int']>;
-  timelineInDays_not?: InputMaybe<Scalars['Int']>;
-  timelineInDays_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  timelineInDays?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_gt?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_gte?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timelineInDays_lt?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_lte?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_not?: InputMaybe<Scalars['BigInt']>;
+  timelineInDays_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   title?: InputMaybe<Scalars['String']>;
   title_contains?: InputMaybe<Scalars['String']>;
   title_ends_with?: InputMaybe<Scalars['String']>;
@@ -240,6 +250,20 @@ export type CallForFunding_Filter = {
   title_not_in?: InputMaybe<Array<Scalars['String']>>;
   title_not_starts_with?: InputMaybe<Scalars['String']>;
   title_starts_with?: InputMaybe<Scalars['String']>;
+  videoUri?: InputMaybe<Scalars['String']>;
+  videoUri_contains?: InputMaybe<Scalars['String']>;
+  videoUri_ends_with?: InputMaybe<Scalars['String']>;
+  videoUri_gt?: InputMaybe<Scalars['String']>;
+  videoUri_gte?: InputMaybe<Scalars['String']>;
+  videoUri_in?: InputMaybe<Array<Scalars['String']>>;
+  videoUri_lt?: InputMaybe<Scalars['String']>;
+  videoUri_lte?: InputMaybe<Scalars['String']>;
+  videoUri_not?: InputMaybe<Scalars['String']>;
+  videoUri_not_contains?: InputMaybe<Scalars['String']>;
+  videoUri_not_ends_with?: InputMaybe<Scalars['String']>;
+  videoUri_not_in?: InputMaybe<Array<Scalars['String']>>;
+  videoUri_not_starts_with?: InputMaybe<Scalars['String']>;
+  videoUri_starts_with?: InputMaybe<Scalars['String']>;
 };
 
 export enum CallForFunding_OrderBy {
@@ -259,7 +283,8 @@ export enum CallForFunding_OrderBy {
   MinFundingAmount = 'minFundingAmount',
   Subgenre = 'subgenre',
   TimelineInDays = 'timelineInDays',
-  Title = 'title'
+  Title = 'title',
+  VideoUri = 'videoUri'
 }
 
 export type Contribution = {
@@ -334,6 +359,7 @@ export enum Contribution_OrderBy {
   User = 'user'
 }
 
+/** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
   Desc = 'desc'
