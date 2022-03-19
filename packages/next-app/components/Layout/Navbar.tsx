@@ -5,12 +5,14 @@ import Wallet from "./Wallet";
 import styles from "./Navbar.module.css";
 import logoDark from "../../public/dark_tight.png";
 import logoLight from "../../public/light_tight.png";
+import cookieCutter from "cookie-cutter";
 
 const Navbar = () => {
   const { mode, setMode } = useTheme();
-
   const handleMode = () => {
-    setMode(mode == "light" ? "dark" : "light");
+    const newMode = mode === "light" ? "dark" : "light";
+    cookieCutter.set("mode", newMode, { path: "/" });
+    setMode(newMode);
   };
 
   return (
@@ -29,10 +31,6 @@ const Navbar = () => {
     >
       <Link href="/" passHref={true}>
         <Box as="a">
-          {/* <Text weight="semiBold" letterSpacing="-0.02" size="large" font="mono">
-            L O U D V E R S E
-          </Text> */}
-          {/* TODO trim logo // too wide */}
           <Image alt="logo" src={mode == "light" ? logoDark : logoLight} width="220" height="24" />
         </Box>
       </Link>
