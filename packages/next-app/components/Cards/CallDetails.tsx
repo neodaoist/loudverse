@@ -34,7 +34,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         justifyContent="center"
         alignItems="center"
       >
-        <Image src={callForFunding?.image} layout="fill" objectFit="cover" />
+        {callForFunding?.image !== " " && <Image src={callForFunding?.image} layout="fill" objectFit="cover" />}
       </Box>
       <Stack direction="vertical" align="center" space="max">
         <Stack direction="horizontal" align="center">
@@ -77,7 +77,7 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
               Minimum funding goal
             </Text>
             <Text align="center" variant="large">
-              {callForFunding?.minFundingAmount / 1000000000000000000} ETH
+              {callForFunding?.minFundingAmount / 1000000000000000000} DAI
             </Text>
           </Box>
           <Box margin="auto">

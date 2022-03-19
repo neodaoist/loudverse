@@ -20,7 +20,6 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
 
             return (
               <Box key={i} marginBottom="4">
-                {/* TODO add timestamp to graph schema */}
                 <Text>
                   <Link href={`/users/${contribution?.user.id}`} passHref>
                     <a>{toTrimmedAddress(contribution?.user.id)}</a>

@@ -31,10 +31,6 @@ const Navbar = () => {
     >
       <Link href="/" passHref={true}>
         <Box as="a">
-          {/* <Text weight="semiBold" letterSpacing="-0.02" size="large" font="mono">
-            L O U D V E R S E
-          </Text> */}
-          {/* TODO trim logo // too wide */}
           <Image alt="logo" src={mode == "light" ? logoDark : logoLight} width="220" height="24" />
         </Box>
       </Link>

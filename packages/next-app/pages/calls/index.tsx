@@ -27,9 +27,8 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
               call.id !== "0x4d6ad8dd38dcbb482bd0e4da293dbb77f195ce8d" &&
               call.id !== "0x536ba7da1a7620b4c442877b887acb325d65ed86"
             ) {
-              console.log(call.id, call.title);
               return (
-                <Box display="flex" key={call.title} width="1/3" padding="4">
+                <Box display="flex" key={`${call.title}-${i}`} width="1/3" padding="4">
                   <FundingCall callForFunding={call} index={i} />
                 </Box>
               );
