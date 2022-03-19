@@ -477,6 +477,21 @@ export class CallForFundsLogic extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
+
+  videoUri(): string {
+    let result = super.call("videoUri", "videoUri():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_videoUri(): ethereum.CallResult<string> {
+    let result = super.tryCall("videoUri", "videoUri():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {

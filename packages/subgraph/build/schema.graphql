@@ -8,7 +8,7 @@ type CallForFunding @entity {
 
   description: String!
 
-  image: String!
+  image: String
 
   category: String!
 
@@ -33,6 +33,8 @@ type CallForFunding @entity {
   currentRoundFundsReceived: BigInt!
 
   lifetimeFundsReceived: BigInt!
+
+  videoUri: String
 }
 
 type User @entity {

@@ -92,7 +92,8 @@ async function main() {
     "fractal/algorithmic", // _subgenre
     90, // _timelineInDays
     1, // _minFundingAmount
-    "image/jpeg" // _deliverableMedium
+    "image/jpeg", // _deliverableMedium
+    "videoURI" // videoURI
   );
   const solarpunkProxyReceipt = await solarpunkProxy.wait();
 
@@ -312,6 +313,7 @@ async function main() {
         "image/jpeg", // _deliverableMedium
         90, // _timelineInDays
         1, // _minFundingAmount
+        "videoURI",
       ],
     });
   } catch (error) {

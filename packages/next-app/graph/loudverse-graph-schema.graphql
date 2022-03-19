@@ -4,7 +4,9 @@ is required to be annotated with this directive.
 """
 directive @entity on OBJECT
 
-"""Defined a Subgraph ID for an object type"""
+"""
+Defined a Subgraph ID for an object type
+"""
 directive @subgraphId(id: String!) on OBJECT
 
 """
@@ -13,33 +15,44 @@ creates a virtual field on the entity that may be queried but cannot be set manu
 directive @derivedFrom(field: String!) on FIELD_DEFINITION
 
 type _Block_ {
-  """The hash of the block"""
+  """
+  The hash of the block
+  """
   hash: Bytes
 
-  """The block number"""
+  """
+  The block number
+  """
   number: Int!
 }
 
-"""The type for the top-level _meta field"""
+"""
+The type for the top-level _meta field
+"""
 type _Meta_ {
   """
   Information about a specific subgraph block. The hash of the block
   will be null if the _meta field has a block constraint that asks for
   a block number. It will be filled if the _meta field has no block constraint
   and therefore asks for the latest  block
-  
   """
   block: _Block_!
 
-  """The deployment ID"""
+  """
+  The deployment ID
+  """
   deployment: String!
 
-  """If `true`, the subgraph encountered indexing errors at some past block"""
+  """
+  If `true`, the subgraph encountered indexing errors at some past block
+  """
   hasIndexingErrors: Boolean!
 }
 
 enum _SubgraphErrorPolicy_ {
-  """Data will be returned even if the subgraph has indexing errors"""
+  """
+  Data will be returned even if the subgraph has indexing errors
+  """
   allow
 
   """
@@ -52,20 +65,25 @@ scalar BigDecimal
 
 scalar BigInt
 
-"""The block at which the query should be executed."""
+"""
+The block at which the query should be executed.
+"""
 input Block_height {
-  """Value containing a block hash"""
+  """
+  Value containing a block hash
+  """
   hash: Bytes
 
-  """Value containing a block number"""
+  """
+  Value containing a block number
+  """
   number: Int
 
   """
-  Value containing the minimum block number. 
+  Value containing the minimum block number.
   In the case of `number_gte`, the query will be executed on the latest block only if
   the subgraph has progressed to or past the minimum block number.
   Defaults to the latest block when omitted.
-  
   """
   number_gte: Int
 }
@@ -87,7 +105,13 @@ type CallForFunding {
   deliverableURI: String
   deliverableToken: String
   fundingState: Int!
-  contributions(skip: Int = 0, first: Int = 100, orderBy: Contribution_orderBy, orderDirection: OrderDirection, where: Contribution_filter): [Contribution!]!
+  contributions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Contribution_orderBy
+    orderDirection: OrderDirection
+    where: Contribution_filter
+  ): [Contribution!]!
   currentRoundFundsReceived: BigInt!
   lifetimeFundsReceived: BigInt!
   videoUri: String
@@ -390,7 +414,9 @@ enum Contribution_orderBy {
   timestamp
 }
 
-"""Defines the order direction, either ascending or descending"""
+"""
+Defines the order direction, either ascending or descending
+"""
 enum OrderDirection {
   asc
   desc
@@ -518,7 +544,9 @@ type Query {
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Contribution!]!
 
-  """Access to subgraph metadata"""
+  """
+  Access to subgraph metadata
+  """
   _meta(block: Block_height): _Meta_
 }
 
@@ -644,14 +672,28 @@ type Subscription {
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [Contribution!]!
 
-  """Access to subgraph metadata"""
+  """
+  Access to subgraph metadata
+  """
   _meta(block: Block_height): _Meta_
 }
 
 type User {
   id: ID!
-  callsForFunds(skip: Int = 0, first: Int = 100, orderBy: CallForFunding_orderBy, orderDirection: OrderDirection, where: CallForFunding_filter): [CallForFunding!]!
-  contributions(skip: Int = 0, first: Int = 100, orderBy: Contribution_orderBy, orderDirection: OrderDirection, where: Contribution_filter): [Contribution!]!
+  callsForFunds(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: CallForFunding_orderBy
+    orderDirection: OrderDirection
+    where: CallForFunding_filter
+  ): [CallForFunding!]!
+  contributions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Contribution_orderBy
+    orderDirection: OrderDirection
+    where: Contribution_filter
+  ): [Contribution!]!
 }
 
 input User_filter {
@@ -670,4 +712,3 @@ enum User_orderBy {
   callsForFunds
   contributions
 }
-

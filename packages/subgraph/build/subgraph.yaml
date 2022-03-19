@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0x15F0Ca26781C3852f8166eD2ebce5D18265cceb7"
       abi: DAI
-      startBlock: 25432161
+      startBlock: 25571639
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -28,9 +28,9 @@ dataSources:
     name: CallForFundsFactory
     network: mumbai
     source:
-      address: "0x4D5A1DD170E1BeCA2DB61FabBF01fcb371D8cf38"
+      address: "0x7D4AC17fAb6c8BE328D33433Af4539F0f1d94c9c"
       abi: CallForFundsFactory
-      startBlock: 25432161
+      startBlock: 25571639
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -43,7 +43,7 @@ dataSources:
           file: CallForFundsFactory/abis/CallForFundsFactory.json
       eventHandlers:
         - event: CallForFundsCreated(indexed address,indexed
-            address,string,string,string,string,string,string,uint96,uint256,string)
+            address,string,string,string,string,string,string,uint96,uint256,string,string)
           handler: handleNewCallForFunds
 templates:
   - kind: ethereum/contract

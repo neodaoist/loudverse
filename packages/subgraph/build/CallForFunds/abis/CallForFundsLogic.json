@@ -502,6 +502,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "videoUri",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "stateMutability": "payable",
     "type": "receive"
   }
