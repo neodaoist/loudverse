@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, useTheme } from "degen";
-import Logo from "../Livepeer";
+import LivepeerLogo from "../LivepeerLogo";
 
 const Video = ({ videoUri }: { videoUri: string }) => {
   const { mode, setMode } = useTheme();
@@ -17,7 +17,7 @@ const Video = ({ videoUri }: { videoUri: string }) => {
       <Box display="flex" justifyContent="flex-end">
         <Box display="flex" color="textPrimary">
           <em>Powered by</em>
-          <Logo height={20} darkMode={mode === "dark"} />
+          <LivepeerLogo height={20} darkMode={mode === "dark"} />
         </Box>
       </Box>
     </Box>

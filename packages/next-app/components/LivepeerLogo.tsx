@@ -6,7 +6,7 @@ interface LogoProps {
   darkMode?: boolean;
 }
 
-export default function Logo({ height, width, darkMode }: LogoProps) {
+export default function LivepeerLogo({ height, width, darkMode }: LogoProps) {
   const fillColor = darkMode ? "#fff" : "#131418";
   return (
     <svg viewBox="-10 0 133 34" fill="none" xmlns="http://www.w3.org/2000/svg" height={height} width={width}>
