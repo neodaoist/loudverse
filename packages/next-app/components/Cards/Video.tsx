@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Text } from "degen";
+import Image from "next/image";
+import LivepeerLogo from "../../public/256x256_Badge_Green.png";
 
 const Video = ({ videoUri }: { videoUri: string }) => {
   return (
@@ -17,6 +19,24 @@ const Video = ({ videoUri }: { videoUri: string }) => {
           // src="https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4"
           controls
         ></video>
+      </Box>
+      <Box position="relative" width="full" height="8" display="flex" justifyContent="center">
+        <Box marginY="3">
+          <Text size="small" font="mono" weight="semiBold" align="center">
+            POWERED BY LIVEPEER
+          </Text>
+        </Box>
+        <Box
+          position="relative"
+          width="8"
+          height="full"
+          justifyContent="center"
+          alignItems="center"
+          marginTop="1"
+          marginLeft="2"
+        >
+          <Image src={LivepeerLogo} layout="fill" objectFit="contain" alt="Livepeer Logo" />
+        </Box>
       </Box>
     </Box>
   );
