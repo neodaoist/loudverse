@@ -15,7 +15,7 @@ const Video = ({ videoUri }: { videoUri: string }) => {
         <video width="592" height="333" src={videoUri} controls></video>
       </Box>
       <Box display="flex" justifyContent="flex-end">
-        <Box display="flex">
+        <Box display="flex" color="textPrimary">
           <em>Powered by</em>
           <Logo height={20} darkMode={mode === "dark"} />
         </Box>
