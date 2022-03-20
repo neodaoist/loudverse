@@ -1,7 +1,9 @@
 import React from "react";
-import { Box, Text } from "degen";
+import { Box, Text, useTheme } from "degen";
+import Logo from "../Livepeer";
 
 const Video = ({ videoUri }: { videoUri: string }) => {
+  const { mode, setMode } = useTheme();
   return (
     <Box padding="4" backgroundColor="foregroundSecondary" borderRadius="medium">
       <Box marginBottom="4">
@@ -10,13 +12,13 @@ const Video = ({ videoUri }: { videoUri: string }) => {
         </Text>
       </Box>
       <Box>
-        <video
-          width="592"
-          height="333"
-          src={videoUri}
-          // src="https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4"
-          controls
-        ></video>
+        <video width="592" height="333" src={videoUri} controls></video>
+      </Box>
+      <Box display="flex" justifyContent="flex-end">
+        <Box display="flex">
+          <em>Powered by</em>
+          <Logo height={20} darkMode={mode === "dark"} />
+        </Box>
       </Box>
     </Box>
   );
