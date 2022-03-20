@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Text, useTheme } from "degen";
-import LivepeerLogo from "../LivepeerLogo";
+import { Box, Text } from "degen";
+import Image from "next/image";
+import LivepeerLogo from "../../public/256x256_Badge_Green.png";
 
 const Video = ({ videoUri }: { videoUri: string }) => {
   const { mode, setMode } = useTheme();
@@ -14,10 +15,22 @@ const Video = ({ videoUri }: { videoUri: string }) => {
       <Box>
         <video width="592" height="333" src={videoUri} controls></video>
       </Box>
-      <Box display="flex" justifyContent="flex-end">
-        <Box display="flex" color="textPrimary">
-          <em>Powered by</em>
-          <LivepeerLogo height={20} darkMode={mode === "dark"} />
+      <Box position="relative" width="full" height="8" display="flex" justifyContent="center">
+        <Box marginY="3">
+          <Text size="small" font="mono" weight="semiBold" align="center">
+            POWERED BY LIVEPEER
+          </Text>
+        </Box>
+        <Box
+          position="relative"
+          width="8"
+          height="full"
+          justifyContent="center"
+          alignItems="center"
+          marginTop="1"
+          marginLeft="2"
+        >
+          <Image src={LivepeerLogo} layout="fill" objectFit="contain" alt="Livepeer Logo" />
         </Box>
       </Box>
     </Box>
