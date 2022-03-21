@@ -22,7 +22,7 @@ const NewProjectForm = () => {
     minFundingAmount: "0",
     deliverableMedium: " ",
     file: null,
-    videoUri: "https://cdn.livepeer.com/recordings/cc7df1a5-2e88-4557-b069-f634bb1a17b1/source.mp4",
+    videoUri: "https://infura-ipfs.io/ipfs/bafkreiegovbjnchcaxd75l4bcwit6fj4yx4yknjtn3zlzamk6kfq2mueee",
   });
 
   const [{ data }, getSigner] = useSigner();
