@@ -12,7 +12,12 @@ const Video = ({ videoUri }: { videoUri: string }) => {
         </Text>
       </Box>
       <Box>
-        <video width="592" height="333" src={videoUri} controls></video>
+        <video
+          width="592"
+          height="333"
+          src="https://infura-ipfs.io/ipfs/bafkreiegovbjnchcaxd75l4bcwit6fj4yx4yknjtn3zlzamk6kfq2mueee"
+          controls
+        ></video>
       </Box>
       <Box position="relative" width="full" height="8" display="flex" justifyContent="center">
         <Box marginY="3">
