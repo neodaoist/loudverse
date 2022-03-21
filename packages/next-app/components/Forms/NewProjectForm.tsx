@@ -22,6 +22,7 @@ const NewProjectForm = () => {
     minFundingAmount: "0",
     deliverableMedium: " ",
     file: null,
+    videoUri: "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4",
   });
 
   const [{ data }, getSigner] = useSigner();
@@ -40,6 +41,7 @@ const NewProjectForm = () => {
       Number(formData.timelineInDays),
       ethers.utils.parseEther(formData.minFundingAmount),
       formData.deliverableMedium,
+      formData.videoUri,
     );
 
     const receipt = await tx.wait();

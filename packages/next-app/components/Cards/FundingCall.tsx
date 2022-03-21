@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 import Link from "next/link";
 import { toTrimmedAddress } from "../../utils";
 import call6 from "../../public/call6.jpeg";
+import guilds from "../../public/guilds.png";
 
 const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding; index: number }) => {
   const categoryColor = () => {
@@ -69,7 +70,7 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           alignItems="center"
         >
           <Image
-            src={callForFunding?.image === " " ? call6 : callForFunding?.image}
+            src={callForFunding?.image === " " ? call6 : callForFunding?.image === "g" ? guilds : callForFunding?.image}
             alt="Call For Funding's cover image"
             layout="fill"
             objectFit="cover"
