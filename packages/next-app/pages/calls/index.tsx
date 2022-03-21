@@ -44,19 +44,19 @@ export const getServerSideProps: GetServerSideProps = async context => {
   // const allCalls = await getAllCallsForFunds();
   const cookie = cookieCutter(context.req.headers);
   const allCalls = [
-    // {
-    //   title: "The Guilds of Sibiu",
-    //   description:
-    //     "@ThomasVieira is creating audio-emotional moments for chamber quintet about Medieval Transylvanian craft guilds", // _description
-    //   image: "g", // _image
-    //   category: "music", // _category
-    //   genre: "classical", // _genre
-    //   subgenre: "string quartet", // _subgenre
-    //   timelineInDays: 90, // _timelineInDays
-    //   minFundingAmount: 1, // _minFundingAmount
-    //   deliverableMedium: "mp3", // _deliverableMedium
-    //   lifetimeFundsReceived: 0,
-    // },
+    {
+      title: "The Guilds of Sibiu",
+      description:
+        "@ThomasVieira is creating audio-emotional moments for chamber quintet about Medieval Transylvanian craft guilds", // _description
+      image: "g", // _image
+      category: "music", // _category
+      genre: "classical", // _genre
+      subgenre: "string quartet", // _subgenre
+      timelineInDays: 90, // _timelineInDays
+      minFundingAmount: 1, // _minFundingAmount
+      deliverableMedium: "mp3", // _deliverableMedium
+      lifetimeFundsReceived: 0,
+    },
     {
       title: "Solarpunk Strings",
       description: "wellwisher.eth is creating an immersive solarpunk experience with a Western classical twist", // _description
