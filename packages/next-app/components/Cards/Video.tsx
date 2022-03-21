@@ -4,7 +4,6 @@ import Image from "next/image";
 import LivepeerLogo from "../../public/256x256_Badge_Green.png";
 
 const Video = ({ videoUri }: { videoUri: string }) => {
-  const { mode, setMode } = useTheme();
   return (
     <Box padding="4" backgroundColor="foregroundSecondary" borderRadius="medium">
       <Box marginBottom="4">

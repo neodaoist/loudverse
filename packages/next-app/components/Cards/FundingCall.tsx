@@ -42,7 +42,7 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
         cursor="pointer"
       >
         <Box>
-          <Box display="flex" justifyContent="space-between" alignItems="baseline" marginY="2">
+          <Box display="flex" justifyContent="space-between" alignItems="center" marginY="2">
             <Text size="extraLarge" weight="semiBold">
               {callForFunding?.title}
             </Text>
@@ -76,9 +76,11 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           />
         </Box>
         <Text>
-          {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} ETH funded by ${
-            callForFunding?.contributions.length
-          } people so far.`}
+          {/* ${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(2)}  */}
+          {`
+          0 DAI funded by 0
+          people so far.`}
+          {/* ${callForFunding?.contributions.length}  */}
         </Text>
       </Box>
     </Link>
