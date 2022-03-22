@@ -5,6 +5,9 @@ LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods lik
 
 ### [Watch the demo video](https://www.dropbox.com/sh/cizir6uy73hzof5/AADIp7qNw-t7ywOOeZ3W6Pyma?dl=0)
 
+### [Try the dapp](https://loudverse.vercel.app/)
+NEW LINK is https://loudverse.vercel.app/ (only updated due to DNS problems with https://loudverse.xyz)
+
 ## Some behind-the-scenes
 ✍️ _**Crowd-Commissions**_ are ERC1155 non-transferrable tokens representing "proof of patronage”
 
