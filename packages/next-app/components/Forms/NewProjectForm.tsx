@@ -21,6 +21,7 @@ const NewProjectForm = () => {
     timelineInDays: "0",
     minFundingAmount: "0",
     deliverableMedium: " ",
+    videoUri: " ",
     file: null,
   });
 
@@ -28,7 +29,8 @@ const NewProjectForm = () => {
 
   const onClick = async () => {
     const url = await uploadFile({ file: formData?.file, title: formData?.title, desc: formData?.description });
-
+    console.log(url);
+    console.log({ formData });
     const factoryWrite = initializeFactoryWSigner(await getSigner());
     const tx = await factoryWrite.createCallForFunds(
       formData.title,
@@ -40,6 +42,7 @@ const NewProjectForm = () => {
       Number(formData.timelineInDays),
       ethers.utils.parseEther(formData.minFundingAmount),
       formData.deliverableMedium,
+      formData.videoUri,
     );
 
     const receipt = await tx.wait();
@@ -158,6 +161,9 @@ const NewProjectForm = () => {
               <option className="select-options" value="World">
                 World
               </option>
+              <option className="select-options" value="Other">
+                Other
+              </option>
             </select>
           </Box>
           <Box marginLeft="8">
@@ -179,6 +185,9 @@ const NewProjectForm = () => {
               </option>
               <option className="select-options" value="Violin Sonata">
                 Violin Sonata
+              </option>
+              <option className="select-options" value="Other">
+                Other
               </option>
             </select>
           </Box>
@@ -202,6 +211,7 @@ const NewProjectForm = () => {
           placeholder="How many days to deliver your project once it's funded"
         />
         <MediaPicker label="Cover image" compact onChange={file => handleFile(file)} />
+        <Input onChange={e => handleChange(e)} name="videoUri" label="Project Video" placeholder="Livepeer URL" />
         <Button onClick={() => onClick()}>Open call for funds</Button>
       </FieldSet>
     </Box>
