@@ -67,13 +67,8 @@ contract CallForFundsLogic is CallForFundsStorage {
 
     event ContributionReceivedETH(address indexed donator, uint256 amount);
 
-    // , address indexed crowdNFTAddress
     event CallMatched(uint256 indexed amountMatched);
 
-    // TODO
-    event StreamStarted();
-
-    // , address indexed nftAddress
     event WorkDelivered(string deliverableURI);
 
     event RefundCompleted(
@@ -181,7 +176,6 @@ contract CallForFundsLogic is CallForFundsStorage {
     ) external payable onlyLoudverse requireState(FundingState.OPEN) {
         // method is payable, msg.value should be the match
         emit CallMatched(msg.value);
-        //TODO #2
         // mint crowd-commissioned NFT
         ICallForFundsLogic(logicAddress).mintCrowdCommission(funders, id, data);
         setFundingState(FundingState.MATCHED);
@@ -193,13 +187,18 @@ contract CallForFundsLogic is CallForFundsStorage {
         requireState(FundingState.OPEN)
     {
         // insecure
-        //TODO #4
-        // might have to track internally
         // for now assumes Loudverse will supply correct amounts for refund
         for (uint256 i = 1; i < addresses.length; i++) {
-            bool success = _attemptETHTransfer(addresses[i], amounts[i]);
+            bool success = ERC20WithTokenInfo(_dai).transfer(
+                addresses[i],
+                amounts[i]
+            );
             require(success);
         }
+
+        address proxyAddress = address(this);
+        uint256 proxyBalance = ERC20WithTokenInfo(_dai).balanceOf(proxyAddress);
+        require(proxyBalance == 0);
 
         emit RefundCompleted(addresses, amounts);
         setFundingState(FundingState.FAILED);
