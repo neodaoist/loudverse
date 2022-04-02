@@ -1,37 +1,37 @@
 {
-    "name": "subgraph",
-    "version": "0.1.0",
-    "scripts": {
-        "create": "graph create @neodaoist/loudverse --node https://api.thegraph.com/deploy/",
-        "create-local": "graph create @neodaoist/loudverse --node http://127.0.0.1:8020",
-        "codegen": "graph codegen",
-        "build": "graph build",
-        "deploy-local": "graph deploy @neodaoist/loudverse --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-        "deploy-hosted": "graph deploy --product hosted-service nickadamson/loudversemumbai",
-        "deploy-studio": "graph deploy @neodaoist/loudverse --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-        "load-schema": "./types/get-schema.sh",
-        "gen-graphql-types": "graphql-codegen --config codegen.json"
-    },
-    "devDependencies": {
-        "@graphprotocol/graph-cli": "^0.23.2",
-        "@graphprotocol/graph-ts": "^0.23.1",
-        "@graphql-codegen/typescript": "^2.4.3",
-        "@graphql-codegen/typescript-operations": "^2.3.0",
-        "@graphql-codegen/introspection": "^2.1.1",
-        "@graphql-codegen/cli": "^2.6.1",
-        "@graphql-codegen/typescript-graphql-request": "^4.3.3",
-        "@graphql-tools/mock": "^8.5.1",
-        "@graphql-tools/schema": "^8.3.1",
-        "@types/big.js": "^6.1.2",
-        "graphql-tools": "^8.2.0"
-    },
-    "dependencies": {
-        "@graphql-codegen/cli": "^2.6.1",
-        "@graphql-codegen/typescript": "^2.4.3",
-        "babel-polyfill": "^6.26.0",
-        "babel-register": "^6.26.0",
-        "truffle": "^5.0.4",
-        "truffle-contract": "^4.0.5",
-        "truffle-hdwallet-provider": "^1.0.4"
-    }
+  "name": "subgraph",
+  "version": "0.1.0",
+  "scripts": {
+    "create": "graph create @neodaoist/loudverse --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create @neodaoist/loudverse --node http://127.0.0.1:8020",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy-local": "graph deploy @neodaoist/loudverse --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy-hosted": "graph deploy --product hosted-service nickadamson/loudverse-polygon",
+    "deploy-studio": "graph deploy @neodaoist/loudverse --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "load-schema": "./types/get-schema.sh",
+    "gen-graphql-types": "graphql-codegen --config codegen.json"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.23.2",
+    "@graphprotocol/graph-ts": "^0.23.1",
+    "@graphql-codegen/typescript": "^2.4.3",
+    "@graphql-codegen/typescript-operations": "^2.3.0",
+    "@graphql-codegen/introspection": "^2.1.1",
+    "@graphql-codegen/cli": "^2.6.1",
+    "@graphql-codegen/typescript-graphql-request": "^4.3.3",
+    "@graphql-tools/mock": "^8.5.1",
+    "@graphql-tools/schema": "^8.3.1",
+    "@types/big.js": "^6.1.2",
+    "graphql-tools": "^8.2.0"
+  },
+  "dependencies": {
+    "@graphql-codegen/cli": "^2.6.1",
+    "@graphql-codegen/typescript": "^2.4.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "truffle": "^5.0.4",
+    "truffle-contract": "^4.0.5",
+    "truffle-hdwallet-provider": "^1.0.4"
+  }
 }
