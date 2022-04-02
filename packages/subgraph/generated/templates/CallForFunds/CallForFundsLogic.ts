@@ -90,20 +90,6 @@ export class RefundCompleted__Params {
   }
 }
 
-export class StreamStarted extends ethereum.Event {
-  get params(): StreamStarted__Params {
-    return new StreamStarted__Params(this);
-  }
-}
-
-export class StreamStarted__Params {
-  _event: StreamStarted;
-
-  constructor(event: StreamStarted) {
-    this._event = event;
-  }
-}
-
 export class WorkDelivered extends ethereum.Event {
   get params(): WorkDelivered__Params {
     return new WorkDelivered__Params(this);

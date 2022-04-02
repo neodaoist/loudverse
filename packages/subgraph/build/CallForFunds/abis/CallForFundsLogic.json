@@ -81,12 +81,6 @@
   },
   {
     "anonymous": false,
-    "inputs": [],
-    "name": "StreamStarted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
         "indexed": false,
