@@ -15,7 +15,7 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
         <Stack flex={1} justify="stretch" direction="horizontal">
           <CallDetails callForFunding={call} />
           <Stack flex={1} justify="stretch">
-            <Video videoUri={call?.videoUri} />
+            {call.videoUri !== (" " || "") && <Video videoUri={call?.videoUri} />}
             <FundingProgress callForFunding={call} />
             <ContributionList contributionList={call?.contributions} />
           </Stack>
