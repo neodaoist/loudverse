@@ -111,11 +111,17 @@ input CallForFunding_filter {
   creator_in: [String!]
   creator_not_in: [String!]
   creator_contains: String
+  creator_contains_nocase: String
   creator_not_contains: String
+  creator_not_contains_nocase: String
   creator_starts_with: String
+  creator_starts_with_nocase: String
   creator_not_starts_with: String
+  creator_not_starts_with_nocase: String
   creator_ends_with: String
+  creator_ends_with_nocase: String
   creator_not_ends_with: String
+  creator_not_ends_with_nocase: String
   title: String
   title_not: String
   title_gt: String
@@ -125,11 +131,17 @@ input CallForFunding_filter {
   title_in: [String!]
   title_not_in: [String!]
   title_contains: String
+  title_contains_nocase: String
   title_not_contains: String
+  title_not_contains_nocase: String
   title_starts_with: String
+  title_starts_with_nocase: String
   title_not_starts_with: String
+  title_not_starts_with_nocase: String
   title_ends_with: String
+  title_ends_with_nocase: String
   title_not_ends_with: String
+  title_not_ends_with_nocase: String
   description: String
   description_not: String
   description_gt: String
@@ -139,11 +151,17 @@ input CallForFunding_filter {
   description_in: [String!]
   description_not_in: [String!]
   description_contains: String
+  description_contains_nocase: String
   description_not_contains: String
+  description_not_contains_nocase: String
   description_starts_with: String
+  description_starts_with_nocase: String
   description_not_starts_with: String
+  description_not_starts_with_nocase: String
   description_ends_with: String
+  description_ends_with_nocase: String
   description_not_ends_with: String
+  description_not_ends_with_nocase: String
   image: String
   image_not: String
   image_gt: String
@@ -153,11 +171,17 @@ input CallForFunding_filter {
   image_in: [String!]
   image_not_in: [String!]
   image_contains: String
+  image_contains_nocase: String
   image_not_contains: String
+  image_not_contains_nocase: String
   image_starts_with: String
+  image_starts_with_nocase: String
   image_not_starts_with: String
+  image_not_starts_with_nocase: String
   image_ends_with: String
+  image_ends_with_nocase: String
   image_not_ends_with: String
+  image_not_ends_with_nocase: String
   category: String
   category_not: String
   category_gt: String
@@ -167,11 +191,17 @@ input CallForFunding_filter {
   category_in: [String!]
   category_not_in: [String!]
   category_contains: String
+  category_contains_nocase: String
   category_not_contains: String
+  category_not_contains_nocase: String
   category_starts_with: String
+  category_starts_with_nocase: String
   category_not_starts_with: String
+  category_not_starts_with_nocase: String
   category_ends_with: String
+  category_ends_with_nocase: String
   category_not_ends_with: String
+  category_not_ends_with_nocase: String
   genre: String
   genre_not: String
   genre_gt: String
@@ -181,11 +211,17 @@ input CallForFunding_filter {
   genre_in: [String!]
   genre_not_in: [String!]
   genre_contains: String
+  genre_contains_nocase: String
   genre_not_contains: String
+  genre_not_contains_nocase: String
   genre_starts_with: String
+  genre_starts_with_nocase: String
   genre_not_starts_with: String
+  genre_not_starts_with_nocase: String
   genre_ends_with: String
+  genre_ends_with_nocase: String
   genre_not_ends_with: String
+  genre_not_ends_with_nocase: String
   subgenre: String
   subgenre_not: String
   subgenre_gt: String
@@ -195,11 +231,17 @@ input CallForFunding_filter {
   subgenre_in: [String!]
   subgenre_not_in: [String!]
   subgenre_contains: String
+  subgenre_contains_nocase: String
   subgenre_not_contains: String
+  subgenre_not_contains_nocase: String
   subgenre_starts_with: String
+  subgenre_starts_with_nocase: String
   subgenre_not_starts_with: String
+  subgenre_not_starts_with_nocase: String
   subgenre_ends_with: String
+  subgenre_ends_with_nocase: String
   subgenre_not_ends_with: String
+  subgenre_not_ends_with_nocase: String
   timelineInDays: BigInt
   timelineInDays_not: BigInt
   timelineInDays_gt: BigInt
@@ -225,11 +267,17 @@ input CallForFunding_filter {
   deliverableMedium_in: [String!]
   deliverableMedium_not_in: [String!]
   deliverableMedium_contains: String
+  deliverableMedium_contains_nocase: String
   deliverableMedium_not_contains: String
+  deliverableMedium_not_contains_nocase: String
   deliverableMedium_starts_with: String
+  deliverableMedium_starts_with_nocase: String
   deliverableMedium_not_starts_with: String
+  deliverableMedium_not_starts_with_nocase: String
   deliverableMedium_ends_with: String
+  deliverableMedium_ends_with_nocase: String
   deliverableMedium_not_ends_with: String
+  deliverableMedium_not_ends_with_nocase: String
   deliverableURI: String
   deliverableURI_not: String
   deliverableURI_gt: String
@@ -239,11 +287,17 @@ input CallForFunding_filter {
   deliverableURI_in: [String!]
   deliverableURI_not_in: [String!]
   deliverableURI_contains: String
+  deliverableURI_contains_nocase: String
   deliverableURI_not_contains: String
+  deliverableURI_not_contains_nocase: String
   deliverableURI_starts_with: String
+  deliverableURI_starts_with_nocase: String
   deliverableURI_not_starts_with: String
+  deliverableURI_not_starts_with_nocase: String
   deliverableURI_ends_with: String
+  deliverableURI_ends_with_nocase: String
   deliverableURI_not_ends_with: String
+  deliverableURI_not_ends_with_nocase: String
   deliverableToken: String
   deliverableToken_not: String
   deliverableToken_gt: String
@@ -253,11 +307,17 @@ input CallForFunding_filter {
   deliverableToken_in: [String!]
   deliverableToken_not_in: [String!]
   deliverableToken_contains: String
+  deliverableToken_contains_nocase: String
   deliverableToken_not_contains: String
+  deliverableToken_not_contains_nocase: String
   deliverableToken_starts_with: String
+  deliverableToken_starts_with_nocase: String
   deliverableToken_not_starts_with: String
+  deliverableToken_not_starts_with_nocase: String
   deliverableToken_ends_with: String
+  deliverableToken_ends_with_nocase: String
   deliverableToken_not_ends_with: String
+  deliverableToken_not_ends_with_nocase: String
   fundingState: Int
   fundingState_not: Int
   fundingState_gt: Int
@@ -291,11 +351,17 @@ input CallForFunding_filter {
   videoUri_in: [String!]
   videoUri_not_in: [String!]
   videoUri_contains: String
+  videoUri_contains_nocase: String
   videoUri_not_contains: String
+  videoUri_not_contains_nocase: String
   videoUri_starts_with: String
+  videoUri_starts_with_nocase: String
   videoUri_not_starts_with: String
+  videoUri_not_starts_with_nocase: String
   videoUri_ends_with: String
+  videoUri_ends_with_nocase: String
   videoUri_not_ends_with: String
+  videoUri_not_ends_with_nocase: String
 }
 
 enum CallForFunding_orderBy {
@@ -345,11 +411,17 @@ input Contribution_filter {
   callForFunds_in: [String!]
   callForFunds_not_in: [String!]
   callForFunds_contains: String
+  callForFunds_contains_nocase: String
   callForFunds_not_contains: String
+  callForFunds_not_contains_nocase: String
   callForFunds_starts_with: String
+  callForFunds_starts_with_nocase: String
   callForFunds_not_starts_with: String
+  callForFunds_not_starts_with_nocase: String
   callForFunds_ends_with: String
+  callForFunds_ends_with_nocase: String
   callForFunds_not_ends_with: String
+  callForFunds_not_ends_with_nocase: String
   user: String
   user_not: String
   user_gt: String
@@ -359,11 +431,17 @@ input Contribution_filter {
   user_in: [String!]
   user_not_in: [String!]
   user_contains: String
+  user_contains_nocase: String
   user_not_contains: String
+  user_not_contains_nocase: String
   user_starts_with: String
+  user_starts_with_nocase: String
   user_not_starts_with: String
+  user_not_starts_with_nocase: String
   user_ends_with: String
+  user_ends_with_nocase: String
   user_not_ends_with: String
+  user_not_ends_with_nocase: String
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
