@@ -3,6 +3,7 @@ const fs = require("fs");
 
 const NETWORK_MAP = {
   4: "rinkeby",
+  137: "polygon",
   80001: "mumbai",
 };
 
@@ -44,9 +45,9 @@ async function main() {
   const factory = await CallForFundsFactory.deploy(logic.address);
   await factory.deployed();
 
-  const bonusFunderFactory = await ethers.getContractFactory("BonusFunder");
-  const bonusFunder = await bonusFunderFactory.deploy(factory.address);
-  await bonusFunder.deployed();
+  // const bonusFunderFactory = await ethers.getContractFactory("BonusFunder");
+  // const bonusFunder = await bonusFunderFactory.deploy(factory.address);
+  // await bonusFunder.deployed();
 
   const info = {
     Contracts: {
@@ -54,7 +55,7 @@ async function main() {
       factory: factory.address,
       crowdCommission: crowdCommission.address,
       smartArt: smartArt.address,
-      bonusFunder: bonusFunder.address,
+      // bonusFunder: bonusFunder.address,
     },
   };
 
@@ -68,7 +69,43 @@ async function main() {
   }
 
   // wait for polygonscan before verifying
-  await new Promise((resolve) => setTimeout(resolve, 60000));
+  await new Promise((resolve) => setTimeout(resolve, 120000));
+
+  try {
+    await run("verify:verify", {
+      address: logic.address,
+      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
+      constructorArguments: [crowdCommission.address, smartArt.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  try {
+    await run("verify:verify", {
+      address: factory.address,
+      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
+      constructorArguments: [logic.address],
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: crowdCommission.address,
+      contract: "contracts/CrowdCommission.sol:CrowdCommission",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  try {
+    await run("verify:verify", {
+      address: smartArt.address,
+      contract: "contracts/SmartArt.sol:SmartArt",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   // automate first 5 grants being created
   const deployer = new ethers.Wallet(
@@ -76,26 +113,38 @@ async function main() {
     new ethers.providers.JsonRpcProvider(mumbaiURL)
   );
 
-  await logic.connect(deployer).setFactory(factory.address);
+  try {
+    await logic.connect(deployer).setFactory(factory.address);
+  } catch (error) {
+    console.log(error);
+  }
 
-  await crowdCommission.connect(deployer).transferOwnership(logic.address);
-  await smartArt.connect(deployer).transferOwnership(logic.address);
+  try {
+    await crowdCommission.connect(deployer).transferOwnership(logic.address);
+  } catch (error) {
+    console.log(error);
+  }
 
-  const factoryWithSigner = factory.connect(deployer);
+  try {
+    await smartArt.connect(deployer).transferOwnership(logic.address);
+  } catch (error) {
+    console.log(error);
+  }
+  // const factoryWithSigner = factory.connect(deployer);
 
-  const solarpunkProxy = await factoryWithSigner.createCallForFunds(
-    "B is 4 Bufficorn", // _title
-    "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
-    "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
-    "digital art", // _category
-    "generative art", // _genre
-    "fractal/algorithmic", // _subgenre
-    90, // _timelineInDays
-    1, // _minFundingAmount
-    "image/jpeg", // _deliverableMedium
-    "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4" // videoURI
-  );
-  const solarpunkProxyReceipt = await solarpunkProxy.wait();
+  // const solarpunkProxy = await factoryWithSigner.createCallForFunds(
+  //   "B is 4 Bufficorn", // _title
+  //   "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
+  //   "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
+  //   "digital art", // _category
+  //   "generative art", // _genre
+  //   "fractal/algorithmic", // _subgenre
+  //   90, // _timelineInDays
+  //   1, // _minFundingAmount
+  //   "image/jpeg", // _deliverableMedium
+  //   "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4" // videoURI
+  // );
+  // const solarpunkProxyReceipt = await solarpunkProxy.wait();
 
   // const buffigweiProxy = await factoryWithSigner.createCallForFunds(
   //   "¿Quien Llamo Carlo?", // _title
@@ -251,74 +300,37 @@ async function main() {
   //   }
   // }
 
-  // await new Promise((resolve) => setTimeout(resolve, 30000));
+  // try {
+  //   await run("verify:verify", {
+  //     address: bonusFunder.address,
+  //     contract: "contracts/BonusFunder.sol:BonusFunder",
+  //     constructorArguments: [factory.address],
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
-  try {
-    await run("verify:verify", {
-      address: logic.address,
-      contract: "contracts/CallForFundsLogic.sol:CallForFundsLogic",
-      constructorArguments: [crowdCommission.address, smartArt.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
-
-  try {
-    await run("verify:verify", {
-      address: factory.address,
-      contract: "contracts/CallForFundsFactory.sol:CallForFundsFactory",
-      constructorArguments: [logic.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  try {
-    await run("verify:verify", {
-      address: crowdCommission.address,
-      contract: "contracts/CrowdCommission.sol:CrowdCommission",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  try {
-    await run("verify:verify", {
-      address: smartArt.address,
-      contract: "contracts/SmartArt.sol:SmartArt",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  try {
-    await run("verify:verify", {
-      address: bonusFunder.address,
-      contract: "contracts/BonusFunder.sol:BonusFunder",
-      constructorArguments: [factory.address],
-    });
-  } catch (error) {
-    console.log(error);
-  }
-
-  try {
-    await run("verify:verify", {
-      address: solarpunkProxyReceipt.events[0].args[0],
-      contract: "contracts/CallForFundsProxy.sol:CallForFundsProxy",
-      constructorArguments: [
-        deployer.address,
-        "B is 4 Bufficorn", // _title
-        "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
-        "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
-        "digital art", // _category
-        "generative art", // _genre
-        "fractal/algorithmic", // _subgenre
-        "image/jpeg", // _deliverableMedium
-        90, // _timelineInDays
-        1, // _minFundingAmount
-        "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4",
-      ],
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   await run("verify:verify", {
+  //     address: solarpunkProxyReceipt.events[0].args[0],
+  //     contract: "contracts/CallForFundsProxy.sol:CallForFundsProxy",
+  //     constructorArguments: [
+  //       deployer.address,
+  //       "B is 4 Bufficorn", // _title
+  //       "vitalik.eth is commissioning digital art to accompany a children’s storybook", // _description
+  //       "https://infura-ipfs.io/ipfs/bafybeiajw4y5t7bw5qzrqjleo4i5lhb6p7or3mesxwsa3s53yetani5qbi", // _image
+  //       "digital art", // _category
+  //       "generative art", // _genre
+  //       "fractal/algorithmic", // _subgenre
+  //       "image/jpeg", // _deliverableMedium
+  //       90, // _timelineInDays
+  //       1, // _minFundingAmount
+  //       "https://cdn.livepeer.com/recordings/cc7d1e64-9e71-4060-ae26-2c56db1c855c/source.mp4",
+  //     ],
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 }
 
 main()

@@ -21,14 +21,18 @@ const NewProjectForm = () => {
     timelineInDays: "0",
     minFundingAmount: "0",
     deliverableMedium: " ",
+    videoUri: " ",
     file: null,
   });
+  const [isUploading, setIsUploading] = useState(false);
 
   const [{ data }, getSigner] = useSigner();
 
   const onClick = async () => {
+    setIsUploading(true);
     const url = await uploadFile({ file: formData?.file, title: formData?.title, desc: formData?.description });
-
+    console.log(url);
+    console.log({ formData });
     const factoryWrite = initializeFactoryWSigner(await getSigner());
     const tx = await factoryWrite.createCallForFunds(
       formData.title,
@@ -40,9 +44,11 @@ const NewProjectForm = () => {
       Number(formData.timelineInDays),
       ethers.utils.parseEther(formData.minFundingAmount),
       formData.deliverableMedium,
+      formData.videoUri,
     );
 
     const receipt = await tx.wait();
+    setIsUploading(false);
     if (receipt) {
       router.push(`/calls/${receipt.events[0].args[0]}`);
     }
@@ -69,7 +75,7 @@ const NewProjectForm = () => {
 
   return (
     <Box width="3/4" justifyContent="center" marginX="16">
-      <FieldSet legend="Open new call for funds">
+      <FieldSet legend="Open New Call For Funds">
         <Input
           name="title"
           onChange={e => handleChange(e)}
@@ -158,6 +164,9 @@ const NewProjectForm = () => {
               <option className="select-options" value="World">
                 World
               </option>
+              <option className="select-options" value="Other">
+                Other
+              </option>
             </select>
           </Box>
           <Box marginLeft="8">
@@ -179,6 +188,9 @@ const NewProjectForm = () => {
               </option>
               <option className="select-options" value="Violin Sonata">
                 Violin Sonata
+              </option>
+              <option className="select-options" value="Other">
+                Other
               </option>
             </select>
           </Box>
@@ -202,7 +214,10 @@ const NewProjectForm = () => {
           placeholder="How many days to deliver your project once it's funded"
         />
         <MediaPicker label="Cover image" compact onChange={file => handleFile(file)} />
-        <Button onClick={() => onClick()}>Open call for funds</Button>
+        <Input onChange={e => handleChange(e)} name="videoUri" label="Project Video" placeholder="Livepeer URL" />
+        <Button disabled={isUploading || !data} onClick={() => onClick()} loading={isUploading}>
+          {!data ? "Please Connect Your Wallet" : "Open call for funds"}
+        </Button>
       </FieldSet>
     </Box>
   );

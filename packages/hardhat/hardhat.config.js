@@ -35,8 +35,13 @@ module.exports = {
     //   accounts:
     //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     // },
-    mumbai: {
-      url: mumbaiURL,
+    // mumbai: {
+    //   url: mumbaiURL,
+    //   accounts:
+    //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    // },
+    matic: {
+      url: maticURL,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
@@ -49,6 +54,7 @@ module.exports = {
     apiKey: {
       rinkeby: process.env.ETHERSCAN_API,
       polygonMumbai: process.env.POLYGONSCAN_API_KEY,
+      polygon: process.env.POLYGONSCAN_API_KEY,
     },
   },
 };

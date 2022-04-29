@@ -1,7 +1,7 @@
-import 'cross-fetch/polyfill';
+import "cross-fetch/polyfill";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-const APIURL = "https://api.thegraph.com/subgraphs/name/nickadamson/loudversemumbai";
+const APIURL = "https://api.thegraph.com/subgraphs/name/nickadamson/loudverse-polygon";
 
 const LoudverseClient = new ApolloClient({
   uri: APIURL,
@@ -9,4 +9,3 @@ const LoudverseClient = new ApolloClient({
 });
 
 export default LoudverseClient;
-
