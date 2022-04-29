@@ -14,7 +14,7 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
         </Text>
       </Box>
       <Box overflow="scroll" height="24">
-        {contributionList?.length &&
+        {contributionList?.length > 0 ? (
           contributionList.map((contribution, i) => {
             const date = new Date(contribution?.timestamp * 1000).toDateString().toString();
 
@@ -29,7 +29,12 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
                 <Text size="small">{date}</Text>
               </Box>
             );
-          })}
+          })
+        ) : (
+          <Box margin="auto">
+            <Text align="center">No contributions, yet!</Text>
+          </Box>
+        )}
       </Box>
     </Box>
   );
