@@ -24,19 +24,20 @@ const CallDetails = ({ callForFunding }: { callForFunding: CallForFunding }) => 
         </Box>
         <Text>{callForFunding?.description}</Text>
       </Box>
-
-      <Box
-        display="flex"
-        position="relative"
-        width="full"
-        margin="4"
-        marginY="8"
-        height="full"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {callForFunding?.image !== " " && <Image src={callForFunding?.image} layout="fill" objectFit="cover" />}
-      </Box>
+      {callForFunding?.image !== " " && (
+        <Box
+          display="flex"
+          position="relative"
+          width="full"
+          margin="4"
+          height="viewHeight"
+          maxHeight="44"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Image src={callForFunding?.image} layout="fill" objectFit="contain" alt="Cover Photo" />
+        </Box>
+      )}
       <Box width="full" textAlign="left">
         <Box marginBottom="4">
           <Text variant="label">Category</Text>

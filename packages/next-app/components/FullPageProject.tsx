@@ -11,7 +11,7 @@ const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
       <Box marginBottom="4">
         <Heading level="2">Call for Funds</Heading>
       </Box>
-      <Box display="flex" height="fit" width="full" marginTop="4">
+      <Box display="flex" flexGrow={1} height="auto" width="full" marginTop="4">
         <Stack flex={1} justify="stretch" direction="horizontal">
           <CallDetails callForFunding={call} />
           <Stack flex={1} justify="stretch">
