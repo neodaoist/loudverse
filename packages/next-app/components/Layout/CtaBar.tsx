@@ -37,8 +37,7 @@ const CtaBar = ({
       backgroundColor="blue"
     >
       <Text color="white" weight="semiBold">
-        More than {distAmt} ETH will be distributed to {numOfCreators} creators this month. Join LOUDVERSE today to
-        start creating!
+        Round #1 ends 15 May 2022. More than 1 ETH will be distributed to 6 creators this round!
       </Text>
       {button}
     </Box>
