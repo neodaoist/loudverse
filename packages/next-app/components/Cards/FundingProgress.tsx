@@ -162,7 +162,8 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
           {callForFunding?.lifetimeFundsReceived
             ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(3)
             : 0}{" "}
-          ETH from {callForFunding?.contributions.length} funders. <br /> with estimated Z match
+          DAI from {callForFunding?.contributions.length} funders.
+          {/* <br /> with estimated Z match */}
         </Text>
       </Box>
       <Box marginBottom="4">
