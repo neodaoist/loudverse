@@ -44,10 +44,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     }
   };
 
-  let percentFunded = (
-    Number((callForFunding?.lifetimeFundsReceived / callForFunding?.minFundingAmount).toFixed(2)) * 100
-  ).toString();
-  if (Number(percentFunded) > 1) {
+  let percentFunded = (Number(callForFunding?.lifetimeFundsReceived / callForFunding?.minFundingAmount) * 100).toFixed(
+    2,
+  );
+  if (Number(percentFunded) > 100) {
     percentFunded = "100";
   }
   if (percentFunded === "NaN") {
