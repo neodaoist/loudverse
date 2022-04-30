@@ -59,13 +59,16 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   };
   const contributeDAI = async () => {
     setIsWaiting(true);
-    const daiWrite = initializeDAIWSigner(await getSigner());
-    console.log(`amt: ${ethers.utils.parseEther(amountToContribute)}\nto: ${callForFunding.id}`);
-    const tx = await daiWrite.transfer(callForFunding.id, ethers.utils.parseEther(amountToContribute));
+    try {
+      const daiWrite = initializeDAIWSigner(await getSigner());
+      const tx = await daiWrite.transfer(callForFunding.id, ethers.utils.parseEther(amountToContribute));
 
-    const receipt = await tx.wait();
-    if (receipt) {
-      console.log(receipt);
+      const receipt = await tx.wait();
+      if (receipt) {
+        console.log(receipt);
+      }
+    } catch (error) {
+      console.log(error);
     }
     setIsWaiting(false);
   };
