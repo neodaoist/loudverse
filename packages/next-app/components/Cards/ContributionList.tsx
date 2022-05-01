@@ -24,7 +24,7 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
                   <Link href={`/users/${contribution?.user.id}`} passHref>
                     <a>{toTrimmedAddress(contribution?.user.id)}</a>
                   </Link>{" "}
-                  funded {ethers.utils.formatEther(contribution?.amount)} ETH
+                  funded {ethers.utils.formatEther(contribution?.amount)} DAI
                 </Text>
                 <Text size="small">{date}</Text>
               </Box>

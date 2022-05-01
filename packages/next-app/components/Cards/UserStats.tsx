@@ -6,7 +6,7 @@ const UserStats = ({ stats }) => {
     <Box backgroundColor="foregroundSecondary" borderRadius="medium" padding="4">
       <Box marginBottom="4">
         <Text size="large">
-          Raised {stats.raised} ETH for {stats.projects} projects
+          Raised {stats.raised} DAI for {stats.projects} projects
         </Text>
       </Box>
       <Box marginBottom="4">

@@ -39,7 +39,7 @@ const FullPageUser = () =>
         date: "January 2022",
         category: "music",
         raised: "3",
-        token: "ETH",
+        token: "DAI",
         funders: "18",
       },
     ];
