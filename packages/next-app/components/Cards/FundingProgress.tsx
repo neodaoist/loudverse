@@ -117,12 +117,13 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   const uploadWork = async () => {
     const proxyWrite = initializeProxyWSigner(await getSigner());
     const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding, file: formData.file });
-    const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
+    //TODO SLICER???
+    // const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
 
-    const receipt = await tx.wait();
-    if (receipt) {
-      console.log(receipt);
-    }
+    // const receipt = await tx.wait();
+    // if (receipt) {
+    //   console.log(receipt);
+    // }
   };
 
   if (isOwner && callForFunding?.fundingState === 2) {
@@ -137,7 +138,9 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         <Stack justify="center" direction="vertical">
           <MediaPicker label="Upload Work" compact onChange={file => handleFile(file)} />
           <Box display="flex" justifyContent="center">
-            <Button onClick={() => uploadWork()}>Deliver Work</Button>
+            <Button disabled={true} onClick={() => uploadWork()}>
+              Deliver Work
+            </Button>
           </Box>
         </Stack>
       </Box>
