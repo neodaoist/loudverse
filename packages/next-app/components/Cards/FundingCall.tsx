@@ -76,9 +76,9 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           />
         </Box>
         <Text>
-          {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} ETH funded by ${
+          {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} DAI funded by ${
             callForFunding?.contributions.length
-          } people so far.`}
+          } supporter(s) so far.`}
         </Text>
       </Box>
     </Link>
