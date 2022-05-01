@@ -27,6 +27,7 @@ export function handleNewCallForFunds(event: CallForFundsCreated): void {
   newCallForFunds.deliverableMedium = event.params.deliverableMedium;
   newCallForFunds.fundingState = 0;
   newCallForFunds.videoUri = event.params.videoUri;
+  newCallForFunds.timestamp = event.block.timestamp;
 
   newCallForFunds.currentRoundFundsReceived = BigInt.fromI32(0);
   newCallForFunds.lifetimeFundsReceived = BigInt.fromI32(0);

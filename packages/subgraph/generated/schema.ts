@@ -28,6 +28,7 @@ export class CallForFunding extends Entity {
     this.set("fundingState", Value.fromI32(0));
     this.set("currentRoundFundsReceived", Value.fromBigInt(BigInt.zero()));
     this.set("lifetimeFundsReceived", Value.fromBigInt(BigInt.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -239,6 +240,15 @@ export class CallForFunding extends Entity {
     } else {
       this.set("videoUri", Value.fromString(<string>value));
     }
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
 
