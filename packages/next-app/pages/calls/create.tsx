@@ -4,11 +4,7 @@ import PageWrapper from "../../components/Layout/PageWrapper";
 import NewProjectForm from "../../components/Forms/NewProjectForm"; // change
 
 const Create: NextPage = () => {
-  return (
-    <PageWrapper>
-      <NewProjectForm />
-    </PageWrapper>
-  );
+  return <PageWrapper>{/* <NewProjectForm /> */}</PageWrapper>;
 };
 
 export const getServerSideProps: GetServerSideProps = async context => {

@@ -63,13 +63,13 @@ const Navbar = () => {
               </Button>
             </Box>
           </Link>
-          <Link href="/calls/create" passHref={true}>
+          {/* <Link href="/calls/create" passHref={true}>
             <Box as="a" paddingX="2">
               <Button size="small" variant="transparent">
                 Create Call
               </Button>
             </Box>
-          </Link>
+          </Link> */}
         </Box>
         <Wallet />
       </Box>
