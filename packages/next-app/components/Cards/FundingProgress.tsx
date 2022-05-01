@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
-import { CallForFunding } from "../../graph/loudverse-graph-types";
+import { CallForFunding, Contribution } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
 import { useAccount, useSigner } from "wagmi";
 import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
@@ -74,7 +74,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
           amount: ethers.utils.parseEther(amountToContribute).toString(),
           timestamp: tx.timestamp,
           txHash: receipt.transactionHash,
-        });
+        } as Contribution);
         updatedCFF.lifetimeFundsReceived = ethers.BigNumber.from(updatedCFF.lifetimeFundsReceived).add(
           ethers.utils.parseEther(amountToContribute),
         );

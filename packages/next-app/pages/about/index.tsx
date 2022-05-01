@@ -6,8 +6,8 @@ import cookieCutter from "cookie-cutter";
 
 import CtaBar from "../../components/Layout/CtaBar";
 import PageWrapper from "../../components/Layout/PageWrapper";
-import logoDark from "../public/loudverse_logo_dark.png";
-import logoLight from "../public/loudverse_logo_light.png";
+import logoDark from "../../public/loudverse_logo_dark.png";
+import logoLight from "../../public/loudverse_logo_light.png";
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 
