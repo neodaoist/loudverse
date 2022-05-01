@@ -35,6 +35,8 @@ type CallForFunding @entity {
   lifetimeFundsReceived: BigInt!
 
   videoUri: String
+
+  timestamp: BigInt!
 }
 
 type User @entity {

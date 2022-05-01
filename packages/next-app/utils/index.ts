@@ -62,6 +62,7 @@ export const uploadFinalDeliverable = async ({
 };
 
 export const cffFactoryAddress = "0x6722AE5911f8677cE148ecf1aA962ae432Ab7f26";
+export const polygonDAI = "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063";
 
 export function toTrimmedAddress(value: string): string {
   if (!value) return "";

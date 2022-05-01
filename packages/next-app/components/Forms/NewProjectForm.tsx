@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, FieldSet, Input, MediaPicker, Text } from "degen";
-import { useContract, useContractWrite, useSigner } from "wagmi";
+import { useSigner } from "wagmi";
 import CallForFundsFactory from "../../abis/CallForFundsFactory.json";
 import { ethers } from "ethers";
 import { cffFactoryAddress, uploadFile } from "../../utils";
@@ -31,34 +31,40 @@ const NewProjectForm = () => {
   const onClick = async () => {
     setIsUploading(true);
     const url = await uploadFile({ file: formData?.file, title: formData?.title, desc: formData?.description });
-    console.log(url);
-    console.log({ formData });
-    const factoryWrite = initializeFactoryWSigner(await getSigner());
-    const tx = await factoryWrite.createCallForFunds(
-      formData.title,
-      formData.description,
-      url,
-      formData.category,
-      formData.genre,
-      formData.subgenre,
-      Number(formData.timelineInDays),
-      ethers.utils.parseEther(formData.minFundingAmount),
-      formData.deliverableMedium,
-      formData.videoUri,
-    );
 
-    const receipt = await tx.wait();
-    setIsUploading(false);
-    if (receipt) {
-      router.push(`/calls/${receipt.events[0].args[0]}`);
+    try {
+      const factoryWrite = initializeFactoryWSigner(await getSigner());
+      const tx = await factoryWrite.createCallForFunds(
+        formData.title,
+        formData.description,
+        url,
+        formData.category,
+        formData.genre,
+        formData.subgenre,
+        Number(formData.timelineInDays),
+        ethers.utils.parseEther(formData.minFundingAmount),
+        formData.deliverableMedium,
+        formData.videoUri,
+      );
+
+      const receipt = await tx.wait();
+      if (receipt) {
+        setIsUploading(false);
+        router.push(`/calls/${receipt.events[0].args[0]}`);
+      }
+    } catch (error) {
+      setIsUploading(false);
+      console.log(error);
     }
   };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   };
+
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData(prevState => ({
       ...prevState,

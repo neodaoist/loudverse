@@ -2,7 +2,7 @@ import { gql, DocumentNode } from "@apollo/client";
 
 export const ALL_CALLS = (): DocumentNode => gql`
   {
-    callForFundings(first: 1000) {
+    callForFundings(first: 1000, orderBy: timestamp, orderDirection: asc) {
       id
       creator {
         id

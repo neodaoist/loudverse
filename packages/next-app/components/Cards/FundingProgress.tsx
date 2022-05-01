@@ -2,22 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
-import { useAccount, useSigner, useTransaction } from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
+import ERC20 from "../../abis/ERC20.json";
 import { ethers } from "ethers";
 import { uploadFinalDeliverable } from "../../utils";
+import { polygonDAI } from "../../utils";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   const [{ data: accountData }, disconnect] = useAccount();
   const [{ error, loading }, getSigner] = useSigner();
   const [isOwner, setIsOwner] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
   const [amountToContribute, setAmountToContribute] = useState("0");
-  const [{ data }, sendTransaction] = useTransaction({
-    request: {
-      to: callForFunding?.id,
-      value: ethers.utils.parseEther(amountToContribute), // 1 ETH
-    },
-  });
 
   const [formData, setFormData] = useState({
     file: null,
@@ -47,15 +44,34 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     }
   };
 
-  let percentFunded = (
-    Number((callForFunding?.lifetimeFundsReceived / callForFunding?.minFundingAmount).toFixed(2)) * 100
-  ).toString();
-  if (Number(percentFunded) > 1) {
+  let percentFunded = (Number(callForFunding?.lifetimeFundsReceived / callForFunding?.minFundingAmount) * 100).toFixed(
+    2,
+  );
+  if (Number(percentFunded) > 100) {
     percentFunded = "100";
   }
   if (percentFunded === "NaN") {
     percentFunded = "0";
   }
+
+  const initializeDAIWSigner = signer => {
+    return new ethers.Contract(polygonDAI, ERC20.abi, signer);
+  };
+  const contributeDAI = async () => {
+    setIsWaiting(true);
+    try {
+      const daiWrite = initializeDAIWSigner(await getSigner());
+      const tx = await daiWrite.transfer(callForFunding.id, ethers.utils.parseEther(amountToContribute));
+
+      const receipt = await tx.wait();
+      if (receipt) {
+        console.log(receipt);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsWaiting(false);
+  };
 
   const initializeProxyWSigner = signer => {
     return new ethers.Contract(callForFunding?.id, CallForFundsLogic.abi, signer);
@@ -121,8 +137,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         />
         <Box marginLeft="4" alignSelf="flex-end">
           <Button
+            disabled={isWaiting}
+            loading={isWaiting}
             onClick={() => {
-              sendTransaction();
+              contributeDAI();
             }}
           >
             Fund
