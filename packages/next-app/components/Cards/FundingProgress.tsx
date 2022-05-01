@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
@@ -8,13 +8,16 @@ import ERC20 from "../../abis/ERC20.json";
 import { ethers } from "ethers";
 import { uploadFinalDeliverable } from "../../utils";
 import { polygonDAI } from "../../utils";
+import { CallContext } from "../FullPageProject";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
   const [{ data: accountData }, disconnect] = useAccount();
   const [{ error, loading }, getSigner] = useSigner();
   const [isOwner, setIsOwner] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
+  const [txSuccess, setTxSuccess] = useState(false);
   const [amountToContribute, setAmountToContribute] = useState("0");
+  const { cffContext, setCFFContext } = useContext(CallContext);
 
   const [formData, setFormData] = useState({
     file: null,
@@ -44,9 +47,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
     }
   };
 
-  let percentFunded = (Number(callForFunding?.lifetimeFundsReceived / callForFunding?.minFundingAmount) * 100).toFixed(
-    2,
-  );
+  let percentFunded = (Number(cffContext?.lifetimeFundsReceived / cffContext?.minFundingAmount) * 100).toFixed(2);
   if (Number(percentFunded) > 100) {
     percentFunded = "100";
   }
@@ -57,6 +58,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   const initializeDAIWSigner = signer => {
     return new ethers.Contract(polygonDAI, ERC20.abi, signer);
   };
+
   const contributeDAI = async () => {
     setIsWaiting(true);
     try {
@@ -65,7 +67,24 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
 
       const receipt = await tx.wait();
       if (receipt) {
-        console.log(receipt);
+        const updatedCFF = cffContext;
+
+        updatedCFF.contributions.push({
+          user: { id: receipt.from },
+          amount: ethers.utils.parseEther(amountToContribute).toString(),
+          timestamp: tx.timestamp,
+          txHash: receipt.transactionHash,
+        });
+        updatedCFF.lifetimeFundsReceived = ethers.BigNumber.from(updatedCFF.lifetimeFundsReceived).add(
+          ethers.utils.parseEther(amountToContribute),
+        );
+
+        setCFFContext(prevState => ({
+          ...prevState,
+          updatedCFF,
+        }));
+
+        setTxSuccess(true);
       }
     } catch (error) {
       console.log(error);
@@ -137,13 +156,13 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         />
         <Box marginLeft="4" alignSelf="flex-end">
           <Button
-            disabled={isWaiting}
+            disabled={isWaiting || txSuccess}
             loading={isWaiting}
             onClick={() => {
               contributeDAI();
             }}
           >
-            Fund
+            {txSuccess ? "Thank You!" : "Fund"}
           </Button>
         </Box>
       </>
@@ -177,10 +196,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       </Box>
       <Box marginBottom="4">
         <Text size="large">
-          {callForFunding?.lifetimeFundsReceived
+          {cffContext?.lifetimeFundsReceived
             ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(3)
             : 0}{" "}
-          DAI from {callForFunding?.contributions.length} funders.
+          DAI from {cffContext?.contributions.length} funders.
           {/* <br /> with estimated Z match */}
         </Text>
       </Box>
