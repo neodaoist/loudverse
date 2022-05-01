@@ -312,6 +312,7 @@ export class Contribution extends Entity {
     this.set("user", Value.fromString(""));
     this.set("amount", Value.fromBigInt(BigInt.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("txHash", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -374,5 +375,14 @@ export class Contribution extends Entity {
 
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get txHash(): Bytes {
+    let value = this.get("txHash");
+    return value!.toBytes();
+  }
+
+  set txHash(value: Bytes) {
+    this.set("txHash", Value.fromBytes(value));
   }
 }

@@ -21,7 +21,11 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
             return (
               <Box key={i} marginBottom="4">
                 <Text>
-                  <Link href={`/users/${contribution?.user.id}`} passHref>
+                  <Link
+                    // href={`/users/${contribution?.user.id}`}
+                    href={`https://polygonscan.com/tx/${contribution.txHash}`}
+                    passHref
+                  >
                     <a>{toTrimmedAddress(contribution?.user.id)}</a>
                   </Link>{" "}
                   funded {ethers.utils.formatEther(contribution?.amount)} DAI
