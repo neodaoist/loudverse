@@ -23,6 +23,7 @@ export const ALL_CALLS = (): DocumentNode => gql`
         }
         amount
         timestamp
+        txHash
       }
       minFundingAmount
       currentRoundFundsReceived

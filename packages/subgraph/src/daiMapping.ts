@@ -26,6 +26,7 @@ export function handleDAITransfer(event: Transfer): void {
 
     contribution.amount = contribution.amount.plus(amount);
     contribution.timestamp = event.block.timestamp;
+    contribution.txHash = event.transaction.hash;
 
     contribution.save();
   }

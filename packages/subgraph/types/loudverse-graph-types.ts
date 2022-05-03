@@ -15,18 +15,13 @@ export type Scalars = {
   Bytes: any;
 };
 
-/** The block at which the query should be executed. */
+export type BlockChangedFilter = {
+  number_gte: Scalars['Int'];
+};
+
 export type Block_Height = {
-  /** Value containing a block hash */
   hash?: InputMaybe<Scalars['Bytes']>;
-  /** Value containing a block number */
   number?: InputMaybe<Scalars['Int']>;
-  /**
-   * Value containing the minimum block number.
-   * In the case of `number_gte`, the query will be executed on the latest block only if
-   * the subgraph has progressed to or past the minimum block number.
-   * Defaults to the latest block when omitted.
-   */
   number_gte?: InputMaybe<Scalars['Int']>;
 };
 
@@ -48,6 +43,7 @@ export type CallForFunding = {
   minFundingAmount: Scalars['BigInt'];
   subgenre: Scalars['String'];
   timelineInDays: Scalars['BigInt'];
+  timestamp: Scalars['BigInt'];
   title: Scalars['String'];
   videoUri?: Maybe<Scalars['String']>;
 };
@@ -62,6 +58,8 @@ export type CallForFundingContributionsArgs = {
 };
 
 export type CallForFunding_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
   category?: InputMaybe<Scalars['String']>;
   category_contains?: InputMaybe<Scalars['String']>;
   category_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -290,6 +288,14 @@ export type CallForFunding_Filter = {
   timelineInDays_lte?: InputMaybe<Scalars['BigInt']>;
   timelineInDays_not?: InputMaybe<Scalars['BigInt']>;
   timelineInDays_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   title?: InputMaybe<Scalars['String']>;
   title_contains?: InputMaybe<Scalars['String']>;
   title_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -349,6 +355,7 @@ export enum CallForFunding_OrderBy {
   MinFundingAmount = 'minFundingAmount',
   Subgenre = 'subgenre',
   TimelineInDays = 'timelineInDays',
+  Timestamp = 'timestamp',
   Title = 'title',
   VideoUri = 'videoUri'
 }
@@ -359,10 +366,13 @@ export type Contribution = {
   callForFunds: CallForFunding;
   id: Scalars['ID'];
   timestamp: Scalars['BigInt'];
+  txHash: Scalars['Bytes'];
   user: User;
 };
 
 export type Contribution_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
   amount?: InputMaybe<Scalars['BigInt']>;
   amount_gt?: InputMaybe<Scalars['BigInt']>;
   amount_gte?: InputMaybe<Scalars['BigInt']>;
@@ -407,6 +417,12 @@ export type Contribution_Filter = {
   timestamp_lte?: InputMaybe<Scalars['BigInt']>;
   timestamp_not?: InputMaybe<Scalars['BigInt']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txHash?: InputMaybe<Scalars['Bytes']>;
+  txHash_contains?: InputMaybe<Scalars['Bytes']>;
+  txHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  txHash_not?: InputMaybe<Scalars['Bytes']>;
+  txHash_not_contains?: InputMaybe<Scalars['Bytes']>;
+  txHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   user?: InputMaybe<Scalars['String']>;
   user_contains?: InputMaybe<Scalars['String']>;
   user_contains_nocase?: InputMaybe<Scalars['String']>;
@@ -434,6 +450,7 @@ export enum Contribution_OrderBy {
   CallForFunds = 'callForFunds',
   Id = 'id',
   Timestamp = 'timestamp',
+  TxHash = 'txHash',
   User = 'user'
 }
 
@@ -611,6 +628,8 @@ export type UserContributionsArgs = {
 };
 
 export type User_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;

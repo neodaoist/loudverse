@@ -2,8 +2,8 @@ import { getAllCallsForFunds } from "../graph/functions";
 import { CallForFunding } from "../graph/loudverse-graph-types";
 import { Contract, ethers } from "ethers";
 import CFFLogicJSON from "../abis/CallForFundsLogic.json";
-import {SigningKey} from "@ethersproject/signing-key";
-import {HexString} from "walletlink/dist/types";
+import { SigningKey } from "@ethersproject/signing-key";
+import { HexString } from "walletlink/dist/types";
 import * as net from "net";
 
 /**
@@ -21,23 +21,23 @@ class Quadratic {
   failedContracts: Array<CallForFunding>;
   eligibleContracts: Set<CallForFunding>;
   private readonly poolKey: String;
-  private readonly fundingAmount: bigint
+  private readonly fundingAmount: bigint;
   private readonly maxPerCall: bigint;
   private readonly network: String;
   private readonly networkUrls: Map<String, String> = new Map<String, String>()
-      .set("rinkeby", "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02")
-      .set("polygon", "tbd")
-      .set("mumbai", "tdb")
-      .set("dryrun", "test")
+    .set("rinkeby", "https://rinkeby.infura.io/v3/d3276e4d49274a54be2a0039dadfbb02")
+    .set("polygon", "tbd")
+    .set("mumbai", "tdb")
+    .set("dryrun", "test");
 
   constructor(fundingAmount: String, poolKey: String, maxPerCall: String, network: String) {
     this.fundingStates = new Map<String, FundingState>();
     this.failedContracts = [];
     this.eligibleContracts = new Set<CallForFunding>();
     this.poolKey = poolKey;
-    this.maxPerCall = BigInt(Number(maxPerCall.toString()) * (10**18));
+    this.maxPerCall = BigInt(Number(maxPerCall.toString()) * 10 ** 18);
     this.network = network;
-    this.fundingAmount = BigInt(Number(fundingAmount.toString()) * (10**18));
+    this.fundingAmount = BigInt(Number(fundingAmount.toString()) * 10 ** 18);
   }
 
   /** Entry point for ending a funding round -- typically called from Github action
@@ -70,8 +70,8 @@ class Quadratic {
   private computeMatchForContract(contract: CallForFunding): FundingState {
     const fundingResult = Quadratic.computeMatch(this.getCommunityFundForContract(contract));
     // limit to max match, if a max is set
-    if(this.maxPerCall > 0 && fundingResult.idealTotal > this.maxPerCall) {
-      fundingResult.idealTotal = this.maxPerCall
+    if (this.maxPerCall > 0 && fundingResult.idealTotal > this.maxPerCall) {
+      fundingResult.idealTotal = this.maxPerCall;
     }
 
     // did we meet the minimum?
@@ -222,18 +222,17 @@ class Quadratic {
     console.log("Round results:");
     console.log("Failed calls for funds:");
 
-
     const logicABI = CFFLogicJSON.abi;
 
     const networkUrl = this.networkUrls.get(this.network);
 
     let deployer;
-    if(networkUrl === "test") {
-      console.log("** DRYRUN -- Will not output to blockchain **")
+    if (networkUrl === "test") {
+      console.log("** DRYRUN -- Will not output to blockchain **");
     } else {
       deployer = new ethers.Wallet(
-          HexString(this.poolKey.toString()),
-          new ethers.providers.JsonRpcProvider(networkUrl.toString())
+        HexString(this.poolKey.toString()),
+        new ethers.providers.JsonRpcProvider(networkUrl.toString()),
       );
     }
 
@@ -241,30 +240,36 @@ class Quadratic {
       return new ethers.Contract(proxyAddress, logicABI, deployer);
     };
 
-
-
     for (const contract of this.failedContracts) {
       console.log(contract.id + " (" + contract.title + ") min: " + contract.minFundingAmount);
     }
     console.log("---- Matches ----");
     let lcv = 1;
     for (const contract of this.eligibleContracts) {
-      console.log("Match address " + contract.id + " (" + contract.title + ") with amount " + this.fundingStates.get(contract.id).proposedMatch);
+      console.log(
+        "Match address " +
+          contract.id +
+          " (" +
+          contract.title +
+          ") with amount " +
+          this.fundingStates.get(contract.id).proposedMatch,
+      );
       const funders: string[] = contract.contributions.map(contribution => {
         return contribution.user.id;
       });
-      if(networkUrl != "test") {
-        const tx = await initializeProxyWDeployer({proxyAddress: contract.id}).matchCallForFunds(
-            funders,
-            lcv,
-            ethers.utils.formatBytes32String(""), {gasLimit: 2000000, gasPrice: 100}
+      if (networkUrl != "test") {
+        const tx = await initializeProxyWDeployer({ proxyAddress: contract.id }).matchCallForFunds(
+          funders,
+          lcv,
+          ethers.utils.formatBytes32String(""),
+          { gasLimit: 2000000, gasPrice: 100 },
         );
         console.log(tx.wait());
         lcv++;
       }
     }
     console.log("----------");
-    console.log("Calling Bonus Funder (Chainlink VRFv2) to award bonus grant at random...");  // TODO: Invoke contract here instead of manual
+    console.log("Calling Bonus Funder (Chainlink VRFv2) to award bonus grant at random..."); // TODO: Invoke contract here instead of manual
   }
 
   // Shameless copy-pasta from https://golb.hplar.ch/2018/09/javascript-bigint.html
@@ -307,6 +312,7 @@ class Quadratic {
       subgenre: "String Quartet",
       timelineInDays: 90,
       fundingState: 0,
+      timestamp: 0,
     });
     const txLog = [
       {

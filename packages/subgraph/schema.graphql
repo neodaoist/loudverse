@@ -59,4 +59,6 @@ type Contribution @entity {
   amount: BigInt!
 
   timestamp: BigInt!
+
+  txHash: Bytes!
 }

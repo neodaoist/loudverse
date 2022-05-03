@@ -19,7 +19,15 @@ const Calls = ({ calls }: { calls: CallForFunding[] }) => {
       <PageWrapper>
         <CtaBar distAmt="2.7" numOfCreators="5" />
         <Box marginBottom="4" marginLeft="4">
-          <Heading level="2">Open Calls for Funds</Heading>
+          <Box marginY="4">
+            <Heading level="2">Open Calls for Funds</Heading>
+          </Box>
+          <Text align="center">
+            LOUDVERSE is a 2-sided marketplace for funding hard-to-quantify public goods like music, poetry, and
+            theater.
+            <br />
+            Connect to Polygon Network to contribute to a Call for Funds.
+          </Text>
         </Box>
         <Stack flex={1} direction="horizontal" space="0" wrap>
           {calls.map((call, i) => {

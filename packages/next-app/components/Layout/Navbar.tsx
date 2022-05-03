@@ -49,17 +49,24 @@ const Navbar = () => {
               </>
             )}
           </Box>
-          <Link href="/calls" passHref={true}>
-            <Box as="a" paddingX="4">
+          <Link href="/about" passHref={true}>
+            <Box as="a" paddingX="2">
               <Button size="small" variant="transparent">
-                Open Calls
+                About
+              </Button>
+            </Box>
+          </Link>
+          <Link href="/calls" passHref={true}>
+            <Box as="a" paddingX="2">
+              <Button size="small" variant="transparent">
+                View Calls
               </Button>
             </Box>
           </Link>
           <Link href="/calls/create" passHref={true}>
-            <Box as="a" paddingX="4">
+            <Box as="a" paddingX="2">
               <Button size="small" variant="transparent">
-                Create
+                Create Call
               </Button>
             </Box>
           </Link>
