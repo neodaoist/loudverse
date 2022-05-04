@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useConnect, useAccount } from "wagmi";
 import { Box, Button, Text } from "degen";
+import { useDisconnect } from "wagmi";
 
 const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
-  const [{ data, error }, connect] = useConnect();
-  const [{ data: accountData }, disconnect] = useAccount({
-    fetchEns: true,
+  const { connect, connectors } = useConnect();
+  const { data: accountData } = useAccount();
+  const { disconnect } = useDisconnect();
   });
   const [showModal, setShowModal] = useState(false);
   const shortAddr = accountData?.address.substring(0, 6);
@@ -27,17 +28,19 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
           paddingTop="32"
         >
           <Box display="grid" cols={2} justifyContent="center" justifySelf="center">
-            {data.connectors.map(connector => {
+            {connectors.map(connector => {
               const handleClick = () => {
                 connect(connector);
                 setShowModal(false);
               };
 
               return (
-                <Button size="small" disabled={!connector.ready} key={connector.id} onClick={() => handleClick()}>
+                <Box key={connector.id} marginX="auto" marginY="2">
+                  <Button size="small" disabled={!connector.ready} onClick={() => handleClick()}>
                   {connector.name}
                   {!connector.ready && " (unsupported)"}
                 </Button>
+                </Box>
               );
             })}
           </Box>
@@ -66,7 +69,7 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
                 {shortAddr}
               </Text>
             </Box>
-            <Button size="small" onClick={disconnect}>
+            <Button size="small" onClick={() => disconnect()}>
               Disconnect Wallet
             </Button>
           </Box>
