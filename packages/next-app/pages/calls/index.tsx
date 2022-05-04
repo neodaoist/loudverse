@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 import { Box, Stack, Text, Heading } from "degen";
 import cookieCutter from "cookie-cutter";
+
 import { getAllCallsForFunds } from "../../graph/functions";
 import { CallForFunding } from "../../graph/loudverse-graph-types";
 import PageWrapper from "../../components/Layout/PageWrapper";
