@@ -197,9 +197,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       </Box>
 
       {/* <Text size="extraLarge">[------Progress Bar--------]</Text> */}
-      <ProgressBar percent={percentFunded} />
+      <ProgressBar percent={Number(percentFunded).toLocaleString()} />
       <Text align="center">
-        Minimum Funding Amount: {ethers.utils.formatEther(callForFunding?.minFundingAmount ?? 0)}
+        Minimum Funding Amount:{" "}
+        {(Number(ethers.utils.formatEther(callForFunding?.minFundingAmount)) ?? 0).toLocaleString()}
       </Text>
       <Box display="flex" justifyContent="center" marginY="4">
         {callToAction}
@@ -207,8 +208,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       <Box marginBottom="4">
         <Text size="large">
           {cffContext?.lifetimeFundsReceived
-            ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(3)
-            : 0}{" "}
+            ? Number(
+                Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(2),
+              ).toLocaleString()
+            : (0).toLocaleString()}{" "}
           DAI from {cffContext?.contributions.length} funders.
           {/* <br /> with estimated Z match */}
         </Text>

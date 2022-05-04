@@ -4,8 +4,6 @@ import { CallForFunding } from "../../graph/loudverse-graph-types";
 import Image from "next/image";
 import { ethers } from "ethers";
 import Link from "next/link";
-import { toTrimmedAddress } from "../../utils";
-import call6 from "../../public/call6.jpeg";
 
 const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding; index: number }) => {
   const categoryColor = () => {
@@ -80,9 +78,9 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           />
         </Box>
         <Text>
-          {`${Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(3)} DAI funded by ${
-            callForFunding?.contributions.length
-          } supporter(s) so far.`}
+          {`${Number(
+            Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived)).toFixed(2),
+          ).toLocaleString()} DAI funded by ${callForFunding?.contributions.length} supporter(s) so far.`}
         </Text>
       </Box>
     </Link>
