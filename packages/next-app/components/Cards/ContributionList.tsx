@@ -20,9 +20,9 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
           contributionList.map((contribution, i) => {
             let date;
             if (contribution?.timestamp !== (null || undefined)) {
-              date = new Date(contribution.timestamp * 1000).toDateString().toString();
+              date = new Date(contribution.timestamp * 1000).toDateString();
             } else {
-              date = new Date().toDateString().toString();
+              date = new Date().toDateString();
             }
 
             return (
