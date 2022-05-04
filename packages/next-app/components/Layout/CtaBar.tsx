@@ -37,7 +37,7 @@ const CtaBar = ({
       backgroundColor="blue"
     >
       <Text color="white" weight="semiBold">
-        Round #1 runs 1 May – 15 May 2022. More than 3000 DAI will be distributed to 6 creators this round!
+        {`Round #1 runs 1 May – 15 May 2022. More than ${(3000).toLocaleString()} DAI will be distributed to 6 creators this round!`}
       </Text>
       {button}
     </Box>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
 import { CallForFunding, Contribution } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useDisconnect, useNetwork, useSigner } from "wagmi";
 import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
 import ERC20 from "../../abis/ERC20.json";
 import { ethers } from "ethers";
@@ -11,8 +11,13 @@ import { polygonDAI } from "../../utils";
 import { CallContext } from "../FullPageProject";
 
 const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding }) => {
-  const [{ data: accountData }, disconnect] = useAccount();
-  const [{ error, loading }, getSigner] = useSigner();
+  const { data: accountData } = useAccount();
+  const { data: signer } = useSigner();
+  const { disconnect } = useDisconnect();
+  const { activeChain } = useNetwork({
+    chainId: 137,
+  });
+
   const [isOwner, setIsOwner] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
   const [txSuccess, setTxSuccess] = useState(false);
@@ -62,7 +67,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   const contributeDAI = async () => {
     setIsWaiting(true);
     try {
-      const daiWrite = initializeDAIWSigner(await getSigner());
+      const daiWrite = initializeDAIWSigner(signer);
       const tx = await daiWrite.transfer(callForFunding.id, ethers.utils.parseEther(amountToContribute));
 
       const receipt = await tx.wait();
@@ -97,7 +102,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   };
 
   const startStream = async () => {
-    const proxyWrite = initializeProxyWSigner(await getSigner());
+    const proxyWrite = initializeProxyWSigner(signer);
     const tx = await proxyWrite.startStream();
     // { gasLimit: 10000000 }
 
@@ -115,7 +120,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   };
 
   const uploadWork = async () => {
-    const proxyWrite = initializeProxyWSigner(await getSigner());
+    const proxyWrite = initializeProxyWSigner(signer);
     const deliverableURI = await uploadFinalDeliverable({ callForFunding: callForFunding, file: formData.file });
     //TODO SLICER???
     // const tx = await proxyWrite.deliver(deliverableURI, "0x3815f8c062539f5134586f3d923aeb99f51f3f77");
@@ -129,7 +134,9 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   if (isOwner && callForFunding?.fundingState === 2) {
     callToAction = (
       <Box justifySelf="center">
-        <Button onClick={() => startStream()}>Start Streaming Funds</Button>
+        <Button disabled={activeChain?.unsupported} onClick={() => startStream()}>
+          Start Streaming Funds
+        </Button>
       </Box>
     );
   } else if (isOwner && callForFunding?.fundingState === 3) {
@@ -159,7 +166,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         />
         <Box marginLeft="4" alignSelf="flex-end">
           <Button
-            disabled={isWaiting || txSuccess}
+            disabled={isWaiting || txSuccess || activeChain?.unsupported}
             loading={isWaiting}
             onClick={() => {
               contributeDAI();
@@ -190,9 +197,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       </Box>
 
       {/* <Text size="extraLarge">[------Progress Bar--------]</Text> */}
-      <ProgressBar percent={percentFunded} />
+      <ProgressBar percent={Number(percentFunded).toLocaleString()} />
       <Text align="center">
-        Minimum Funding Amount: {ethers.utils.formatEther(callForFunding?.minFundingAmount ?? 0)}
+        Minimum Funding Amount:{" "}
+        {(Number(ethers.utils.formatEther(callForFunding?.minFundingAmount)) ?? 0).toLocaleString()}
       </Text>
       <Box display="flex" justifyContent="center" marginY="4">
         {callToAction}
@@ -200,8 +208,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
       <Box marginBottom="4">
         <Text size="large">
           {cffContext?.lifetimeFundsReceived
-            ? Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(3)
-            : 0}{" "}
+            ? Number(
+                Number(ethers.utils.formatEther(callForFunding?.lifetimeFundsReceived ?? 0)).toFixed(2),
+              ).toLocaleString()
+            : (0).toLocaleString()}{" "}
           DAI from {cffContext?.contributions.length} funders.
           {/* <br /> with estimated Z match */}
         </Text>

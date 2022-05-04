@@ -3,7 +3,7 @@ import { CallForFunding } from "../graph/loudverse-graph-types";
 import { Contract, ethers } from "ethers";
 import CFFLogicJSON from "../abis/CallForFundsLogic.json";
 import { SigningKey } from "@ethersproject/signing-key";
-import { HexString } from "walletlink/dist/types";
+// import { HexString } from "walletlink/dist/types";
 import * as net from "net";
 
 /**
@@ -231,7 +231,7 @@ class Quadratic {
       console.log("** DRYRUN -- Will not output to blockchain **");
     } else {
       deployer = new ethers.Wallet(
-        HexString(this.poolKey.toString()),
+        this.poolKey.toString(),
         new ethers.providers.JsonRpcProvider(networkUrl.toString()),
       );
     }

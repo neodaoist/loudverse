@@ -26,14 +26,14 @@ const NewProjectForm = () => {
   });
   const [isUploading, setIsUploading] = useState(false);
 
-  const [{ data }, getSigner] = useSigner();
+  const { data: signer } = useSigner();
 
   const onClick = async () => {
     setIsUploading(true);
     const url = await uploadFile({ file: formData?.file, title: formData?.title, desc: formData?.description });
 
     try {
-      const factoryWrite = initializeFactoryWSigner(await getSigner());
+      const factoryWrite = initializeFactoryWSigner(signer);
       const tx = await factoryWrite.createCallForFunds(
         formData.title,
         formData.description,
@@ -221,8 +221,13 @@ const NewProjectForm = () => {
         />
         <MediaPicker label="Cover image" compact onChange={file => handleFile(file)} />
         <Input onChange={e => handleChange(e)} name="videoUri" label="Project Video" placeholder="Livepeer URL" />
-        <Button disabled={isUploading || !data} onClick={() => onClick()} loading={isUploading}>
-          {!data ? "Please Connect Your Wallet" : "Open call for funds"}
+        <Button
+          // disabled={isUploading || !signer}
+          disabled={true} // cap of 6 round 1
+          onClick={() => onClick()}
+          loading={isUploading}
+        >
+          {!signer ? "Please Connect Your Wallet" : "Open call for funds"}
         </Button>
       </FieldSet>
     </Box>

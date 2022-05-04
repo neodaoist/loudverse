@@ -3,7 +3,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { Box, Heading, IconBookOpen, IconEth, IconHand, IconPlug, IconUsersSolid, Text, useTheme } from "degen";
 import cookieCutter from "cookie-cutter";
-
 import CtaBar from "../../components/Layout/CtaBar";
 import PageWrapper from "../../components/Layout/PageWrapper";
 import logoDark from "../../public/loudverse_logo_dark.png";
@@ -111,15 +110,6 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
                 </Text>
               </Box>
             </Box>
-          </Box>
-          {divider}
-          <Box marginBottom="8">
-            <Box marginBottom="2">
-              <Text size="large">© 2022 LOUDVΞRSΞ. All rights reserved.</Text>
-            </Box>
-            <Text>
-              💚 <em>Helping artists ship creative work</em> 💚
-            </Text>
           </Box>
         </Box>
       </PageWrapper>

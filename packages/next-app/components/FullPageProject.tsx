@@ -13,10 +13,6 @@ export const CallContext = createContext<ContextType<CallForFunding>>(null);
 const FullPageCallDetails = ({ call }: { call: CallForFunding }) => {
   const [cffContext, setCFFContext] = useState(call);
 
-  useEffect(() => {
-    console.log("context updated");
-  }, [cffContext, setCFFContext]);
-
   return (
     <CallContext.Provider value={{ cffContext, setCFFContext }}>
       <Box marginBottom="4">
