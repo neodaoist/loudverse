@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Input, MediaPicker, Stack, Text } from "degen";
 import { CallForFunding, Contribution } from "../../graph/loudverse-graph-types";
 import ProgressBar from "../ProgressBar";
-import { useAccount, useDisconnect, useSigner } from "wagmi";
+import { useAccount, useDisconnect, useNetwork, useSigner } from "wagmi";
 import CallForFundsLogic from "../../abis/CallForFundsLogic.json";
 import ERC20 from "../../abis/ERC20.json";
 import { ethers } from "ethers";
@@ -14,6 +14,10 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   const { data: accountData } = useAccount();
   const { data: signer } = useSigner();
   const { disconnect } = useDisconnect();
+  const { activeChain } = useNetwork({
+    chainId: 137,
+  });
+
   const [isOwner, setIsOwner] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
   const [txSuccess, setTxSuccess] = useState(false);
@@ -130,7 +134,9 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
   if (isOwner && callForFunding?.fundingState === 2) {
     callToAction = (
       <Box justifySelf="center">
-        <Button onClick={() => startStream()}>Start Streaming Funds</Button>
+        <Button disabled={activeChain?.unsupported} onClick={() => startStream()}>
+          Start Streaming Funds
+        </Button>
       </Box>
     );
   } else if (isOwner && callForFunding?.fundingState === 3) {
@@ -160,7 +166,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         />
         <Box marginLeft="4" alignSelf="flex-end">
           <Button
-            disabled={isWaiting || txSuccess}
+            disabled={isWaiting || txSuccess || activeChain?.unsupported}
             loading={isWaiting}
             onClick={() => {
               contributeDAI();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useConnect, useAccount } from "wagmi";
+import { useConnect, useAccount, useNetwork } from "wagmi";
 import { Box, Button, Text } from "degen";
 import { useDisconnect } from "wagmi";
 
@@ -8,9 +8,22 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
   const { connect, connectors } = useConnect();
   const { data: accountData } = useAccount();
   const { disconnect } = useDisconnect();
+  const { activeChain, switchNetwork } = useNetwork({
+    chainId: 137,
   });
+
   const [showModal, setShowModal] = useState(false);
   const shortAddr = accountData?.address.substring(0, 6);
+
+  useEffect(() => {
+    if (accountData?.address && activeChain?.unsupported) {
+      try {
+        switchNetwork();
+      } catch (error) {
+        // user clicked disconnect wallet
+      }
+    }
+  }, [activeChain, accountData, switchNetwork]);
 
   return (
     <>
@@ -37,9 +50,9 @@ const Wallet = ({ isCallsCta }: { isCallsCta?: boolean }) => {
               return (
                 <Box key={connector.id} marginX="auto" marginY="2">
                   <Button size="small" disabled={!connector.ready} onClick={() => handleClick()}>
-                  {connector.name}
-                  {!connector.ready && " (unsupported)"}
-                </Button>
+                    {connector.name}
+                    {!connector.ready && " (unsupported)"}
+                  </Button>
                 </Box>
               );
             })}
