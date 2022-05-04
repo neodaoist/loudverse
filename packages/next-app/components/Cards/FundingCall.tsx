@@ -69,7 +69,11 @@ const FundingCall = ({ callForFunding, index }: { callForFunding: CallForFunding
           alignItems="center"
         >
           <Image
-            src={callForFunding?.image === " " ? call6 : callForFunding?.image}
+            src={
+              callForFunding.id === "0xc2db902e79144c9d572f148ac14d20045e420356"
+                ? "https://infura-ipfs.io/ipfs/bafybeieaczhi3egn2ydcmgt2366ifveacp73mirsyt6icevk7u6wx25z7i"
+                : callForFunding?.image
+            }
             alt="Call For Funding's cover image"
             layout="fill"
             objectFit="cover"
