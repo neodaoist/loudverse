@@ -1,4 +1,5 @@
 import { Box } from "degen";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 const PageWrapper = ({ children }) => {
@@ -8,6 +9,7 @@ const PageWrapper = ({ children }) => {
       <Box width="full" maxWidth="screenXl" marginX="16" paddingBottom="16" backgroundColor="backgroundSecondary">
         {children}
       </Box>
+      <Footer />
     </Box>
   );
 };
