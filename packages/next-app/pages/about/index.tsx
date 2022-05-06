@@ -52,16 +52,29 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
           <Box marginBottom="8" backgroundColor="backgroundSecondary">
             <Text size="extraLarge">
               <p>
-                <strong>LOUDVERSE</strong> is a 2-sided marketplace for funding
+                <strong>LOUDVΞRSΞ</strong> is a 2-sided marketplace for funding
                 <br />
                 hard-to-quantify public goods like music, poetry, and theater.
               </p>
             </Text>
             <Text size="extraLarge">
               <p>
-                Key building blocks include crowd-commissions, smart-art,
+                A winning project at <strong>ETH Denver 2022</strong> in both the{" "}
+                <a href="https://dorahacks.io/buidl/2040">in-person</a>
                 <br />
-                and a <strong>double-constrained quadratic funding</strong> mechanism.
+                and <a href="https://dorahacks.io/buidl/2434">virtual</a> hackathons, we launched a real-money,
+                invite-only
+                <br />
+                Beta round with 3k DAI from our winnings to keep learning and
+                <br />
+                commission some awesome art — <a href="https://loudverse.xyz/calls">Check out these 6 creators!</a>
+              </p>
+            </Text>
+            <Text size="extraLarge">
+              <p>
+                A key building block is <strong>double-constrained quadratic funding</strong>,
+                <br />
+                to match funds using a fixed match pool and minimum viable funding goals.
               </p>
             </Text>
             <Text size="extraLarge">
@@ -73,8 +86,27 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
                 Ethereum blockchain in ways never before possible.
               </p>
             </Text>
+            <Text size="extraLarge">
+              <p>Want to connect? Email general (at) loudverse (dot) com, we would love to hear from you!</p>
+            </Text>
           </Box>
           {/* Need to get live values in here */}
+          {divider}
+          <Box marginBottom="8" backgroundColor="backgroundSecondary">
+            <Text size="extraLarge">
+              <p>
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/qY0-s_UsqKM"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </p>
+            </Text>
+          </Box>
           {divider}
           {/* Mixed content rows */}
           {/* ETH -> HAND -> PLUG */}
@@ -100,8 +132,8 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
               <IconPlug size="24" color="textPrimary" />
               <Box marginLeft="2">
                 <Text size="extraLarge" align="left">
-                  A Crowd-Commission is a non-transferrable NFT that represents “proof of patronage.” Smart-Art is an
-                  NFT collectible that allows artists and contributors to co-create and share in the financial upside.
+                  A Crowd-Commission is a non-transferrable NFT collectible that represents “proof of patronage” and can
+                  allow artists and contributors to co-create and share in the financial upside.
                 </Text>
               </Box>
             </Box>
