@@ -60,14 +60,22 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
             <Text size="extraLarge">
               <p>
                 A winning project at <strong>ETH Denver 2022</strong> in both the{" "}
-                <a href="https://dorahacks.io/buidl/2040">in-person</a>
+                <a className="external-link" href="https://dorahacks.io/buidl/2040">
+                  in-person
+                </a>
                 <br />
-                and <a href="https://dorahacks.io/buidl/2434">virtual</a> hackathons, we launched a real-money,
-                invite-only
+                and{" "}
+                <a className="external-link" href="https://dorahacks.io/buidl/2434">
+                  virtual
+                </a>{" "}
+                hackathons, we launched a real-money, invite-only
                 <br />
                 Beta round with 3k DAI from our winnings to keep learning and
                 <br />
-                commission some awesome art — <a href="https://loudverse.xyz/calls">Check out these 6 creators!</a>
+                commission some awesome art — 
+                <a className="external-link" href="https://loudverse.xyz/calls">
+                  Check out these 6 creators!
+                </a>
               </p>
             </Text>
             <Text size="extraLarge">

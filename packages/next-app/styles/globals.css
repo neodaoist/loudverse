@@ -16,8 +16,18 @@ body {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+a.external-link {
+  /* color: ; */
+  text-decoration: none;
+}
+a:hover.external-link {
+  text-decoration: underline;
 }
 
 * {
