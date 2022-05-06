@@ -2926,6 +2926,11 @@
   "resolved" "https://registry.npmjs.org/@types/google-protobuf/-/google-protobuf-3.15.5.tgz"
   "version" "3.15.5"
 
+"@types/gtag.js@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@types/gtag.js/-/gtag.js-0.0.10.tgz#ac90d9b79c00daac447725a4b78ec1c398796760"
+  integrity sha512-98Hy7woUb3jMAMXkZQwfIOYNyfxmI0+U4m0PpCGdnd/FHk0tDpQFCqgXdNkdEoXsKkcGya/2Gew1cAJjKJspVw==
+
 "@types/http-assert@*":
   "integrity" "sha512-FyAOrDuQmBi8/or3ns4rwPno7/9tJTijVW6aQQjK02+kOQ8zmoNg2XJtAuQhvQcy1ASJq38wirX5//9J1EqoUA=="
   "resolved" "https://registry.npmjs.org/@types/http-assert/-/http-assert-1.5.3.tgz"
