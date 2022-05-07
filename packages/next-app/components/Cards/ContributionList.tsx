@@ -32,8 +32,13 @@ const ContributionList = ({ contributionList }: { contributionList: Contribution
         {/* link to user page <Linkhref={`/users/${contribution?.user.id}`}passHref> */}
         <Box cursor="pointer">
           <Text>
-            <a href={`https://polygonscan.com/tx/${contribution.txHash}`} target="_blank" rel="noreferrer">
-              <u>{ensOrAddress}</u> funded {Number(ethers.utils.formatEther(contribution?.amount)).toLocaleString()} DAI{" "}
+            <a
+              className="external-link"
+              href={`https://polygonscan.com/tx/${contribution.txHash}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {ensOrAddress} funded {Number(ethers.utils.formatEther(contribution?.amount)).toLocaleString()} DAI{" "}
             </a>
           </Text>
         </Box>
