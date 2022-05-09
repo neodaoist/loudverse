@@ -7,7 +7,7 @@ import { getAllUsers, getUserByID } from "../../graph/functions";
 
 const User = ({ user }: { user: User }) => {
   return (
-    <PageWrapper>
+    <PageWrapper title={`User ${user?.id}`}>
       <FullPageUser
       // user={user}
       />

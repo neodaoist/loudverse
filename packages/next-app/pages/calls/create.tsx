@@ -4,7 +4,7 @@ import PageWrapper from "../../components/Layout/PageWrapper";
 import NewProjectForm from "../../components/Forms/NewProjectForm"; // change
 
 const Create: NextPage = () => {
-  return <PageWrapper>{/* <NewProjectForm /> */}</PageWrapper>;
+  return <PageWrapper title={"Create New Call for Funds"}>{/* <NewProjectForm /> */}</PageWrapper>;
 };
 
 export const getServerSideProps: GetServerSideProps = async context => {

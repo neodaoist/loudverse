@@ -11,7 +11,7 @@ import FundingCall from "../../components/Cards/FundingCall";
 const Calls = ({ calls }: { calls: CallForFunding[] }) => {
   return (
     <>
-      <PageWrapper>
+      <PageWrapper title={"Open Calls"}>
         <CtaBar distAmt="2.7" numOfCreators="5" />
         <Box marginBottom="4" marginLeft="4">
           <Box marginY="4">

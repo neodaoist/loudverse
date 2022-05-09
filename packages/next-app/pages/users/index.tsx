@@ -5,7 +5,7 @@ import PageWrapper from "../../components/Layout/PageWrapper";
 
 const Users: NextPage = () => {
   return (
-    <PageWrapper>
+    <PageWrapper title="Users">
       <Box color="foreground">You must view a specific user</Box>
     </PageWrapper>
   );

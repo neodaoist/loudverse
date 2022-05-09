@@ -16,7 +16,7 @@ const Home = ({ calls }: { calls: CallForFunding[] }) => {
 
   return (
     <>
-      <PageWrapper>
+      <PageWrapper title={"About"}>
         <CtaBar distAmt="2.7" numOfCreators={calls.length.toString()} isHomePage={true} />
         <Box textAlign="center">
           {/* Banner */}

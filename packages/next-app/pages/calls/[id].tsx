@@ -8,7 +8,7 @@ import PageWrapper from "../../components/Layout/PageWrapper";
 
 const Call = ({ call }: { call: CallForFunding }) => {
   return (
-    <PageWrapper>
+    <PageWrapper title={call?.title} description={call?.description}>
       <FullPageCallDetails call={call} />
     </PageWrapper>
   );
