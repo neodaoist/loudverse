@@ -222,7 +222,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
         </Text>
       </Box>
       <Box>
-        <Text size="large">Round #1 ends 15 May 2022</Text>
+        <Text size="large">Round #1 ends 31 May 2022</Text>
       </Box>
     </Box>
   );
