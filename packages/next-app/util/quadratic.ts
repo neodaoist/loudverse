@@ -180,6 +180,7 @@ class Quadratic {
    * @private
    */
   private normalizeFunding() {
+    let lastround = false;
     console.log("Runoff: considering " + this.eligibleContracts.size + " calls for funds");
     if (this.eligibleContracts.size === 0) {
       return;
@@ -191,9 +192,9 @@ class Quadratic {
     const adjustmentCoefficient: number = Number(this.fundingAmount) / Number(matchAccumulate);
     console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + this.fundingAmount);
     if (this.fundingAmount > matchAccumulate) {
-      console.log("Funding pool has sufficient funds.  No normalization needed");
-      return;
-    } else {
+      console.log("Funding pool has sufficient funds.  Adjust upward to consume pool");
+      lastround = true;
+     } // else {
       console.log(
         "Ideal match: " +
           matchAccumulate +
@@ -202,7 +203,7 @@ class Quadratic {
           ", adjustment: " +
           adjustmentCoefficient,
       );
-    }
+    // }
     // Adjust the match amounts
     for (let contract of this.fundingStates.keys()) {
       let fundingState = this.fundingStates.get(contract);
@@ -210,7 +211,9 @@ class Quadratic {
       fundingState.proposedMatch = BigInt(Math.floor(Number(fundingState.proposedMatch) * adjustmentCoefficient));
       this.fundingStates.set(contract, fundingState);
     }
-
+    if(lastround) {
+      return;
+    }
     if (this.removeFarthestUnmet()) {
       // recurse
       this.normalizeFunding();
