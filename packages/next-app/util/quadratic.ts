@@ -196,26 +196,10 @@ class Quadratic {
     const adjustmentCoefficient: number = Number(this.fundingAmount) / Number(matchAccumulate);
     console.log("Ideal match: " + matchAccumulate + ".  Available match pool is " + this.fundingAmount);
     if (this.fundingAmount > matchAccumulate) {
-      let minimumsMet = true;
-      // check if all contracts have met their minimums
-      for (const contract of this.eligibleContracts) {
-        const fundingState = this.fundingStates.get(contract.id)
-        if(fundingState.contributions + fundingState.proposedMatch < contract.minFundingAmount) {
-          console.log("Contract " + contract.title + "did not meet minimum after scaling.  Dropping...");
-          this.failedContracts.push(contract);
-          this.eligibleContracts.delete(contract);
-          this.fundingStates.delete(contract.id);
-          minimumsMet = false;
-        }
-      }
-      if( ! minimumsMet) {
-        // Run normalization one more time
-        console.log("At least one call was removed for unmet minimums -- renormalize");
-        this.normalizeFunding();
-      }
+
       console.log("Funding pool has sufficient funds.  Adjust upward to consume pool");
       lastround = true;
-     } // else {
+    } // else {
       console.log(
         "Ideal match: " +
           matchAccumulate +
@@ -232,6 +216,25 @@ class Quadratic {
       fundingState.proposedMatch = BigInt(Math.floor(Number(fundingState.proposedMatch) * adjustmentCoefficient));
       this.fundingStates.set(contract, fundingState);
     }
+
+    // check if all contracts have met their minimums
+    let minimumsMet = true;
+    for (const contract of this.eligibleContracts) {
+      const fundingState = this.fundingStates.get(contract.id)
+      if(fundingState.contributions + fundingState.proposedMatch < contract.minFundingAmount) {
+        console.log("Contract " + contract.title + "did not meet minimum after scaling.  Dropping...");
+        this.failedContracts.push(contract);
+        this.eligibleContracts.delete(contract);
+        this.fundingStates.delete(contract.id);
+        minimumsMet = false;
+      }
+    }
+    if( ! minimumsMet) {
+      // Run normalization one more time
+      console.log("At least one call was removed for unmet minimums -- renormalize");
+      this.normalizeFunding();
+    }
+
     if(lastround) {
       return;
     }
