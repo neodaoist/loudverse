@@ -76,6 +76,7 @@ class Quadratic {
 
     // did we meet the minimum?
     console.log("  Minimum: " + contract.minFundingAmount + ", Ideal total: " + fundingResult.idealTotal);
+    /* Trying to add "scale up" logic for Round One
     if (fundingResult.idealTotal < contract.minFundingAmount) {
       // minimum not met -- close
       console.log("  Minimum not met with ideal -- close contract " + contract.id);
@@ -83,10 +84,11 @@ class Quadratic {
       this.fundingStates.delete(contract.id);
     } else {
       // minimum met -- match
+     */
       console.log("  Adding match amount: " + fundingResult.proposedMatch + " to contract " + contract.id);
       this.fundingStates.set(contract.id, fundingResult);
       this.eligibleContracts.add(contract);
-    }
+//    }
     return fundingResult;
   }
 
