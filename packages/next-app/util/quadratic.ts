@@ -154,7 +154,9 @@ class Quadratic {
 
       return {
         contributions: contributedAmount,
-        proposedMatch: idealTotal - contributedAmount,
+        // This idea seems incompatible with normalize up behavior
+        //proposedMatch: idealTotal - contributedAmount,
+        proposedMatch: idealTotal,
         idealTotal: idealTotal,
       };
     }
