@@ -103,8 +103,7 @@ const FundingProgress = ({ callForFunding }: { callForFunding: CallForFunding })
 
   const startStream = async () => {
     const proxyWrite = initializeProxyWSigner(signer);
-    const tx = await proxyWrite.startStream();
-    // { gasLimit: 10000000 }
+    const tx = await proxyWrite.startStream({ gasLimit: 10000000 });
 
     const receipt = await tx.wait();
     if (receipt) {
