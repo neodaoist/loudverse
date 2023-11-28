@@ -37,7 +37,7 @@ const CtaBar = ({
       backgroundColor="blue"
     >
       <Text color="white" weight="semiBold">
-        {`Round #1 runs 5 May – 31 May 2022. More than ${(3000).toLocaleString()} DAI will be distributed to 6 creators this round!`}
+        {`Quadratic funding round ran 5 May – 31 May 2022. More than ${(3500).toLocaleString()} DAI was distributed to 6 creators!`}
       </Text>
       {button}
     </Box>
